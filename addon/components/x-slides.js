@@ -1,11 +1,12 @@
+/* eslint ember/no-on-calls-in-components: 0 */
+
 import { inject } from '@ember/service';
 import { on } from '@ember/object/evented';
 import Component from '@ember/component';
-import { EKMixin } from 'ember-keyboard';
-import { keyUp, keyDown } from 'ember-keyboard';
+import { EKMixin as EmberKeyboard, keyUp } from 'ember-keyboard';
 import layout from '../templates/components/x-slides';
 
-export default Component.extend(EKMixin, {
+export default Component.extend(EmberKeyboard, {
   layout,
 
   slidesService: inject(),
