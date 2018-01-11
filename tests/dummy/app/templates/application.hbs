@@ -1,3 +1,6 @@
-<h2 id="title">Welcome to Ember</h2>
+<button onClick={{action (action 'previous' target=slidesService)}}>Previous</button>
+<button onClick={{action (action 'next' target=slidesService)}}>Next</button>
 
-{{outlet}}
+<hr />
+
+{{component slidesService.current.componentPath}}
