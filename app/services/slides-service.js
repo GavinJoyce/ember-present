@@ -1,2 +1,2 @@
-import SlidesMap from "ember-present/slides-map";
-export default SlidesMap;
+import SlidesService from "ember-present/services/slides-service";
+export default SlidesService;

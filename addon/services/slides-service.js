@@ -29,12 +29,20 @@ export default Service.extend({
     return this.get('slides').objectAt(this.get('currentIndex'));
   }),
 
+  previous() {
+    this.decrementProperty('currentIndex');
+  },
+
+  next() {
+    this.incrementProperty('currentIndex');
+  },
+
   actions: {
     previous() {
-      this.decrementProperty('currentIndex');
+      this.previous();
     },
     next() {
-      this.incrementProperty('currentIndex');
+      this.next();
     }
   }
 });
