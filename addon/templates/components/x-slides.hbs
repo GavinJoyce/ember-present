@@ -1,1 +1,28 @@
-{{component slidesService.current.componentPath}}
+<style>
+  /* TODO: extract styles */
+
+  .slide-container {
+    height:100vh;
+  }
+
+  .slide {
+    width: 1280px;
+    height: 720px;
+    padding: 50px;
+    text-align: center;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+  }
+</style>
+
+<div class="slide-container">
+
+  {{#x-slide}}
+    {{component slidesService.current.componentPath slidesService=slidesService}}
+  {{/x-slide}}
+
+
+</div>
