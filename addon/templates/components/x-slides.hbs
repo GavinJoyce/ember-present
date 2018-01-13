@@ -1,36 +1,4 @@
-<style>
-  /* TODO: extract styles */
-
-  .slide-container {
-    height:100vh;
-    background-color: #000;
-  }
-
-  .slide {
-    width: 1280px;
-    height: 720px;
-    padding: 50px;
-    text-align: center;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    transform-origin: center center;
-  }
-
-  video.slide {
-    padding: 0;
-  }
-
-  video {
-    height: 100vh;
-    display: block;
-    padding: 0;
-    margin: 0;
-  }
-</style>
-
-<div class="slide-container">
+<div class="slides">
 
   {{#if (eq slidesService.current.type 'video')}}
 
