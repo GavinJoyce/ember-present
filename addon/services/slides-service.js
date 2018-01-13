@@ -1,9 +1,10 @@
 import { getOwner } from '@ember/application';
 import Service from '@ember/service';
 import { computed } from '@ember/object';
+import Evented from '@ember/object/evented';
 import { A } from '@ember/array';
 
-export default Service.extend({
+export default Service.extend(Evented, {
   currentIndex: 0,
 
   init() {
@@ -45,6 +46,8 @@ export default Service.extend({
     if (proceed && !this.get('isFirstSlide')) {
       this.set('navigationHandler', undefined);
       this.decrementProperty('currentIndex');
+      this.trigger('previous');
+      this.trigger('change');
     }
   },
 
@@ -59,6 +62,17 @@ export default Service.extend({
     if (proceed && !this.get('isLastSlide')) {
       this.set('navigationHandler', undefined);
       this.incrementProperty('currentIndex');
+      this.trigger('next');
+      this.trigger('change');
+    }
+  },
+
+  goToSlide(name) {
+    let slides = this.get('slides');
+    let slideIndex = slides.findIndex((slide) => slide.name === name);
+
+    if (slideIndex >= 0) {
+      this.set('currentIndex', slideIndex);
     }
   },
 
