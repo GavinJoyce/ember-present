@@ -14,7 +14,7 @@ export default Component.extend(DomMixin, {
   },
 
   _onResize() {
-    let container = document.querySelectorAll('.slide-container')[0];
+    let container = document.querySelectorAll('.slides')[0];
     let slide = document.querySelectorAll('.slide')[0];
 
     let scale = Math.min(
