@@ -21,8 +21,10 @@
 <div class="slide-container">
 
   {{#x-slide}}
-    {{component slidesService.current.componentPath slidesService=slidesService}}
+    {{component
+      slidesService.current.componentPath
+      slidesService=slidesService
+    }}
   {{/x-slide}}
-
 
 </div>
