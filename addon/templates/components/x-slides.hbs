@@ -21,10 +21,14 @@
 <div class="slide-container">
 
   {{#x-slide}}
-    {{component
-      slidesService.current.componentPath
-      slidesService=slidesService
-    }}
+    {{#liquid-bind slidesService.current use="rotateBelow" class="demo-container" as |currentModel|}}
+      {{component
+        slidesService.current.componentPath
+        slidesService=slidesService
+      }}
+    {{/liquid-bind}}
+
+
   {{/x-slide}}
 
 </div>
