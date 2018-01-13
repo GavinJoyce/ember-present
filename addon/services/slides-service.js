@@ -29,12 +29,41 @@ export default Service.extend({
     return this.get('slides').objectAt(this.get('currentIndex'));
   }),
 
+  isFirstSlide: computed.equal('currentIndex', 0),
+  isLastSlide: computed('currentIndex', 'slides.length', function() {
+    return this.get('currentIndex') === (this.get('slides.length') - 1);
+  }),
+
   previous() {
-    this.decrementProperty('currentIndex');
+    let proceed = true;
+
+    let navigationHandler = this.get('navigationHandler');
+    if (navigationHandler && navigationHandler.previous) {
+      proceed = navigationHandler.previous();
+    }
+
+    if (proceed && !this.get('isFirstSlide')) {
+      this.set('navigationHandler', undefined);
+      this.decrementProperty('currentIndex');
+    }
   },
 
   next() {
-    this.incrementProperty('currentIndex');
+    let proceed = true;
+
+    let navigationHandler = this.get('navigationHandler');
+    if (navigationHandler && navigationHandler.next) {
+      proceed = navigationHandler.next();
+    }
+
+    if (proceed && !this.get('isLastSlide')) {
+      this.set('navigationHandler', undefined);
+      this.incrementProperty('currentIndex');
+    }
+  },
+
+  handleNavigation(component) {
+    this.set('navigationHandler', component);
   },
 
   actions: {
