@@ -10,10 +10,16 @@ export default Component.extend(EmberKeyboard, {
   layout,
 
   slidesService: inject(),
+  realtimeService: inject(),
+
+  role: 'screen',
 
   init() {
     this._super(...arguments);
     this.set('keyboardActivated', true);
+
+    let slidesService = this.get('slidesService');
+    slidesService.setupRole(this.get('role'));
   },
 
   onLeft: on(keyUp('ArrowLeft'), function() {
