@@ -5,6 +5,7 @@ export default Controller.extend({
   queryParams: ['slide'],
 
   slidesService: inject(),
+  realtimeService: inject(),
 
   init() {
     this._super(...arguments);
