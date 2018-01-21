@@ -1,7 +1,7 @@
-import Slide from './x-slide';
+import Component from '@ember/component';
 import layout from '../templates/components/x-video-slide';
 
-export default Slide.extend({
+export default Component.extend({
   layout,
   tagName: 'video',
   attributeBindings: ['preload', 'autoplay'],

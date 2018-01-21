@@ -6,7 +6,7 @@
 .slide {
   width: 1280px;
   height: 720px;
-  padding: 50px;
+  padding: 1px; /* TODO: why is there a white bar with `padding: 0;` ? */
   text-align: center;
   position: relative;
   left: 50%;
@@ -15,13 +15,8 @@
   transform-origin: center center;
 }
 
-video.slide {
-  padding: 0;
-}
-
 video {
-  height: 100vh;
-  display: block;
+  width: 100%;
   padding: 0;
   margin: 0;
 }

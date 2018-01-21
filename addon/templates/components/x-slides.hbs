@@ -1,18 +1,10 @@
 <div class="slides">
 
-  {{#if (eq slidesService.current.type 'video')}}
-
-    {{x-video-slide src=slidesService.current.src}}
-
-  {{else}}
-
-    {{#x-slide}}
-      {{component
-        slidesService.current.componentPath
-        slidesService=slidesService
-      }}
-    {{/x-slide}}
-
-  {{/if}}
+  {{#x-slide}}
+    {{component
+      slidesService.current.componentPath
+      slidesService=slidesService
+    }}
+  {{/x-slide}}
 
 </div>
