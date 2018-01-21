@@ -17,6 +17,8 @@ export default Service.extend(Evented, {
     realtimeService.on('goToSlide', (data) => {
       this.goToSlide(data.slide);
     }, this);
+
+    realtimeService.emit('setInitialSlideState');
   },
 
   current: computed('slides.[]', 'currentIndex', function() {

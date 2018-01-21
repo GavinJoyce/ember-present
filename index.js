@@ -2,6 +2,8 @@
 
 const SOCKET_SERVER_PORT = 5200;
 
+let currentSlide;
+
 module.exports = {
   name: 'ember-present',
 
@@ -11,7 +13,6 @@ module.exports = {
 
   serverMiddleware: function(config) {
     //TODO: GJ: extract to https://github.com/gavinjoyce/ember-present-server
-    // let configPath = config.options.project.configPath();
 
     let app = config.app;
     let http = require('http').Server(app);
@@ -30,10 +31,14 @@ module.exports = {
 
       //TODO: lock down to presenter role
       socket.on('goToSlide', function(data) {
-        console.log('GJ: goToSlide', data);
-        //TODO: GJ: store current slide so that new clients can go there
-
+        currentSlide = data.slide;
         io.emit('goToSlide', data);
+      });
+
+      socket.on('setInitialSlideState', function() {
+        if (currentSlide) {
+          socket.emit('goToSlide', { slide: currentSlide });
+        }
       });
     });
   }
