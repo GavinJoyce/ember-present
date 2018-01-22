@@ -22,6 +22,7 @@
     "ember-cli-babel": "^6.6.0",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-keyboard": "^2.3.0",
+    "ember-lifeline": "^2.0.0",
     "ember-truth-helpers": "^2.0.0",
     "ember-websockets": "^7.1.1"
   },
@@ -43,7 +44,6 @@
     "ember-cli-uglify": "^2.0.0",
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
-    "ember-lifeline": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
     "ember-resolver": "^4.0.0",
     "ember-source": "~3.0.0-beta.1",
