@@ -6,6 +6,7 @@ import { A } from '@ember/array';
 
 export default Service.extend(Evented, {
   realtimeService: inject(),
+  fastboot: inject(),
 
   currentIndex: 0,
   role: undefined,
@@ -13,12 +14,14 @@ export default Service.extend(Evented, {
   init() {
     this._super(...arguments);
 
-    let realtimeService = this.get('realtimeService');
-    realtimeService.on('goToSlide', (data) => {
-      this.goToSlide(data.slide);
-    }, this);
+    if (!this.get('fastboot.isFastBoot')) {
+      let realtimeService = this.get('realtimeService');
+      realtimeService.on('goToSlide', (data) => {
+        this.goToSlide(data.slide);
+      }, this);
 
-    realtimeService.emit('setInitialSlideState');
+      realtimeService.emit('setInitialSlideState');
+    }
   },
 
   current: computed('slides.[]', 'currentIndex', function() {

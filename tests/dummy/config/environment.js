@@ -9,6 +9,10 @@ module.exports = function(environment) {
     'ember-websockets': {
       socketIO: true
     },
+    emberPresent: {
+      socketServerUrl: 'http://localhost:5200',
+      socketServerPort: 5200,
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
