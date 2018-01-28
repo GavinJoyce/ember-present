@@ -1,6 +1,6 @@
 'use strict';
 
-const SOCKET_SERVER_PORT = 5200;
+const DEFAULT_SOCKET_SERVER_PORT = 5200;
 
 let currentSlide;
 
@@ -12,14 +12,16 @@ module.exports = {
   },
 
   serverMiddleware: function(config) {
-    //TODO: GJ: extract to https://github.com/gavinjoyce/ember-present-server
+    let configPath = config.options.project.configPath();
+    let env = require(configPath)(config.options.environment); //TODO: there must be a simpler way
+    let socketServerPort = env.emberPresent.socketServerPort || DEFAULT_SOCKET_SERVER_PORT;
 
     let app = config.app;
     let http = require('http').Server(app);
     let io = require('socket.io')(http);
 
-    http.listen(SOCKET_SERVER_PORT, function() {
-      console.log('listening on *:' + SOCKET_SERVER_PORT);
+    http.listen(socketServerPort, function() {
+      console.log('socket server listening on *:' + socketServerPort);
     });
 
     io.on('connection', function(socket) {
