@@ -9,8 +9,8 @@ import layout from '../templates/components/x-slides';
 export default Component.extend(EmberKeyboard, {
   layout,
 
-  slidesService: inject(),
-  realtimeService: inject(),
+  slides: inject(),
+  realtime: inject(),
 
   role: 'screen',
 
@@ -18,15 +18,15 @@ export default Component.extend(EmberKeyboard, {
     this._super(...arguments);
     this.set('keyboardActivated', true);
 
-    let slidesService = this.get('slidesService');
-    slidesService.setupRole(this.get('role'));
+    let slides = this.get('slides');
+    slides.setupRole(this.get('role'));
   },
 
   onLeft: on(keyUp('ArrowLeft'), function() {
-    this.get('slidesService').previous();
+    this.get('slides').previous();
   }),
 
   onRight: on(keyUp('ArrowRight'), keyUp('Space'), keyUp('Enter'), function() {
-    this.get('slidesService').next();
+    this.get('slides').next();
   })
 });

@@ -5,7 +5,7 @@ import Evented from '@ember/object/evented';
 import { A } from '@ember/array';
 
 export default Service.extend(Evented, {
-  realtimeService: inject(),
+  realtime: inject(),
   fastboot: inject(),
 
   currentIndex: 0,
@@ -15,12 +15,12 @@ export default Service.extend(Evented, {
     this._super(...arguments);
 
     if (!this.get('fastboot.isFastBoot')) {
-      let realtimeService = this.get('realtimeService');
-      realtimeService.on('goToSlide', (data) => {
+      let realtime = this.get('realtime');
+      realtime.on('goToSlide', (data) => {
         this.goToSlide(data.slide);
       }, this);
 
-      realtimeService.emit('setInitialSlideState');
+      realtime.emit('setInitialSlideState');
     }
   },
 
@@ -65,7 +65,7 @@ export default Service.extend(Evented, {
       this.decrementProperty('currentIndex');
       this.trigger('previous');
       this.trigger('change');
-      this.get('realtimeService').emit('goToSlide', { slide: this.get('currentName') });
+      this.get('realtime').emit('goToSlide', { slide: this.get('currentName') });
     }
   },
 
@@ -75,7 +75,7 @@ export default Service.extend(Evented, {
       this.trigger('next');
       this.trigger('change');
 
-      this.get('realtimeService').emit('goToSlide', { slide: this.get('currentName') });
+      this.get('realtime').emit('goToSlide', { slide: this.get('currentName') });
     }
   },
 

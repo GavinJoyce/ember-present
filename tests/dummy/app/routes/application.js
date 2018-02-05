@@ -2,8 +2,8 @@ import Route from '@ember/routing/route';
 import { inject } from '@ember/service';
 
 export default Route.extend({
-  slidesService: inject(),
-  socketIo: inject(),
+  slides: inject(),
+  socketIo: inject(), //TODO: GJ: zap?
 
   queryParams: {
     slide: {
@@ -13,7 +13,7 @@ export default Route.extend({
 
   beforeModel({ queryParams }) {
     if (queryParams.slide) {
-      this.get('slidesService').goToSlide(queryParams.slide);
+      this.get('slides').goToSlide(queryParams.slide);
     }
   }
 });

@@ -1,0 +1,8 @@
+<h1>Login...</h1>
+
+<button onclick={{action 'login' 'Presenter' 'presenterpassword' target=session}} disabled={{session.isLoggingIn}}>Presenter</button>
+<button onclick={{action 'login' 'Screen' 'screenpassword' target=session}} disabled={{session.isLoggingIn}}>Screen</button>
+<button onclick={{action 'login' 'Notes' 'notespassword' target=session}} disabled={{session.isLoggingIn}}>Notes</button>
+
+<button onclick={{action 'login' 'Audience1' null target=session}} disabled={{session.isLoggingIn}}>Audience 1</button>
+<button onclick={{action 'login' 'Audience2' null target=session}} disabled={{session.isLoggingIn}}>Audience 2</button>

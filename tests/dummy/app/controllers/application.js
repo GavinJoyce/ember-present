@@ -4,16 +4,16 @@ import { inject } from '@ember/service';
 export default Controller.extend({
   queryParams: ['slide'],
 
-  slidesService: inject(),
-  realtimeService: inject(),
+  slides: inject(),
+  realtime: inject(),
 
   init() {
     this._super(...arguments);
 
-    let slidesService = this.get('slidesService');
+    let slides = this.get('slides');
 
-    slidesService.on('change', () => {
-      this.set('slide', slidesService.get('current.name'));
+    slides.on('change', () => {
+      this.set('slide', slides.get('current.name'));
     });
   }
 });

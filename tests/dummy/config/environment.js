@@ -12,6 +12,20 @@ module.exports = function(environment) {
     emberPresent: {
       socketServerUrl: 'http://localhost:5200',
       socketServerPort: 5200,
+      roles: {
+        presenter: {
+          password: 'presenterpassword'
+        },
+        notes: {
+          password: 'notespassword'
+        },
+        screen: {
+          password: 'screenpassword'
+        },
+        audience: {
+          
+        }
+      }
     },
     EmberENV: {
       FEATURES: {
@@ -22,6 +36,9 @@ module.exports = function(environment) {
         // Prevent Ember Data from overriding Date.parse.
         Date: false
       }
+    },
+    fastboot: {
+      hostWhitelist: [/^localhost:\d+$/]
     },
 
     APP: {
