@@ -1,4 +1,5 @@
 import Service, { inject } from '@ember/service';
+import { Promise } from 'rsvp';
 
 export default Service.extend({
   socketIo: inject('socket-io'),
@@ -18,17 +19,20 @@ export default Service.extend({
   },
 
   on() {
-    let socket = this.get('socket');
-    socket.on.apply(socket, arguments);
+    this.get('socket').on(...arguments);
   },
 
   off() {
-    let socket = this.get('socket');
-    socket.off.apply(socket, arguments);
+    this.get('socket').off(...arguments);
   },
 
   emit() {
-    let socket = this.get('socket');
-    socket.emit.apply(socket, arguments);
+    this.get('socket').emit(...arguments);
   },
+
+  emitWithResponse() {
+    return new Promise((resolve) => {
+      this.get('socket').emit(...arguments, resolve);
+    });
+  }
 });

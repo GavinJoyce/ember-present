@@ -8,10 +8,15 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('all');
-  this.route('screen');
-  this.route('presenter');
-  this.route('notes');
-  this.route('audience');
+
+  this.route('login');
+
+  this.route('auth', { path: '/' }, function() {
+    this.route('screen');
+    this.route('presenter');
+    this.route('notes');
+    this.route('audience');
+  });
 });
 
 export default Router;
