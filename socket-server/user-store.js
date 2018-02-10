@@ -30,8 +30,21 @@ module.exports = class UserStore {
     return new LoginResponse(user);
   }
 
+  disconnect(socketId) {
+    let user = Object.values(this.connectedUsers).find(u => u.socketId === socketId);
+
+    if (user) {
+      this.disconnectedUsers[user.username] = user;
+      delete this.connectedUsers[user.username];
+    }
+  }
+
   get connectedUserCount() {
     return Object.keys(this.connectedUsers).length;
+  }
+
+  get disconnectedUserCount() {
+    return Object.keys(this.disconnectedUsers).length;
   }
 };
 

@@ -58,4 +58,28 @@ describe('UserStore', function() {
       //TODO: also for disconnectedUsers
     });
   });
+
+  describe('#disconnect', function() {
+    describe('a logged in user', function() {
+      it('disconnects the user', function() {
+        let { user } = store.login('Alex', undefined, 'socket-id');
+        assert.equal(store.connectedUserCount, 1);
+        assert.equal(store.disconnectedUserCount, 0);
+        store.disconnect('socket-id');
+        assert.equal(store.connectedUserCount, 0);
+        assert.equal(store.disconnectedUserCount, 1);
+      });
+    });
+
+    describe('a non-logged in user', function() {
+      it('is a no-op', function() {
+        let { user } = store.login('Alex', undefined, 'socket-id');
+        assert.equal(store.connectedUserCount, 1);
+        assert.equal(store.disconnectedUserCount, 0);
+        store.disconnect('non-existent-socket-id');
+        assert.equal(store.connectedUserCount, 1);
+        assert.equal(store.disconnectedUserCount, 0);
+      });
+    });
+  });
 });
