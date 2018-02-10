@@ -1,6 +1,7 @@
 /* eslint ember/no-on-calls-in-components: 0 */
 
 import { inject } from '@ember/service';
+import { computed } from '@ember/object';
 import { on } from '@ember/object/evented';
 import Component from '@ember/component';
 import { EKMixin as EmberKeyboard, keyUp } from 'ember-keyboard';
@@ -12,7 +13,9 @@ export default Component.extend(EmberKeyboard, {
   slides: inject(),
   realtime: inject(),
 
-  role: 'screen',
+  slideComponent: computed('slides.role.type', function() {
+    return `x-${this.get('slides.role.type')}-slide`;
+  }),
 
   init() {
     this._super(...arguments);

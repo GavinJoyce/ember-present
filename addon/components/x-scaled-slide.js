@@ -1,10 +1,10 @@
 import Component from '@ember/component';
-import layout from '../templates/components/x-slide';
+import layout from '../templates/components/x-scaled-slide';
 import DomMixin from 'ember-lifeline/mixins/dom';
 
 export default Component.extend(DomMixin, {
   layout,
-  classNames: ['slide'],
+  classNames: ['slide', 'scaled-slide'],
 
   didInsertElement() {
     this._super(...arguments);

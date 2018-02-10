@@ -3,7 +3,7 @@
   background-color: #000;
 }
 
-.slide {
+.scaled-slide {
   width: 1280px;
   height: 720px;
   padding: 1px; /* TODO: why is there a white bar with `padding: 0;` ? */
@@ -13,6 +13,11 @@
   top: 50%;
   transform: translate(-50%, -50%);
   transform-origin: center center;
+}
+
+.responsive-slide {
+  background-color: yellow;
+  height:100vh;
 }
 
 video {

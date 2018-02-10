@@ -41,8 +41,10 @@ export default Service.extend(Evented, {
     return this.get('currentIndex') === (this.get('slides.length') - 1);
   }),
 
-  setupRole(role) {
+  setupRole(roleIdentifier) {
+    let role = this.get(`configuration.roles.${roleIdentifier}`);
     this.set('role', role);
+
     let owner = getOwner(this);
     let config = owner.factoryFor('slides:main').class;
 
@@ -50,7 +52,7 @@ export default Service.extend(Evented, {
 
     if (config) {
       config.slides.forEach((slide) => {
-        let componentPath = `slides/${role}/${slide.name}`;
+        let componentPath = `slides/${roleIdentifier}/${slide.name}`;
 
         if (!this._componentExists(componentPath)) {
           componentPath = 'slides/blank-slide';
