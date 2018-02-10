@@ -27,8 +27,9 @@ module.exports = class SocketServer {
         callback(response);
       });
 
-      socket.on('disconnect', function() {
+      socket.on('disconnect', () => {
         console.log('GJ: SOCKET DISCONNECT', socket.id);
+        this.userStore.disconnect(socket.id);
       });
 
       //TODO: lock down to presenter role
