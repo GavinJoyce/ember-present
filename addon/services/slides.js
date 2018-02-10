@@ -14,6 +14,7 @@ export default Service.extend(Evented, {
 
   currentIndex: 0,
   role: undefined,
+  roleIdentifier: undefined,
 
   init() {
     this._super(...arguments);
@@ -41,9 +42,10 @@ export default Service.extend(Evented, {
     return this.get('currentIndex') === (this.get('slides.length') - 1);
   }),
 
-  setupRole(roleIdentifier) {
+  setupRole(roleIdentifier) { //TODO: test and refactor
     let role = this.get(`configuration.roles.${roleIdentifier}`);
     this.set('role', role);
+    this.set('roleIdentifier', roleIdentifier);
 
     let owner = getOwner(this);
     let config = owner.factoryFor('slides:main').class;
@@ -55,7 +57,14 @@ export default Service.extend(Evented, {
         let componentPath = `slides/${roleIdentifier}/${slide.name}`;
 
         if (!this._componentExists(componentPath)) {
-          componentPath = 'slides/blank-slide';
+          let rolesConfig = slide.roles || {};
+          let customRoleConfig = rolesConfig[roleIdentifier];
+
+          if (customRoleConfig) {
+            componentPath = customRoleConfig.componentPath; //TODO: check if exists
+          } else {
+            componentPath = 'slides/blank-slide';
+          }
         }
 
         set(slide, 'componentPath', componentPath);
