@@ -23,8 +23,7 @@
 </style>
 
 <div class='iframe-grid'>
-  <iframe src='/screen' />
-  <iframe src='/presenter' />
-  <iframe src='/notes' />
-  <iframe src='/audience' />
+  {{#each-in slides.configuration.roles as |roleName roleConfig|}}
+    <iframe src='{{href-to roleConfig.route}}' />
+  {{/each-in}}
 </div>

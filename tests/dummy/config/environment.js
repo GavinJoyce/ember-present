@@ -14,16 +14,19 @@ module.exports = function(environment) {
       socketServerPort: 5200,
       roles: {
         presenter: {
-          password: 'presenterpassword'
+          password: 'presenterpassword',
+          route: 'auth.presenter'
         },
         notes: {
-          password: 'notespassword'
+          password: 'notespassword',
+          route: 'auth.notes'
         },
         screen: {
-          password: 'screenpassword'
+          password: 'screenpassword',
+          route: 'auth.screen'
         },
         audience: {
-          
+          route: 'auth.audience'
         }
       }
     },

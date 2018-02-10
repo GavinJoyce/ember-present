@@ -2570,6 +2570,13 @@ ember-getowner-polyfill@2.2.0:
     ember-cli-version-checker "^2.1.0"
     ember-factory-for-polyfill "^1.3.1"
 
+ember-href-to@^1.15.1:
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/ember-href-to/-/ember-href-to-1.15.1.tgz#1ba20ec201245c7cae7e2aa3eec50eb2aa25b729"
+  dependencies:
+    ember-cli-babel "^6.8.2"
+    ember-router-service-polyfill "^1.0.2"
+
 ember-keyboard@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/ember-keyboard/-/ember-keyboard-2.3.0.tgz#6a210ccfc3ad8ca19e73cbef291ed2a0afd08ad0"
@@ -2634,6 +2641,12 @@ ember-router-generator@^1.0.0, ember-router-generator@^1.2.3:
   resolved "https://registry.yarnpkg.com/ember-router-generator/-/ember-router-generator-1.2.3.tgz#8ed2ca86ff323363120fc14278191e9e8f1315ee"
   dependencies:
     recast "^0.11.3"
+
+ember-router-service-polyfill@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/ember-router-service-polyfill/-/ember-router-service-polyfill-1.0.2.tgz#6e5565f196fa7045cbe06a6fab861f9e766fe62a"
+  dependencies:
+    ember-cli-babel "^6.8.2"
 
 ember-source@~3.0.0-beta.1:
   version "3.0.0-beta.2"
