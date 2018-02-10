@@ -25,3 +25,44 @@ video {
   padding: 0;
   margin: 0;
 }
+
+.htmlbars.hljs, .javascript.hljs {
+  text-align: left;
+  margin: 10px auto;
+  width: 70%;
+  padding: 10px;
+  background-color: #151718 !important;
+  color: #d4d8d6;
+}
+
+.htmlbars .hljs-builtin-name, .htmlbars .hljs-template-tag {
+  color: #ff0071;
+}
+
+.htmlbars .hljs-builtin-name, .htmlbars .hljs-keyword {
+  color: #91e600 !important;
+}
+
+.htmlbars .hljs-template-variable {
+  color: #d4d8d6 !important;
+}
+
+.htmlbars .hljs-tag {
+  color: #ff0071 !important;
+}
+
+.htmlbars .hljs-name {
+  color: #ff0071 !important;
+}
+
+.javascript .hljs-keyword {
+  color: #25dcf3 !important;
+}
+
+.javascript .hljs-number {
+  color: #b979ff !important;
+}
+
+.javascript .hljs-string, .javascript .hljs-subst {
+  color: #e6dc61 !important;
+}
