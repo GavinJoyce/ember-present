@@ -1,12 +1,16 @@
 import { getOwner } from '@ember/application';
 import Service, { inject } from '@ember/service';
 import { computed, set } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import Evented from '@ember/object/evented';
 import { A } from '@ember/array';
 
 export default Service.extend(Evented, {
   realtime: inject(),
   fastboot: inject(),
+  config: inject(),
+
+  configuration: readOnly('config.emberPresent'),
 
   currentIndex: 0,
   role: undefined,
