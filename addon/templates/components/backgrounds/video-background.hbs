@@ -1,0 +1,21 @@
+<style>
+  .video-background-container {
+    position: absolute;
+    bottom: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+  }
+</style>
+
+<div class='video-background-container'>
+  <video autoplay loop style='width: 100%;'>
+    {{#if backgroundData.mp4}}
+      <source src={{backgroundData.mp4}} type="video/mp4" />Your browser does not support the video tag. I suggest you upgrade your browser.
+    {{/if}}
+    {{#if backgroundData.webm}}
+      <source src={{backgroundData.webm}} type="video/webm" />Your browser does not support the video tag. I suggest you upgrade your browser.
+    {{/if}}
+  </video>
+</div>

@@ -7,8 +7,28 @@ export default {
   ],
   slides: [
     { name: 'slide-1' },
-    { name: 'slide-2' },
-    { name: 'slide-3' },
+    {
+      name: 'slide-2',
+      roles: {
+        screen: {
+          background: {
+            type: 'video',
+            mp4: '/backgrounds/Head-or-Tails.mp4',
+            webm: '/backgrounds/Head-or-Tails.webm'
+          }
+        }
+      }
+    },
+    {
+      name: 'slide-3',
+      roles: {
+        screen: {
+          background: {
+            type: 'gradient'
+          }
+        }
+      }
+    },
     { name: 'slide-4' },
     {
       name: 'slide-5',
