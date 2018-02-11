@@ -38,6 +38,10 @@ module.exports = class SocketServer {
         io.emit('goToSlide', data);
       });
 
+      socket.on('getUserStatistics', (callback) => {
+        callback(this.userStore.summary);
+      });
+
       socket.on('setInitialSlideState', () => {
         if (this.currentSlide) {
           socket.emit('goToSlide', { slide: this.currentSlide });

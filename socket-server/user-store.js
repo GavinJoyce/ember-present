@@ -31,12 +31,16 @@ module.exports = class UserStore {
   }
 
   disconnect(socketId) {
-    let user = Object.values(this.connectedUsers).find(u => u.socketId === socketId);
+    let user = this.getUserBySocketId(socketId);
 
     if (user) {
       this.disconnectedUsers[user.username] = user;
       delete this.connectedUsers[user.username];
     }
+  }
+
+  getUserBySocketId(socketId) { //TODO: GJ: tests
+    return Object.values(this.connectedUsers).find(u => u.socketId === socketId);
   }
 
   get connectedUserCount() {
@@ -45,6 +49,13 @@ module.exports = class UserStore {
 
   get disconnectedUserCount() {
     return Object.keys(this.disconnectedUsers).length;
+  }
+
+  get summary() { //TODO: tests
+    return {
+      connectedUserCount: this.connectedUserCount,
+      disconnectedUserCount: this.disconnectedUserCount,
+    }
   }
 };
 
