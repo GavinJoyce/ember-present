@@ -6,12 +6,35 @@ export default Service.extend({
   config: inject(),
   router: inject(),
   realtime: inject(),
+  fastboot: inject(),
 
   user: undefined,
   isAuthenticated: notEmpty('user'),
   isNotAuthenticated: not('user'),
 
+  isConnected: false,
+  isReconnecting: false,
   isLoggingIn: readOnly('loginTask.isRunning'),
+
+  init() {
+    this._super(...arguments);
+
+    if (!this.get('fastboot.isFastBoot')) {
+      let realtime = this.get('realtime');
+
+      realtime.on('connect', () => {
+        this.set('isConnected', true);
+      });
+
+      realtime.on('disconnect', () => {
+        this.set('isConnected', false);
+      });
+
+      realtime.on('userMetadataUpdated', (metadata) => {
+        this.set('user.metadata', metadata)
+      });
+    }
+  },
 
   actions: {
     login(username, password) {

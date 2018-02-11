@@ -43,6 +43,17 @@ module.exports = class UserStore {
     return Object.values(this.connectedUsers).find(u => u.socketId === socketId);
   }
 
+  getUsersByRole(role) { //TODO: GJ: tests
+    return Object.values(this.connectedUsers).filter(u => u.role === role);
+  }
+
+  mergeUserMetadata(socketId, metadata) {
+    let user = this.getUserBySocketId(socketId);
+    if (user) {
+      return user.mergeMetadata(metadata);
+    }
+  }
+
   get connectedUserCount() {
     return Object.keys(this.connectedUsers).length;
   }
@@ -55,6 +66,12 @@ module.exports = class UserStore {
     return {
       connectedUserCount: this.connectedUserCount,
       disconnectedUserCount: this.disconnectedUserCount,
+    }
+  }
+
+  get users() { //TODO: tests and decide on payload format
+    return {
+      connectedUsers: this.connectedUsers
     }
   }
 };
@@ -76,7 +93,12 @@ class User {
     this.username = username;
     this.role = role;
     this.socketId = socketId;
+    this.metadata = {};
     this.token = uuidv4();
+  }
+
+  mergeMetadata(metadata) {
+    return Object.assign(this.metadata, metadata);
   }
 }
 
