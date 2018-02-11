@@ -19,7 +19,16 @@ export default {
         }
       }
     },
-    { name: 'slide-3' },
+    {
+      name: 'slide-3',
+      roles: {
+        screen: {
+          background: {
+            type: 'gradient'
+          }
+        }
+      }
+    },
     { name: 'slide-4' },
     {
       name: 'slide-5',
