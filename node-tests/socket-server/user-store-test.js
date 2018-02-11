@@ -82,4 +82,29 @@ describe('UserStore', function() {
       });
     });
   });
+
+  describe('#mergeUserMetadata', function() {
+    describe('a logged in user', function() {
+      it('merges the user metadata', function() {
+        let { user } = store.login('Alex', undefined, 'socket-id');
+        assert.deepEqual(user.metadata, {});
+
+        let metadata = store.mergeUserMetadata('socket-id', { favouriteColour: 'red' });
+        assert.deepEqual(metadata, { favouriteColour: 'red' });
+
+        metadata = store.mergeUserMetadata('socket-id', { age: 3 });
+        assert.deepEqual(metadata, { favouriteColour: 'red', age: 3 });
+
+        metadata = store.mergeUserMetadata('socket-id', { favouriteColour: 'blue', age: 4 });
+        assert.deepEqual(metadata, { favouriteColour: 'blue', age: 4 });
+      });
+    });
+
+    describe('a logged out user', function() {
+      it('does not throw an exception', function() {
+        let response = store.mergeUserMetadata('invalid-socket-id', { favouriteColour: 'red' });
+        assert.equal(response, undefined);
+      });
+    });
+  });
 });

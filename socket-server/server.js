@@ -23,7 +23,6 @@ module.exports = class SocketServer {
 
       socket.on('login', (data, callback) => {
         let response = this.userStore.login(data.username, data.password, socket.id);
-
         callback(response);
       });
 
@@ -31,6 +30,21 @@ module.exports = class SocketServer {
         console.log('GJ: SOCKET DISCONNECT', socket.id);
         this.userStore.disconnect(socket.id);
       });
+
+      socket.on('updateUserMetaData', (data) => {
+        let metadata = this.userStore.mergeUserMetadata(socket.id, data);
+        socket.emit('userMetadataUpdated', metadata);
+
+        //TODO: GJ: emit `userModified` for roles which allow it
+        //TODO: GJ: extract
+        let screenUsers = this.userStore.getUsersByRole('screen'); //TODO: GJ: roles that receive user update hints should be configurable
+        screenUsers.forEach((user) => {
+          let screenSocket = io.sockets.connected[user.socketId];
+          if (screenSocket) {
+            screenSocket.emit('userModified');
+          }
+        });
+      }),
 
       //TODO: lock down to presenter role
       socket.on('goToSlide', (data) => {
@@ -41,6 +55,10 @@ module.exports = class SocketServer {
       socket.on('getUserStatistics', (callback) => {
         callback(this.userStore.summary);
       });
+
+      socket.on('getUsers', (callback) => {
+        callback(this.userStore.users);
+      }),
 
       socket.on('setInitialSlideState', () => {
         if (this.currentSlide) {
