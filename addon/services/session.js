@@ -53,7 +53,7 @@ export default Service.extend({
 
       //TODO: GJ: persist token to cookies
       //TODO: GJ: redirect based on auth user type and url config
-      this.get('router').transitionTo(`auth.${response.user.role}`);
+      this.get('router').transitionTo(`auth.${response.user.role}`, { queryParams: { slide: response.currentSlide } });
     } else {
       this.set('user', undefined);
       this.set('invalidLogin', true);

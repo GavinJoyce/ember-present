@@ -23,6 +23,7 @@ module.exports = class SocketServer {
 
       socket.on('login', (data, callback) => {
         let response = this.userStore.login(data.username, data.password, socket.id);
+        response.currentSlide = this.currentSlide;
         callback(response);
       });
 
