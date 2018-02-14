@@ -9,7 +9,6 @@ export default Service.extend(Evented, {
   realtime: inject(),
   fastboot: inject(),
   config: inject(),
-
   configuration: readOnly('config.emberPresent'),
 
   currentIndex: 0,
