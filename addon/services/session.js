@@ -46,7 +46,7 @@ export default Service.extend({
     let realtime = this.get('realtime');
     let response = yield realtime.emitWithResponse('login', { username, password });
 
-    console.log('AUTH RESP', response);
+    window.console.log('AUTH RESP', response);
 
     if (response.isSuccess) {
       this.set('user', response.user);

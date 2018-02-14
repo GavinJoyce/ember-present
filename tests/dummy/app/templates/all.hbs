@@ -10,6 +10,7 @@
     height: 100vh;
     padding: 0;
     margin: 0;
+    background-color: #333;
   }
 
   .iframe-grid iframe {
@@ -20,10 +21,29 @@
     padding: 0;
     border: 0;
   }
+
+  iframe.responsive {
+    width: 60%;
+    margin: auto;
+    background-color: #eee;
+  }
+
+  iframe.screen {
+    background-color: #03a9f4;
+  }
+
+  iframe.presenter {
+    background-color: #e91e63;
+  }
+
+  iframe.audience {
+    background-color: #ffeb3b;
+  }
 </style>
 
 <div class='iframe-grid'>
-  {{#each-in slides.configuration.roles as |roleName roleConfig|}}
-    <iframe src='{{href-to roleConfig.route}}' />
-  {{/each-in}}
+  <iframe src='{{href-to "auth.screen"}}' class='scaled screen' />
+  <iframe src='{{href-to "auth.presenter"}}' class='responsive presenter' />
+  <iframe src='{{href-to "auth.audience"}}' class='responsive audience' />
+  <iframe src='{{href-to "auth.audience"}}' class='responsive audience' />
 </div>
