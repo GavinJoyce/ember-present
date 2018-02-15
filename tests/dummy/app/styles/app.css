@@ -3,3 +3,23 @@ body {
   margin: 0;
   font-size: 2em;
 }
+
+.navigation {
+  display: flex;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 80px;
+  background-color: black;
+}
+
+.navigation button {
+  height: 100%;
+  width: 50%;
+  font-size: 1.3em;
+}
+
+.navigation button:active {
+  background-color: #ccc;
+}
