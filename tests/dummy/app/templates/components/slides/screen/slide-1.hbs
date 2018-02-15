@@ -1,8 +1,28 @@
-<div class="flex flex-col justify-center" style="height: 100vh;">
-  <div class="text-grey-darker text-center text-orange text-5xl font-bold px-4 py-2 m-2">
-    <h1 style="filter: invert(100%);mix-blend-mode: difference;">ember-present</h1>
-  </div>
-  <div class="text-grey-darker text-center text-orange px-4 py-2 m-2">
-    <h2 style="filter: invert(100%);mix-blend-mode: difference;">@gavinjoyce</h2>
-  </div>
+<style>
+  .slide-grid {
+    display: grid;
+    width: 1280px;
+    height: 720px;
+    grid-template-columns: repeat(12, [col] 1fr );
+    grid-template-rows: repeat(12, [row] auto);
+    grid-gap: 10px;
+  }
+
+  .slide-grid h1 {
+    grid-column: 2 / 12;
+    grid-row: 5;
+    text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black;
+  }
+
+  .slide-grid h3 {
+    grid-column: 2 / 12;
+    grid-row: 6;
+    text-shadow: #000 0px 0px 4px;
+
+  }
+</style>
+
+<div class='slide-grid text-5xl'>
+  <h1 class='text-orange'>ember-present</h1>
+  <h3 class='text-blue-light'>@gavinjoyce</h3>
 </div>
