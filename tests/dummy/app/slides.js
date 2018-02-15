@@ -6,7 +6,17 @@ export default {
     'audience'
   ],
   slides: [
-    { name: 'slide-1' },
+    {
+      name: 'slide-1',
+      roles: {
+        screen: {
+          background: {
+            type: 'gradient',
+            linearGradient: '-15deg, #e7e33c, #e7e33c, #d52362, #d523ba'
+          }
+        }
+      }
+    },
     {
       name: 'slide-2',
       roles: {

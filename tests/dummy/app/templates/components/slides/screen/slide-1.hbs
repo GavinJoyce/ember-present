@@ -1,32 +1,8 @@
-<style>
-  .slide-container {
-    background-color: #222;
-  }
-
-  body {
-    color: white;
-  }
-
-  a {
-    color: cornflowerblue;
-  }
-
-  button {
-    font-size: 2em;
-    padding: 20px;
-    background-color: cornflowerblue;
-    color: white;
-  }
-</style>
-
-<h1>Welcome to ember-present</h1>
-<h4>(use the arrow keys to navigate)</h4>
-<h4>There are {{connectedUserCount}} people connected</h4>
-
-<h3>
-  <a href="https://twitter.com/gavinjoyce/status/951500087221522433">
-    https://twitter.com/gavinjoyce/status/951500087221522433
-  </a>
-</h3>
-
-<button onclick={{action 'next' target=slides}}>NEXT &gt;</button>
+<div class="flex flex-col justify-center" style="height: 100vh;">
+  <div class="text-grey-darker text-center text-orange text-5xl font-bold px-4 py-2 m-2">
+    <h1 style="filter: invert(100%);mix-blend-mode: difference;">ember-present</h1>
+  </div>
+  <div class="text-grey-darker text-center text-orange px-4 py-2 m-2">
+    <h2 style="filter: invert(100%);mix-blend-mode: difference;">@gavinjoyce</h2>
+  </div>
+</div>

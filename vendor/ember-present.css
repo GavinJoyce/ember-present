@@ -1,6 +1,7 @@
 .slides {
   height:100vh;
-  background-color: #000;
+  background-color: #111;
+  color: #eee;
 }
 
 .scaled-slide {
