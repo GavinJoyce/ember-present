@@ -8,6 +8,7 @@ module.exports = {
   SocketServer,
 
   included(app) {
+    app.import('vendor/tailwind.min.css');
     app.import('vendor/ember-present.css');
   },
 
