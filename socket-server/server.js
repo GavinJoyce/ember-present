@@ -49,7 +49,6 @@ module.exports = class SocketServer {
             });
           }
         });
-
       }),
 
       //TODO: lock down to presenter role
@@ -57,6 +56,10 @@ module.exports = class SocketServer {
         this.currentSlide = data.slide;
         io.emit('goToSlide', data);
       });
+
+      socket.on('getMetadataSummary', (key, callback) => {
+        callback(this.userStore.getMetadataSummary(key));
+      }),
 
       socket.on('getUserStatistics', (callback) => {
         callback(this.userStore.summary);

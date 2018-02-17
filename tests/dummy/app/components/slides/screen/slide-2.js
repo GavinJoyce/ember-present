@@ -9,11 +9,13 @@ export default Component.extend({
   greenCount: 0,
   blueCount: 0,
 
-  didInsertElement() {
+  async didInsertElement() {
     this._super(...arguments);
 
     let realtime = this.get('realtime');
     realtime.on('users.metadata.favouriteColour.summary', this.favouriteColourSummary, this);
+    let data = await realtime.emitWithResponse('getMetadataSummary', 'favouriteColour');
+    this.favouriteColourSummary(data);
   },
 
   willDestroyElement() {
