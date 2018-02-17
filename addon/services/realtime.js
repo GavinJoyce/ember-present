@@ -30,6 +30,10 @@ export default Service.extend({
     this.get('socket').emit(...arguments);
   },
 
+  broadcast(name, data) {
+    this.emit('broadcast', { name, data });
+  },
+
   emitWithResponse() {
     return new Promise((resolve) => {
       this.get('socket').emit(...arguments, resolve);

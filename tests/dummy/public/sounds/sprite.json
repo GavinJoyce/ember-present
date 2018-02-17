@@ -1,0 +1,137 @@
+{
+  "src": "sprite.32.mp3",
+  "sprite": [
+    {
+      "name": "cello",
+      "start": 0,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "clap",
+      "start": 41,
+      "duration": 0.5,
+      "loop": false
+    },
+    {
+      "name": "clarinet1",
+      "start": 43,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "clarinet2",
+      "start": 84,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "contrabass",
+      "start": 125,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "fifteenStep",
+      "start": 166,
+      "duration": 6.315804988662132,
+      "loop": false
+    },
+    {
+      "name": "fifteenStepHalf",
+      "start": 174,
+      "duration": 3.1579138321995464,
+      "loop": false
+    },
+    {
+      "name": "fifteenStepLeft",
+      "start": 179,
+      "duration": 6.315804988662132,
+      "loop": false
+    },
+    {
+      "name": "fifteenStepMiddle",
+      "start": 187,
+      "duration": 6.315804988662132,
+      "loop": false
+    },
+    {
+      "name": "fifteenStepRight",
+      "start": 195,
+      "duration": 6.315804988662132,
+      "loop": false
+    },
+    {
+      "name": "flute",
+      "start": 203,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "frenchHorn1",
+      "start": 244,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "frenchHorn2",
+      "start": 285,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "hihat_closed",
+      "start": 326,
+      "duration": 0.5,
+      "loop": false
+    },
+    {
+      "name": "kick",
+      "start": 328,
+      "duration": 0.5,
+      "loop": false
+    },
+    {
+      "name": "kicks",
+      "start": 330,
+      "duration": 2,
+      "loop": false
+    },
+    {
+      "name": "oboe",
+      "start": 333,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "snare",
+      "start": 374,
+      "duration": 0.75,
+      "loop": false
+    },
+    {
+      "name": "trumpet",
+      "start": 376,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "viola",
+      "start": 417,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "violin1",
+      "start": 458,
+      "duration": 39.18369614512471,
+      "loop": false
+    },
+    {
+      "name": "violin2",
+      "start": 499,
+      "duration": 39.18369614512471,
+      "loop": false
+    }
+  ]
+}

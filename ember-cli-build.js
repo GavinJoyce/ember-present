@@ -7,6 +7,8 @@ module.exports = function(defaults) {
     snippetPaths: ['tests/dummy/app/snippets']
   });
 
+  app.import('node_modules/waud.js/dist/waud.min.js');
+
   /*
     This build file specifies the options for the dummy test app of this
     addon, located in `/tests/dummy`
