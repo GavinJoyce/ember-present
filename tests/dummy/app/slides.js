@@ -51,6 +51,7 @@ export default {
           }
         }
       }
-    }
+    },
+    { name: 'realtime-drums' }
   ]
 }

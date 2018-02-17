@@ -3,7 +3,6 @@ import { inject } from '@ember/service';
 
 export default Component.extend({
   realtime: inject(),
-  connectedUsers: inject(),
 
   redCount: 0,
   greenCount: 0,

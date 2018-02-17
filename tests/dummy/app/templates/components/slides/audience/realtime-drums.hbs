@@ -1,0 +1,16 @@
+<style>
+  .slide {
+    background-color: yellow;
+  }
+</style>
+
+<h1>Realtime Drums</h1>
+
+{{#if playingSound}}
+  <h1 style="font-size: 4em; color: yellow; padding: 10px; background-color: cornflowerblue;">
+    {{playingSound}}
+  </h1>
+{{else}}
+  <h1 style="font-size: 4em; padding: 10px; border: 1px dashed cornflowerblue;">&nbsp;</h1>
+  <p>please stand by...</p>
+{{/if}}

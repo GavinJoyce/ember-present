@@ -6935,6 +6935,10 @@ watch@~0.18.0:
     exec-sh "^0.2.0"
     minimist "^1.2.0"
 
+waud.js@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/waud.js/-/waud.js-1.0.3.tgz#69b24977f0d19f02e7c12f72d43b0d103ec22a80"
+
 websocket-driver@>=0.5.1:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/websocket-driver/-/websocket-driver-0.7.0.tgz#0caf9d2d755d93aee049d4bdd0d3fe2cca2a24eb"

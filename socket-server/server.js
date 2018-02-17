@@ -74,6 +74,10 @@ module.exports = class SocketServer {
           socket.emit('goToSlide', { slide: this.currentSlide });
         }
       });
+
+      socket.on('broadcast', function({ name, data }) {
+        io.emit(name, data);
+      });
     });
   }
 };
