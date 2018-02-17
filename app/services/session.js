@@ -1,2 +1,1 @@
-import Session from 'ember-present/services/session';
-export default Session;
+export { default } from 'ember-present/services/session';

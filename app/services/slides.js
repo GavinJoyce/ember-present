@@ -1,2 +1,1 @@
-import Slides from 'ember-present/services/slides';
-export default Slides;
+export { default } from 'ember-present/services/slides';

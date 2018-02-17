@@ -1,2 +1,1 @@
-import Realtime from 'ember-present/services/realtime';
-export default Realtime;
+export { default } from 'ember-present/services/realtime';
