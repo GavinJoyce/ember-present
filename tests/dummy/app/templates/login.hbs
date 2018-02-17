@@ -46,3 +46,9 @@
     {{/each}}
   {{/if}}
 </div>
+
+{{#unless role}}
+  <h3 class="p-4">
+    Or try {{#link-to 'all'}}multiple{{/link-to}} at the same time
+  </h3>
+{{/unless}}
