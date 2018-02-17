@@ -107,4 +107,25 @@ describe('UserStore', function() {
       });
     });
   });
+
+  describe('#getMetadataSummary', function() {
+    describe('with users with metadata', function() {
+      it('returns summary data', function() {
+        let { alex } = store.login('Alex', undefined, 'alex');
+        let { ben } = store.login('Ben', undefined, 'ben');
+        let { sophie } = store.login('Sophie', undefined, 'sophie');
+        store.login('Sarah', undefined, 'sarah');
+
+        store.mergeUserMetadata('alex', { favouriteColour: 'purple' });
+        store.mergeUserMetadata('ben', { favouriteColour: 'blue' });
+        store.mergeUserMetadata('sophie', { favouriteColour: 'blue' });
+
+        let summary = store.getMetadataSummary('favouriteColour');
+        assert.deepEqual(summary, {
+          purple: 1,
+          blue: 2
+        });
+      });
+    });
+  });
 });

@@ -54,6 +54,23 @@ module.exports = class UserStore {
     }
   }
 
+  getMetadataSummary(key) {
+    let summary = {};
+    Object.values(this.connectedUsers).forEach((user) => {
+      let value = user.metadata[key];
+
+      if (value !== undefined) {
+        if (summary[value] === undefined) {
+          summary[value] = 1;
+        } else {
+          summary[value]++;
+        }
+      }
+    });
+
+    return summary;
+  }
+
   get connectedUserCount() {
     return Object.keys(this.connectedUsers).length;
   }

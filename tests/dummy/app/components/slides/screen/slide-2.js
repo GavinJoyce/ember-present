@@ -1,37 +1,33 @@
 import Component from '@ember/component';
-import { computed, get } from '@ember/object';
-import { readOnly } from '@ember/object/computed';
 import { inject } from '@ember/service';
 
 export default Component.extend({
   realtime: inject(),
   connectedUsers: inject(),
 
-  audience: readOnly('connectedUsers.audience'),
+  redCount: 0,
+  greenCount: 0,
+  blueCount: 0,
 
-  redUsers: computed('audience.[]', function() { //TODO: GJ: extract to CP macro
-    let audience = this.get('audience');
+  didInsertElement() {
+    this._super(...arguments);
 
-    if (audience) {
-      return audience.filter(a => get(a, 'metadata.favouriteColour') === 'red');
-    }
-  }),
+    let realtime = this.get('realtime');
+    realtime.on('users.metadata.favouriteColour.summary', this.favouriteColourSummary, this);
+  },
 
-  greenUsers: computed('audience.[]', function() {
-    let audience = this.get('audience');
+  willDestroyElement() {
+    this._super(...arguments);
 
-    if (audience) {
-      return audience.filter(a => get(a, 'metadata.favouriteColour') === 'green');
-    }
-  }),
+    let realtime = this.get('realtime');
+    realtime.off('users.metadata.favouriteColour.summary', this.favouriteColourSummary);
+  },
 
-  blueUsers: computed('audience.[]', function() {
-    let audience = this.get('audience');
-
-    if (audience) {
-      return audience.filter(a => get(a, 'metadata.favouriteColour') === 'blue');
-    }
-  }),
-
-
+  favouriteColourSummary(data) {
+    this.setProperties({
+      redCount: data.red || 0,
+      greenCount: data.green || 0,
+      blueCount: data.blue || 0
+    });
+  },
 });

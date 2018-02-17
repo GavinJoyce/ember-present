@@ -36,15 +36,20 @@ module.exports = class SocketServer {
         let metadata = this.userStore.mergeUserMetadata(socket.id, data);
         socket.emit('userMetadataUpdated', metadata);
 
-        //TODO: GJ: emit `userModified` for roles which allow it
         //TODO: GJ: extract
         let screenUsers = this.userStore.getUsersByRole('screen'); //TODO: GJ: roles that receive user update hints should be configurable
         screenUsers.forEach((user) => {
           let screenSocket = io.sockets.connected[user.socketId];
           if (screenSocket) {
-            screenSocket.emit('userModified');
+
+            Object.keys(data).forEach((key) => {
+              //TODO: GJ: only send if there are active subscribers?
+              //TODO: GJ: debounce
+              screenSocket.emit(`users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
+            });
           }
         });
+
       }),
 
       //TODO: lock down to presenter role
