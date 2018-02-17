@@ -1,19 +1,48 @@
-<h1>Login...</h1>
 
-{{#if (or (eq role 'screen') (not role))}}
-  <button onclick={{action 'login' 'Screen' 'screenpassword' target=session}} disabled={{session.isLoggingIn}}>Screen</button>
-{{/if}}
+<h2 class="p-4">
+  Login...
+</h2>
 
-{{#if (or (eq role 'presenter') (not role))}}
-  <button onclick={{action 'login' 'Presenter' 'presenterpassword' target=session}} disabled={{session.isLoggingIn}}>Presenter</button>
-{{/if}}
+<div class="px-4">
+  {{#if (or (eq role 'screen') (not role))}}
+    <button
+      onclick={{action 'login' 'Screen' 'screenpassword' target=session}}
+      disabled={{session.isLoggingIn}}
+      class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+    >
+      Screen
+    </button>
+  {{/if}}
 
-{{#if (or (eq role 'notes') (not role))}}
-  <button onclick={{action 'login' 'Notes' 'notespassword' target=session}} disabled={{session.isLoggingIn}}>Notes</button>
-{{/if}}
+  {{#if (or (eq role 'presenter') (not role))}}
+    <button
+      onclick={{action 'login' 'Presenter' 'presenterpassword' target=session}}
+      disabled={{session.isLoggingIn}}
+      class="bg-white hover:bg-blue text-blue-dark text-sm hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+    >
+      Presenter
+    </button>
+  {{/if}}
 
-{{#if (or (eq role 'audience') (not role))}}
-  <button onclick={{action 'login' 'Audience1' null target=session}} disabled={{session.isLoggingIn}}>Audience 1</button>
-  <button onclick={{action 'login' 'Audience2' null target=session}} disabled={{session.isLoggingIn}}>Audience 2</button>
-  <button onclick={{action 'login' 'Audience3' null target=session}} disabled={{session.isLoggingIn}}>Audience 3</button>
-{{/if}}
+  {{#if (or (eq role 'notes') (not role))}}
+    <button
+      onclick={{action 'login' 'Notes' 'notespassword' target=session}}
+      disabled={{session.isLoggingIn}}
+      class="bg-white hover:bg-blue text-blue-dark text-sm hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+    >
+      Notes
+    </button>
+  {{/if}}
+
+  {{#if (or (eq role 'audience') (not role))}}
+    {{#each (array 'Audience1' 'Audience2' 'Audience3') as |name|}}
+      <button
+        onclick={{action 'login' name undefined target=session}}
+        disabled={{session.isLoggingIn}}
+        class="bg-white hover:bg-blue text-blue-dark text-sm hover:text-white py-2 px-4 m-2 border border-blue hover:border-transparent rounded"
+      >
+        {{name}}
+      </button>
+    {{/each}}
+  {{/if}}
+</div>

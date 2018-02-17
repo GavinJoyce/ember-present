@@ -23,8 +23,8 @@ export default {
         screen: {
           background: {
             type: 'video',
-            mp4: '/backgrounds/Head-or-Tails.mp4',
-            webm: '/backgrounds/Head-or-Tails.webm'
+            mp4: '/backgrounds/Holiday lights.mp4',
+            webm: '/backgrounds/Holiday lights.webm'
           }
         }
       }
