@@ -51,6 +51,11 @@ module.exports = class SocketServer {
         });
       }),
 
+      socket.on('latencyPing', function(data) {
+        data.serverTime = Date.now();
+        socket.emit('latencyPong', data);
+      });
+
       //TODO: lock down to presenter role
       socket.on('goToSlide', (data) => {
         this.currentSlide = data.slide;
