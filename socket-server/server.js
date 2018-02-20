@@ -1,4 +1,6 @@
 const UserStore = require('./user-store');
+const http = require('http').Server(this.app);
+const io = require('socket.io')(http);
 
 module.exports = class SocketServer {
   constructor(app, configuration) {
@@ -11,24 +13,23 @@ module.exports = class SocketServer {
   }
 
   start() {
-    let http = require('http').Server(this.app);
-    let io = require('socket.io')(http);
-
     http.listen(this.configuration.socketServerPort, () => {
       console.log('socket server listening on *:' + this.configuration.socketServerPort);
     });
 
     io.on('connection', (socket) => {
-      console.log('GJ: SOCKET CONNECT', socket.id);
+      console.log('SOCKET CONNECT', socket.id);
 
       socket.on('login', (data, callback) => {
         let response = this.userStore.login(data.username, data.password, socket.id);
         response.currentSlide = this.currentSlide;
         callback(response);
+
+        this.emitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
       });
 
       socket.on('disconnect', () => {
-        console.log('GJ: SOCKET DISCONNECT', socket.id);
+        console.log('SOCKET DISCONNECT', socket.id);
         this.userStore.disconnect(socket.id);
       });
 
@@ -36,18 +37,8 @@ module.exports = class SocketServer {
         let metadata = this.userStore.mergeUserMetadata(socket.id, data);
         socket.emit('userMetadataUpdated', metadata);
 
-        //TODO: GJ: extract
-        let screenUsers = this.userStore.getUsersByRole('screen'); //TODO: GJ: roles that receive user update hints should be configurable
-        screenUsers.forEach((user) => {
-          let screenSocket = io.sockets.connected[user.socketId];
-          if (screenSocket) {
-
-            Object.keys(data).forEach((key) => {
-              //TODO: GJ: only send if there are active subscribers?
-              //TODO: GJ: debounce
-              screenSocket.emit(`users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
-            });
-          }
+        Object.keys(data).forEach((key) => { //TODO: GJ: config roles
+          this.emitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
         });
       }),
 
@@ -83,6 +74,16 @@ module.exports = class SocketServer {
       socket.on('broadcast', function({ name, data }) {
         io.emit(name, data);
       });
+    });
+  }
+
+  emitToRole(role, name, data) { //TODO: GJ: use rooms for this?
+    let users = this.userStore.getUsersByRole(role);
+    users.forEach((user) => {
+      let socket = io.sockets.connected[user.socketId];
+      if (socket) {
+        socket.emit(name, data);
+      }
     });
   }
 };

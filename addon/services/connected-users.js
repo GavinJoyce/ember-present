@@ -1,33 +1,19 @@
-import Service, { inject } from '@ember/service';
-import { computed } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
+import Service from '@ember/service';
+import Realtime from 'ember-present/mixins/realtime';
 
-export default Service.extend({
-  realtime: inject(),
+export default Service.extend(Realtime, {
+  statistics: undefined,
 
-  users: undefined,
-  audience: computed('users.[]', function() {
-    let users = this.get('users') || [];
-    return users.filter(u => u.role === 'audience');
-  }),
-
-  init() {
+  async init() {
     this._super(...arguments);
 
-    let realtime = this.get('realtime');
+    this.set('statistics', { });
 
-    realtime.on('userModified', () => {
-      this.get('fetchUsers').perform();
+    this.addRealtimeListener('userStastics', (statistics) => {
+      this.set('statistics', statistics);
     });
-  },
 
-  fetchUsers: task(function * () {
-    yield timeout(500);
-
-    let realtime = this.get('realtime');
-
-    //TODO: GJ: perhaps replace with a get request?
-    let response = yield realtime.emitWithResponse('getUsers');
-    this.set('users', Object.values(response.connectedUsers));
-  }).keepLatest(),
+    let statistics = await this.get('realtime').emitWithResponse('getUserStatistics');
+    this.set('statistics', statistics);
+  }
 });
