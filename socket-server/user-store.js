@@ -75,6 +75,10 @@ module.exports = class UserStore {
     return Object.keys(this.connectedUsers).length;
   }
 
+  get connectedAudienceCount() {
+    return this.getUsersByRole('audience').length;
+  }
+
   get disconnectedUserCount() {
     return Object.keys(this.disconnectedUsers).length;
   }
@@ -82,6 +86,7 @@ module.exports = class UserStore {
   get summary() { //TODO: tests
     return {
       connectedUserCount: this.connectedUserCount,
+      connectedAudienceCount: this.connectedAudienceCount,
       disconnectedUserCount: this.disconnectedUserCount,
     }
   }
