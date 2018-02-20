@@ -7,10 +7,8 @@ export default Service.extend({
 
   users: undefined,
   audience: computed('users.[]', function() {
-    let users = this.get('users');
-    if (users) {
-      return users.filter(u => u.role === 'audience');
-    }
+    let users = this.get('users') || [];
+    return users.filter(u => u.role === 'audience');
   }),
 
   init() {
