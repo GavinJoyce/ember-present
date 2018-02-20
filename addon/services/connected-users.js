@@ -10,12 +10,10 @@ export default Service.extend(Realtime, {
     this.set('statistics', { });
 
     this.addRealtimeListener('userStastics', (statistics) => {
-      console.log('stats', statistics);
       this.set('statistics', statistics);
     });
 
     let statistics = await this.get('realtime').emitWithResponse('getUserStatistics');
     this.set('statistics', statistics);
-    console.log('stats', statistics);
   }
 });
