@@ -16,6 +16,8 @@ export default Mixin.create(DisposableMixin, {
 
     let realtime = this.get('realtime');
     let data = await realtime.emitWithResponse('getMetadataSummary', key);
+
+    if (this.isDestroyed) { return; }
     callback(data);
   },
 

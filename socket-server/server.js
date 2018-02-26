@@ -72,6 +72,8 @@ module.exports = class SocketServer {
       });
 
       socket.on('broadcast', function({ name, data }) {
+        data = data || {};
+        data.serverTime = Date.now();
         io.emit(name, data);
       });
     });
