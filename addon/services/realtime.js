@@ -52,6 +52,10 @@ export default Service.extend({
     this.emit('broadcast', { name, data });
   },
 
+  broadcastToRole(role, name, data) {
+    this.emit('broadcastToRole', { role, name, data });
+  },
+
   emitWithResponse() {
     return new Promise((resolve) => {
       this.get('socket').emit(...arguments, resolve);

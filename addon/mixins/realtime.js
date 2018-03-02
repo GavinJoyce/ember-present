@@ -23,5 +23,9 @@ export default Mixin.create(DisposableMixin, {
 
   broadcast(name, data) {
     this.get('realtime').broadcast(name, data);
+  },
+
+  broadcastToRole(role, name, data) {
+    this.get('realtime').broadcastToRole(role, name, data);
   }
 });

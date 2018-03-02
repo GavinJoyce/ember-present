@@ -71,15 +71,21 @@ module.exports = class SocketServer {
         }
       });
 
-      socket.on('broadcast', function({ name, data }) {
+      socket.on('broadcast', ({ name, data }) => {
         data = data || {};
         data.serverTime = Date.now();
         io.emit(name, data);
       });
+
+      socket.on('broadcastToRole', ({ role, name, data }) => {
+        data = data || {};
+        data.serverTime = Date.now();
+        this.emitToRole(role, name, data);
+      });
     });
   }
 
-  emitToRole(role, name, data) { //TODO: GJ: use rooms for this?
+  emitToRole(role, name, data) { //TODO: GJ: use rooms for this
     let users = this.userStore.getUsersByRole(role);
     users.forEach((user) => {
       let socket = io.sockets.connected[user.socketId];
