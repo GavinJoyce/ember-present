@@ -30,6 +30,12 @@ export default Mixin.create(DisposableMixin, {
     this.get('realtime').broadcast(name, data);
   },
 
+  broadcastToRoles(roles, name, data) {
+    roles.forEach((role) => {
+      this.get('realtime').broadcastToRole(role, name, data);
+    });
+  },
+
   broadcastToRole(role, name, data) {
     this.get('realtime').broadcastToRole(role, name, data);
   }

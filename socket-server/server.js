@@ -6,6 +6,7 @@ function getRandomItem(items) {
   return items[Math.floor(Math.random()*items.length)];
 }
 
+//TODO: GJ: add try catch to ensure no crashers
 module.exports = class SocketServer {
   constructor(app, configuration) {
     this.app = app;
@@ -42,13 +43,16 @@ module.exports = class SocketServer {
         let socketId = data.socketId || socket.id; //TODO: GJ: lock down to role
         delete data.socketId;
 
-        let metadata = this.userStore.mergeUserMetadata(socketId, data);
-        socket.emit('userMetadataUpdated', metadata);
+        let userSocket = this.getSocket(socketId);
+        if (userSocket) {
+          let metadata = this.userStore.mergeUserMetadata(socketId, data);
+          userSocket.emit('userMetadataUpdated', metadata);
 
-        Object.keys(data).forEach((key) => { //TODO: GJ: config roles
-          this.emitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
-          this.emitToRole('ableton', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
-        });
+          Object.keys(data).forEach((key) => { //TODO: GJ: config roles
+            this.emitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
+            this.emitToRole('ableton', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
+          });
+        }
       }),
 
       socket.on('latencyPing', function(data) {
@@ -86,7 +90,15 @@ module.exports = class SocketServer {
       }),
 
       socket.on('clearMetadataByValue', (key, value) => {
-        this.userStore.clearMetadataByValue(key, value);
+        let users = this.userStore.clearMetadataByValue(key, value);
+
+        //TODO: GJ: emit `userMetadataUpdated` for any users which had the metadata
+        users.forEach((user) => {
+          let userSocket = this.getSocket(user.socketId);
+          if (userSocket) {
+            userSocket.emit('userMetadataUpdated', user.metadata);
+          }
+        });
 
         //TODO: GJ: config roles and extract commonality
         this.emitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
@@ -116,10 +128,14 @@ module.exports = class SocketServer {
   emitToRole(role, name, data) { //TODO: GJ: use rooms for this
     let users = this.userStore.getUsersByRole(role);
     users.forEach((user) => {
-      let socket = io.sockets.connected[user.socketId];
+      let socket = this.getSocket(user.socketId);
       if (socket) {
         socket.emit(name, data);
       }
     });
+  }
+
+  getSocket(socketId) {
+    return io.sockets.connected[socketId];
   }
 };

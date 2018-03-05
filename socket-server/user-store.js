@@ -58,6 +58,7 @@ module.exports = class UserStore {
   clearMetadataByValue(key, value) {
     let users = this.getUsersByMetadata(key, value);
     users.forEach((user) => user.clearMetadata(key));
+    return users; //TODO: test
   }
 
   mergeUserMetadata(socketId, metadata) {
