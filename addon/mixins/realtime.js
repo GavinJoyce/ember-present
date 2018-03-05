@@ -1,6 +1,7 @@
 import DisposableMixin from 'ember-lifeline/mixins/disposable';
 import Mixin from '@ember/object/mixin';
 import { inject } from '@ember/service';
+import { task } from 'ember-concurrency';
 
 export default Mixin.create(DisposableMixin, {
   realtime: inject(),
@@ -11,7 +12,7 @@ export default Mixin.create(DisposableMixin, {
     this.registerDisposable(() => realtime.off(name, callback));
   },
 
-  async addMetadataSummaryRealtimeListener(key, callback) {
+  async addMetadataSummaryRealtimeListener(key, callback) { //TODO: task?
     this.addRealtimeListener(`users.metadata.${key}.summary`, callback);
 
     let realtime = this.get('realtime');
@@ -20,6 +21,10 @@ export default Mixin.create(DisposableMixin, {
     if (this.isDestroyed) { return; }
     callback(data);
   },
+
+  getRandomUserWithMetadata: task(function * (key, value) {
+    return yield this.get('realtime').emitWithResponse('getRandomUserWithMetadata', key, value);
+  }),
 
   broadcast(name, data) {
     this.get('realtime').broadcast(name, data);

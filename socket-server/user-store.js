@@ -47,6 +47,19 @@ module.exports = class UserStore {
     return Object.values(this.connectedUsers).filter(u => u.role === role);
   }
 
+  getUsersByMetadata(key, value) { //TODO: getUsersWithMetadataValue
+    return Object.values(this.connectedUsers).filter(u => u.hasMetadataValue(key, value));
+  }
+
+  getUsersWithMetadata(key) {
+    return Object.values(this.connectedUsers).filter(u => u.hasMetadata(key));
+  }
+
+  clearMetadataByValue(key, value) {
+    let users = this.getUsersByMetadata(key, value);
+    users.forEach((user) => user.clearMetadata(key));
+  }
+
   mergeUserMetadata(socketId, metadata) {
     let user = this.getUserBySocketId(socketId);
     if (user) {
@@ -121,6 +134,18 @@ class User {
 
   mergeMetadata(metadata) {
     return Object.assign(this.metadata, metadata);
+  }
+
+  hasMetadata(key) {
+    return this.metadata[key] !== undefined;
+  }
+
+  hasMetadataValue(key, value) {
+    return this.metadata[key] === value;
+  }
+
+  clearMetadata(key) {
+    delete this.metadata[key];
   }
 }
 

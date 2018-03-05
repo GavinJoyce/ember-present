@@ -2,6 +2,10 @@ const UserStore = require('./user-store');
 const http = require('http').Server(this.app);
 const io = require('socket.io')(http);
 
+function getRandomItem(items) {
+  return items[Math.floor(Math.random()*items.length)];
+}
+
 module.exports = class SocketServer {
   constructor(app, configuration) {
     this.app = app;
@@ -26,6 +30,7 @@ module.exports = class SocketServer {
         callback(response);
 
         this.emitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+        this.emitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
       });
 
       socket.on('disconnect', () => {
@@ -33,12 +38,16 @@ module.exports = class SocketServer {
         this.userStore.disconnect(socket.id);
       });
 
-      socket.on('updateUserMetaData', (data) => {
-        let metadata = this.userStore.mergeUserMetadata(socket.id, data);
+      socket.on('updateUserMetaData', (data) => { //TODO: rename to updateUserMetadata and review API
+        let socketId = data.socketId || socket.id; //TODO: GJ: lock down to role
+        delete data.socketId;
+
+        let metadata = this.userStore.mergeUserMetadata(socketId, data);
         socket.emit('userMetadataUpdated', metadata);
 
         Object.keys(data).forEach((key) => { //TODO: GJ: config roles
           this.emitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
+          this.emitToRole('ableton', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
         });
       }),
 
@@ -64,6 +73,25 @@ module.exports = class SocketServer {
       socket.on('getUsers', (callback) => {
         callback(this.userStore.users);
       }),
+
+      socket.on('getRandomUserWithMetadata', (key, value, callback) => {
+        let matchingUsers = this.userStore.getUsersByMetadata(key, value);
+        let user = getRandomItem(matchingUsers);
+        callback(user);
+      }),
+
+      socket.on('getUsersWithMetadata', (key, callback) => {
+        let users = this.userStore.getUsersWithMetadata(key);
+        callback({ users });
+      }),
+
+      socket.on('clearMetadataByValue', (key, value) => {
+        this.userStore.clearMetadataByValue(key, value);
+
+        //TODO: GJ: config roles and extract commonality
+        this.emitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
+        this.emitToRole('ableton', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
+      });
 
       socket.on('setInitialSlideState', () => {
         if (this.currentSlide) {

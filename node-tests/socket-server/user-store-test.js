@@ -109,23 +109,67 @@ describe('UserStore', function() {
   });
 
   describe('#getMetadataSummary', function() {
-    describe('with users with metadata', function() {
-      it('returns summary data', function() {
-        let { alex } = store.login('Alex', undefined, 'alex');
-        let { ben } = store.login('Ben', undefined, 'ben');
-        let { sophie } = store.login('Sophie', undefined, 'sophie');
-        store.login('Sarah', undefined, 'sarah');
+    it('returns summary data', function() {
+      store.login('Alex', undefined, 'alex');
+      store.login('Ben', undefined, 'ben');
+      store.login('Sophie', undefined, 'sophie');
+      store.login('Sarah', undefined, 'sarah');
 
-        store.mergeUserMetadata('alex', { favouriteColour: 'purple' });
-        store.mergeUserMetadata('ben', { favouriteColour: 'blue' });
-        store.mergeUserMetadata('sophie', { favouriteColour: 'blue' });
+      store.mergeUserMetadata('alex', { favouriteColour: 'purple' });
+      store.mergeUserMetadata('ben', { favouriteColour: 'blue' });
+      store.mergeUserMetadata('sophie', { favouriteColour: 'blue' });
 
-        let summary = store.getMetadataSummary('favouriteColour');
-        assert.deepEqual(summary, {
-          purple: 1,
-          blue: 2
-        });
+      let summary = store.getMetadataSummary('favouriteColour');
+      assert.deepEqual(summary, {
+        purple: 1,
+        blue: 2
       });
+    });
+  });
+
+  describe('#getUsersByMetadata', function() {
+    it('returns the correct users', function() {
+      let alex = store.login('Alex', undefined, 'alex').user;
+      let ben = store.login('Ben', undefined, 'ben').user;
+      let sophie = store.login('Sophie', undefined, 'sophie').user;
+
+      store.mergeUserMetadata('alex', { favouriteColour: 'purple' });
+      store.mergeUserMetadata('ben', { favouriteColour: 'blue' });
+      store.mergeUserMetadata('sophie', { favouriteColour: 'blue' });
+
+      let matchingUsers = store.getUsersByMetadata('favouriteColour', 'blue');
+      assert.deepEqual(matchingUsers, [ben, sophie]);
+
+      matchingUsers = store.getUsersByMetadata('favouriteColour', 'purple');
+      assert.deepEqual(matchingUsers, [alex]);
+
+      matchingUsers = store.getUsersByMetadata('favouriteColour', 'nothing');
+      assert.deepEqual(matchingUsers, []);
+
+      matchingUsers = store.getUsersByMetadata('somethingMissing', 'nothing');
+      assert.deepEqual(matchingUsers, []);
+    });
+  });
+
+  describe('#clearMetadataByValue', function() {
+    it('clears user metadata', function() {
+      let alex = store.login('Alex', undefined, 'alex').user;
+      let ben = store.login('Ben', undefined, 'ben').user;
+      let sophie = store.login('Sophie', undefined, 'sophie').user;
+      store.mergeUserMetadata('alex', { favouriteColour: 'purple' });
+      store.mergeUserMetadata('ben', { favouriteColour: 'purple' });
+      store.mergeUserMetadata('sophie', { favouriteColour: 'blue' });
+
+      let matchingUsers = store.getUsersByMetadata('favouriteColour', 'purple');
+      assert.deepEqual(matchingUsers, [alex, ben]);
+
+      store.clearMetadataByValue('favouriteColour', 'purple');
+
+      matchingUsers = store.getUsersByMetadata('favouriteColour', 'purple');
+      assert.deepEqual(matchingUsers, []);
+
+      matchingUsers = store.getUsersByMetadata('favouriteColour', 'blue');
+      assert.deepEqual(matchingUsers, [sophie]);
     });
   });
 });
