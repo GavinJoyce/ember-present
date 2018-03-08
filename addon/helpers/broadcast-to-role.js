@@ -1,11 +1,11 @@
 import { helper } from '@ember/component/helper';
 import { getOwner } from '@ember/application';
 
-export function broadcast([name, data]) {
+export function broadcastToRole([role, name, data]) {
   return function() {
     let realtime = getOwner(this).lookup('service:realtime');
-    realtime.broadcast(name, data);
+    realtime.broadcastToRole(role, name, data);
   };
 }
 
-export default helper(broadcast);
+export default helper(broadcastToRole);
