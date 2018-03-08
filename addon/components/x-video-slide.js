@@ -16,7 +16,9 @@ export default Component.extend(Realtime, {
   init() {
     this._super(...arguments);
 
-    this.set('sections', []);
+    if (this.get('sections') === undefined) {
+      this.set('sections', []);
+    }
   },
 
   didInsertElement() {
