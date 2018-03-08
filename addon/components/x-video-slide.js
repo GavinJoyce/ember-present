@@ -13,11 +13,28 @@ export default Component.extend(Realtime, {
   autoplay: Ember.computed.empty('sections'),
   preload: true,
 
+  init() {
+    this._super(...arguments);
+
+    this.set('sections', []);
+  },
+
   didInsertElement() {
     this._super(...arguments);
 
     this.addRealtimeListener('videoNext', () => this.get('next').perform());
+    this.addRealtimeListener('videoPlay', () => this.play());
+    this.addRealtimeListener('videoPause', () => this.pause());
+
     this.get('next').perform();
+  },
+
+  play() {
+    this.$()[0].play();
+  },
+
+  pause() {
+    this.$()[0].pause();
   },
 
   next: task(function * () {
