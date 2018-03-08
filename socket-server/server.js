@@ -111,13 +111,13 @@ module.exports = class SocketServer {
         }
       });
 
-      socket.on('broadcast', ({ name, data }) => {
+      socket.on('broadcast', ({ name, data }) => { //TODO: GJ: change from hash to arguments
         data = data || {};
         data.serverTime = Date.now();
         io.emit(name, data);
       });
 
-      socket.on('broadcastToRole', ({ role, name, data }) => {
+      socket.on('broadcastToRole', ({ role, name, data }) => { //TODO: GJ: change from hash to arguments
         data = data || {};
         data.serverTime = Date.now();
         this.emitToRole(role, name, data);
