@@ -4,7 +4,9 @@ import layout from '../../templates/components/backgrounds/video-background';
 export default Component.extend({
   layout,
 
-  didReceiveAttrs() { //TODO: GJ: only if the src changes
+  didRender() {
+    this._super(...arguments);
+
     let $video = this.$('video');
     if($video) {
       let video = $video[0];
