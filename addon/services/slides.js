@@ -111,6 +111,9 @@ export default Service.extend(Evented, {
     },
     next() {
       this.next();
+    },
+    goToSlide(name) {
+      this.get('realtime').emit('goToSlide', { slide: name });
     }
   },
 
