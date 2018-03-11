@@ -3,6 +3,7 @@ import Service, { inject } from '@ember/service';
 import { computed, set } from '@ember/object';
 import { readOnly } from '@ember/object/computed';
 import Evented from '@ember/object/evented';
+import { schedule } from '@ember/runloop';
 import { A } from '@ember/array';
 
 export default Service.extend(Evented, {
@@ -101,6 +102,10 @@ export default Service.extend(Evented, {
 
       if (slideIndex >= 0) {
         this.set('currentIndex', slideIndex);
+
+        schedule('afterRender', this, () => {
+          window.scrollTo(0, 0);
+        });
       }
     }
   },
@@ -114,6 +119,10 @@ export default Service.extend(Evented, {
     },
     goToSlide(name) {
       this.get('realtime').emit('goToSlide', { slide: name });
+    },
+    goToFirstSlide() {
+      let firstSlideName = this.get('slides.firstObject.name');
+      this.get('realtime').emit('goToSlide', { slide: firstSlideName });
     }
   },
 

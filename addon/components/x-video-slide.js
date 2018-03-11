@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import layout from '../templates/components/x-video-slide';
+import { notEmpty } from '@ember/object/computed';
 import Realtime from '../mixins/realtime';
 import { task, timeout } from 'ember-concurrency';
 
@@ -10,7 +11,7 @@ export default Component.extend(Realtime, {
 
   index: 0,
   sections: undefined,
-  autoplay: Ember.computed.empty('sections'),
+  autoplay: notEmpty('sections'),
   preload: true,
 
   init() {
@@ -28,7 +29,9 @@ export default Component.extend(Realtime, {
     this.addRealtimeListener('videoPlay', () => this.play());
     this.addRealtimeListener('videoPause', () => this.pause());
 
-    this.get('next').perform();
+    if (this.get('autoplay')) {
+      this.get('next').perform();
+    }
   },
 
   play() {
@@ -55,7 +58,6 @@ export default Component.extend(Realtime, {
 
       yield this.get('stop').perform((section.end - section.start) * 1000);
     } else {
-      console.log('could not find ', index);
       yield false;
     }
   }),
