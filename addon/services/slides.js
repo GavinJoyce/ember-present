@@ -8,7 +8,6 @@ import { A } from '@ember/array';
 
 export default Service.extend(Evented, {
   realtime: inject(),
-  fastboot: inject(),
   config: inject(),
   configuration: readOnly('config.emberPresent'),
 
@@ -19,14 +18,12 @@ export default Service.extend(Evented, {
   init() {
     this._super(...arguments);
 
-    if (!this.get('fastboot.isFastBoot')) {
-      let realtime = this.get('realtime');
-      realtime.on('goToSlide', (data) => {
-        this.goToSlide(data.slide);
-      }, this);
+    let realtime = this.get('realtime');
+    realtime.on('goToSlide', (data) => {
+      this.goToSlide(data.slide);
+    }, this);
 
-      realtime.emit('setInitialSlideState');
-    }
+    realtime.emit('setInitialSlideState');
   },
 
   current: computed('slides.[]', 'currentIndex', function() {

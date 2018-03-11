@@ -3,7 +3,6 @@ import { Promise } from 'rsvp';
 
 export default Service.extend({
   socketIo: inject('socket-io'),
-  fastboot: inject(),
   config: inject(),
 
   isConnected: false,
@@ -12,28 +11,26 @@ export default Service.extend({
   init() {
     this._super(...arguments);
 
-    if (!this.get('fastboot.isFastBoot')) {
-      let socketServerUrl = this.get('config.emberPresent.socketServerUrl');
-      let socket = this.get('socketIo').socketFor(socketServerUrl);
-      this.set('socket', socket);
+    let socketServerUrl = this.get('config.emberPresent.socketServerUrl');
+    let socket = this.get('socketIo').socketFor(socketServerUrl);
+    this.set('socket', socket);
 
-      socket.on('connect', () => {
-        this.set('isConnected', true);
-      });
+    socket.on('connect', () => {
+      this.set('isConnected', true);
+    });
 
-      socket.on('disconnect', () => {
-        this.set('isConnected', false);
-      });
+    socket.on('disconnect', () => {
+      this.set('isConnected', false);
+    });
 
-      socket.on('reconnecting', () => {
-        this.set('isReconnecting', true);
-      });
+    socket.on('reconnecting', () => {
+      this.set('isReconnecting', true);
+    });
 
-      socket.on('reconnect', () => {
-        this.set('isConnected', true);
-        this.set('isReconnecting', false);
-      });
-    }
+    socket.on('reconnect', () => {
+      this.set('isConnected', true);
+      this.set('isReconnecting', false);
+    });
   },
 
   on() {
