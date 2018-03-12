@@ -28,6 +28,21 @@ export default Service.extend({
       this.set('isConnected', false);
     });
 
+    realtime.on('reconnecting', () => {
+      this.set('isReconnecting', true);
+    });
+
+    realtime.on('reconnect', () => {
+      this.set('isConnected', true);
+      this.set('isReconnecting', false);
+      //TODO: GJ: re-auth with token if possible
+      let user = this.get('user');
+      if (user) {
+        console.log(`TODO: reconnect with token: ${user.token}`);
+        return this.get('reconnectWithTokenTask').perform(user.token);
+      }
+    });
+
     realtime.on('userMetadataUpdated', (metadata) => {
       this.set('user.metadata', metadata)
     });
@@ -44,6 +59,24 @@ export default Service.extend({
     let response = yield realtime.emitWithResponse('login', { username, password });
 
     window.console.log('AUTH RESP', response);
+
+    if (response.isSuccess) {
+      this.set('user', response.user);
+
+      //TODO: GJ: persist token to cookies
+      //TODO: GJ: redirect based on auth user type and url config
+      this.get('router').transitionTo(`auth.${response.user.role}`, { queryParams: { slide: response.currentSlide } });
+    } else {
+      this.set('user', undefined);
+      this.set('invalidLogin', true);
+    }
+  }),
+
+  reconnectWithTokenTask: task(function * (token) {
+    let realtime = this.get('realtime');
+    let response = yield realtime.emitWithResponse('reconnectWithToken', { token });
+
+    window.console.log('RECONNECT RESP', response);
 
     if (response.isSuccess) {
       this.set('user', response.user);
