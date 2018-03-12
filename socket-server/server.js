@@ -62,6 +62,7 @@ module.exports = class SocketServer {
           let metadata = this.userStore.mergeUserMetadata(socketId, data);
           userSocket.emit('userMetadataUpdated', metadata);
 
+          //TODO: GJ: important! throttle this
           Object.keys(data).forEach((key) => { //TODO: GJ: config roles
             this.emitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
             this.emitToRole('ableton', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
