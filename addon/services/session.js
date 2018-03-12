@@ -35,10 +35,9 @@ export default Service.extend({
     realtime.on('reconnect', () => {
       this.set('isConnected', true);
       this.set('isReconnecting', false);
-      //TODO: GJ: re-auth with token if possible
+
       let user = this.get('user');
       if (user) {
-        console.log(`TODO: reconnect with token: ${user.token}`);
         return this.get('reconnectWithTokenTask').perform(user.token);
       }
     });
@@ -57,36 +56,25 @@ export default Service.extend({
   loginTask: task(function * (username, password) {
     let realtime = this.get('realtime');
     let response = yield realtime.emitWithResponse('login', { username, password });
-
-    window.console.log('AUTH RESP', response);
-
-    if (response.isSuccess) {
-      this.set('user', response.user);
-
-      //TODO: GJ: persist token to cookies
-      //TODO: GJ: redirect based on auth user type and url config
-      this.get('router').transitionTo(`auth.${response.user.role}`, { queryParams: { slide: response.currentSlide } });
-    } else {
-      this.set('user', undefined);
-      this.set('invalidLogin', true);
-    }
+    this._handleResponse(response);
   }),
 
   reconnectWithTokenTask: task(function * (token) {
     let realtime = this.get('realtime');
     let response = yield realtime.emitWithResponse('reconnectWithToken', { token });
+    this._handleResponse(response);
+  }),
 
-    window.console.log('RECONNECT RESP', response);
-
+  _handleResponse(response) {
     if (response.isSuccess) {
       this.set('user', response.user);
 
-      //TODO: GJ: persist token to cookies
-      //TODO: GJ: redirect based on auth user type and url config
+      //TODO: GJ: persist token to cookies so that reloading the app works?
       this.get('router').transitionTo(`auth.${response.user.role}`, { queryParams: { slide: response.currentSlide } });
     } else {
       this.set('user', undefined);
       this.set('invalidLogin', true);
+      this.get('router').transitionTo('login');
     }
-  })
+  }
 });
