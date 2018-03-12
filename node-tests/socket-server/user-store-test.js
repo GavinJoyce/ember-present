@@ -83,6 +83,36 @@ describe('UserStore', function() {
     });
   });
 
+  describe('#reconnectWithToken', function() {
+    describe('a user with a valid token', function() {
+      it('reconnects the user', function() {
+        let { user } = store.login('Alex', undefined, 'socket-id');
+        store.disconnect('socket-id');
+
+        let response = store.reconnectWithToken(user.token, 'new-socket-id');
+        assert.equal(store.connectedUserCount, 1);
+        assert.equal(store.disconnectedUserCount, 0);
+
+        assert.equal(user.socketId, 'new-socket-id', 'the user socket id was updated');
+        assert.ok(response.isSuccess, 'The reconnection was successful');
+      });
+    });
+
+    describe('a user with an invalid token', function() {
+      it('is not succesful', function() {
+        let { user } = store.login('Alex', undefined, 'socket-id');
+        store.disconnect('socket-id');
+
+        let response = store.reconnectWithToken('invalid token', 'new-socket-id');
+        assert.equal(store.connectedUserCount, 0);
+        assert.equal(store.disconnectedUserCount, 1);
+
+        assert.equal(user.socketId, 'socket-id', 'the user socket id was not updated');
+        assert.ok(!response.isSuccess, 'The reconnection was not successful');
+      });
+    });
+  });
+
   describe('#mergeUserMetadata', function() {
     describe('a logged in user', function() {
       it('merges the user metadata', function() {
@@ -121,8 +151,11 @@ describe('UserStore', function() {
 
       let summary = store.getMetadataSummary('favouriteColour');
       assert.deepEqual(summary, {
-        purple: 1,
-        blue: 2
+        count: 3,
+        counts: {
+          purple: 1,
+          blue: 2
+        }
       });
     });
   });

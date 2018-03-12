@@ -39,8 +39,29 @@ module.exports = class UserStore {
     }
   }
 
+  reconnectWithToken(token, socketId) {
+    let user = this.getDisconnectedUserByToken(token);
+
+    if (user) {
+      user.socketId = socketId;
+      this.connectedUsers[user.username] = user;
+      delete this.disconnectedUsers[user.username];
+      return new LoginResponse(user);
+    } else {
+      return new InvalidLoginResponse();
+    }
+  }
+
   getUserBySocketId(socketId) { //TODO: GJ: tests
     return Object.values(this.connectedUsers).find(u => u.socketId === socketId);
+  }
+
+  getDisconnectedUserBySocketId(socketId) { //TODO: GJ: tests
+    return Object.values(this.disconnectedUsers).find(u => u.socketId === socketId);
+  }
+
+  getDisconnectedUserByToken(token) { //TODO: GJ: tests
+    return Object.values(this.disconnectedUsers).find(u => u.token === token);
   }
 
   getUsersByRole(role) { //TODO: GJ: tests
@@ -113,7 +134,8 @@ module.exports = class UserStore {
 
   get users() { //TODO: tests and decide on payload format
     return {
-      connectedUsers: this.connectedUsers
+      connectedUsers: this.connectedUsers,
+      disconnectedUsers: this.disconnectedUsers
     }
   }
 };

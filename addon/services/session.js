@@ -28,6 +28,20 @@ export default Service.extend({
       this.set('isConnected', false);
     });
 
+    realtime.on('reconnecting', () => {
+      this.set('isReconnecting', true);
+    });
+
+    realtime.on('reconnect', () => {
+      this.set('isConnected', true);
+      this.set('isReconnecting', false);
+
+      let user = this.get('user');
+      if (user) {
+        return this.get('reconnectWithTokenTask').perform(user.token);
+      }
+    });
+
     realtime.on('userMetadataUpdated', (metadata) => {
       this.set('user.metadata', metadata)
     });
@@ -42,18 +56,25 @@ export default Service.extend({
   loginTask: task(function * (username, password) {
     let realtime = this.get('realtime');
     let response = yield realtime.emitWithResponse('login', { username, password });
+    this._handleResponse(response);
+  }),
 
-    window.console.log('AUTH RESP', response);
+  reconnectWithTokenTask: task(function * (token) {
+    let realtime = this.get('realtime');
+    let response = yield realtime.emitWithResponse('reconnectWithToken', { token });
+    this._handleResponse(response);
+  }),
 
+  _handleResponse(response) {
     if (response.isSuccess) {
       this.set('user', response.user);
 
-      //TODO: GJ: persist token to cookies
-      //TODO: GJ: redirect based on auth user type and url config
+      //TODO: GJ: persist token to cookies so that reloading the app works?
       this.get('router').transitionTo(`auth.${response.user.role}`, { queryParams: { slide: response.currentSlide } });
     } else {
       this.set('user', undefined);
       this.set('invalidLogin', true);
+      this.get('router').transitionTo('login');
     }
-  })
+  }
 });

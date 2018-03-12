@@ -34,9 +34,23 @@ module.exports = class SocketServer {
         this.emitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
       });
 
+      socket.on('reconnectWithToken', (data, callback) => {
+        let response = this.userStore.reconnectWithToken(data.token, socket.id);
+        response.currentSlide = this.currentSlide;
+        callback(response);
+
+        this.emitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+        this.emitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+      }),
+
       socket.on('disconnect', () => {
-        console.log('SOCKET DISCONNECT', socket.id);
-        this.userStore.disconnect(socket.id);
+        if (socket) {
+          console.log('SOCKET DISCONNECT', socket.id);
+          this.userStore.disconnect(socket.id);
+
+          this.emitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+          this.emitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+        }
       });
 
       socket.on('updateUserMetaData', (data) => { //TODO: rename to updateUserMetadata and review API
