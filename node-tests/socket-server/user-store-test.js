@@ -140,22 +140,20 @@ describe('UserStore', function() {
 
   describe('#getMetadataSummary', function() {
     it('returns summary data', function() {
-      store.login('Alex', undefined, 'alex');
-      store.login('Ben', undefined, 'ben');
-      store.login('Sophie', undefined, 'sophie');
-      store.login('Sarah', undefined, 'sarah');
+      store.login('Alex', undefined, 'alex-socket');
+      store.login('Ben', undefined, 'ben-socket');
+      store.login('Sophie', undefined, 'sophie-socket');
+      store.login('Sarah', undefined, 'sarah-socket');
 
-      store.mergeUserMetadata('alex', { favouriteColour: 'purple' });
-      store.mergeUserMetadata('ben', { favouriteColour: 'blue' });
-      store.mergeUserMetadata('sophie', { favouriteColour: 'blue' });
+      store.mergeUserMetadata('alex-socket', { favouriteColour: 'purple' });
+      store.mergeUserMetadata('ben-socket', { favouriteColour: 'blue' });
+      store.mergeUserMetadata('sophie-socket', { favouriteColour: 'blue' });
 
       let summary = store.getMetadataSummary('favouriteColour');
       assert.deepEqual(summary, {
-        count: 3,
-        counts: {
-          purple: 1,
-          blue: 2
-        }
+        'Alex': 'purple',
+        'Ben': 'blue',
+        'Sophie': 'blue'
       });
     });
   });
