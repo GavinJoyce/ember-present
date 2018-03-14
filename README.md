@@ -9,4 +9,4 @@ This addon is currently in an experimental phase with unstable APIs and no docs.
 
 You can see my EmberConf talk which uses this addon here:
 
-https://www.youtube.com/watch?v=bt9MRkf5Mus
+https://www.youtube.com/watch?v=bt9MRkf5Mus&feature=youtu.be&t=1h16m54s
