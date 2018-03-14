@@ -69,36 +69,59 @@ module.exports = class SocketServer {
         socket.emit('latencyPong', data);
       });
 
-      //TODO: lock down to presenter role
       socket.on('goToSlide', (data) => {
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
         this.currentSlide = data.slide;
         io.emit('goToSlide', data);
       });
 
       socket.on('getMetadataSummary', (key, callback) => {
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
         callback(this.userStore.getMetadataSummary(key));
       }),
 
       socket.on('getUserStatistics', (callback) => {
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
         callback(this.userStore.summary);
       });
 
       socket.on('getUsers', (callback) => {
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
         callback(this.userStore.users);
       }),
 
       socket.on('getRandomUserWithMetadata', (key, value, callback) => {
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
+
         let matchingUsers = this.userStore.getUsersByMetadata(key, value);
         let user = getRandomItem(matchingUsers);
         callback(user);
       }),
 
       socket.on('getUsersWithMetadata', (key, callback) => {
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
+
         let users = this.userStore.getUsersWithMetadata(key);
         callback({ users });
       }),
 
       socket.on('clearMetadataByValue', (key, value) => {
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
+
         let users = this.userStore.clearMetadataByValue(key, value);
 
         //TODO: GJ: emit `userMetadataUpdated` for any users which had the metadata
@@ -115,23 +138,57 @@ module.exports = class SocketServer {
       });
 
       socket.on('setInitialSlideState', () => {
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
+
         if (this.currentSlide) {
           socket.emit('goToSlide', { slide: this.currentSlide });
         }
       });
 
       socket.on('broadcast', ({ name, data }) => { //TODO: GJ: change from hash to arguments
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
+
         data = data || {};
         data.serverTime = Date.now();
         io.emit(name, data);
       });
 
       socket.on('broadcastToRole', ({ role, name, data }) => { //TODO: GJ: change from hash to arguments
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
+
         data = data || {};
         data.serverTime = Date.now();
         this.emitToRole(role, name, data);
       });
     });
+  }
+
+  hasRole(socket, roles) {
+    if (!socket) {
+      return false;
+    }
+
+    if (!roles) {
+      return false;
+    }
+    
+    let user = this.userStore.getUserBySocketId(socket.id);
+
+    if (user) {
+      for (let i=0; i<roles.length; i++) {
+        if (user.role === roles[i]) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   emitToRole(role, name, data) { //TODO: GJ: use rooms for this
