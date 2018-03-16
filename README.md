@@ -9,7 +9,7 @@ You can see my EmberConf talk which used this addon here:
 
 [<img width="856" alt="screen shot 2018-03-15 at 06 45 36" src="https://user-images.githubusercontent.com/2526/37498971-892784d0-287e-11e8-9c0a-62dee67564f0.png">](https://www.youtube.com/watch?v=bt9MRkf5Mus&feature=youtu.be&t=1h16m40)
 
-## EmberConf 2018 Source Code
+## EmberConf 2018 Talk Source Code
 
 I built this initial addon to power my [EmberConf 2018 "Smartphone Symphony" talk](https://www.youtube.com/watch?v=bt9MRkf5Mus&feature=youtu.be&t=1h16m40s). There was a lot of moving parts to this and I had a bit of a scramble trying to get everything working. I woke up early on the day of the talk and realised that I had made a set of changes the previous night that resulted in many parts of the talk no longer working. I scrambled to fix this by adding some polling, removing authorisation from the server and generally hacking the slides until things looked like they were working again.
 
