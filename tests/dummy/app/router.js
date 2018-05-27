@@ -1,9 +1,9 @@
-import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
+import EmberPresentRouter from 'ember-present/routing/router';
 
-const Router = EmberRouter.extend({
+const Router = EmberPresentRouter.extend({
   location: config.locationType,
-  rootURL: config.rootURL
+  rootURL: config.rootURL,
 });
 
 Router.map(function() {
@@ -16,6 +16,12 @@ Router.map(function() {
     this.route('presenter');
     this.route('notes');
     this.route('audience');
+  });
+
+  this.route('slides', function() {
+    this.slide('slide-1');
+    this.slide('slide-2');
+    this.slide('slide-3');
   });
 });
 
