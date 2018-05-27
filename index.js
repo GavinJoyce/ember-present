@@ -5,10 +5,17 @@ const SocketServer = require('./socket-server');
 module.exports = {
   name: 'ember-present',
 
+  options: {
+    'ember-cli-tailwind': {
+      buildTarget: 'addon'
+    }
+  },
+
   SocketServer,
 
   included(app) {
-    app.import('vendor/tailwind.min.css');
+    this._super(...arguments);
+
     app.import('vendor/ember-present.css');
   },
 
