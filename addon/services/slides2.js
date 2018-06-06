@@ -2,13 +2,16 @@ import Service, { inject as service } from '@ember/service';
 import { mapBy, readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
+import { on } from '@ember/object/evented';
+import { EKMixin as EmberKeyboard, keyUp } from 'ember-keyboard';
 
-export default Service.extend({
+export default Service.extend(EmberKeyboard, {
   router: service(),
 
   init() {
     this._super(...arguments);
 
+    this.set('keyboardActivated', true);
     this.set('slideRoutes', A());
   },
 
@@ -96,4 +99,26 @@ export default Service.extend({
     let nextSlideIndex = this.get('nextSlideIndex');
     return slideRoutes[nextSlideIndex];
   }),
+
+  onLeft: on(keyUp('ArrowLeft'), function() {
+    this.previous();
+  }),
+
+  onRight: on(keyUp('ArrowRight'), keyUp('Space'), keyUp('Enter'), function() {
+    this.next();
+  }),
+
+  previous() {
+    if (this.get('hasPreviousSlide')) {
+      let slide = this.get('previousSlide');
+      this.get('router').transitionTo(slide.path);
+    }
+  },
+
+  next() {
+    if (this.get('hasNextSlide')) {
+      let slide = this.get('nextSlide');
+      this.get('router').transitionTo(slide.path);
+    }
+  },
 });
