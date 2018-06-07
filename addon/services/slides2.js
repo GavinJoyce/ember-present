@@ -1,9 +1,21 @@
 import Service, { inject as service } from '@ember/service';
+import Object from '@ember/object';
 import { mapBy, readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
 import { on } from '@ember/object/evented';
 import { EKMixin as EmberKeyboard, keyUp } from 'ember-keyboard';
+
+const Slide = Object.extend({
+  path: undefined,
+  config: undefined
+});
+
+const SlideTransition = Object.extend({
+  sourceSlide: undefined,
+  targetSlide: undefined,
+  isForwards: undefined,
+});
 
 export default Service.extend(EmberKeyboard, {
   router: service(),
@@ -16,11 +28,27 @@ export default Service.extend(EmberKeyboard, {
   },
 
   registerSlide(path, config = {}) {
-    this.get('slideRoutes').pushObject({ path, config });
+    this.get('slideRoutes').pushObject(
+      Slide.create({ path, config })
+    );
   },
 
   slidePaths: mapBy('slideRoutes', 'path'),
   slideCount: readOnly('slidePaths.length'),
+
+  getSlideTransition(sourceRouteName, targetRouteName) {
+    let sourceSlide = this.get('slideRoutes').findBy('path', sourceRouteName);
+    let targetSlide = this.get('slideRoutes').findBy('path', targetRouteName);
+
+    let sourceSlideIndex = this.get('slidePaths').indexOf(sourceRouteName);
+    let targetSlideIndex = this.get('slidePaths').indexOf(targetRouteName);
+
+    return SlideTransition.create({
+      sourceSlide,
+      targetSlide,
+      isForwards: targetSlideIndex > sourceSlideIndex
+    });
+  },
 
   currentSlideIndex: computed('slidePaths.[]', 'router.currentRouteName', function() {
     let currentRouteName = this.get('router.currentRouteName');

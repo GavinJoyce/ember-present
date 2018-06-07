@@ -19,9 +19,11 @@ Router.map(function() {
   });
 
   this.route('slides', function() {
-    this.slide('slide-1');
-    this.slide('slide-2');
-    this.slide('slide-3');
+    this.slide('slide-1', { transition: 'slide' });
+    this.slide('slide-2', { transition: 'slide' });
+    this.slide('slide-3', { transition: 'fade' });
+    this.slide('slide-4');
+    this.slide('slide-5');
   });
 });
 
