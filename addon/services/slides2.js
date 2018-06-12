@@ -5,6 +5,7 @@ import { computed } from '@ember/object';
 import { A } from '@ember/array';
 import { on } from '@ember/object/evented';
 import { EKMixin as EmberKeyboard, keyUp } from 'ember-keyboard';
+const { HTMLBars } = Ember;
 
 const Slide = Object.extend({
   path: undefined,
@@ -15,6 +16,14 @@ const SlideTransition = Object.extend({
   sourceSlide: undefined,
   targetSlide: undefined,
   isForwards: undefined,
+});
+
+const SlideController = Ember.Controller.extend({
+  init() {
+    this._super(...arguments);
+
+    console.log('SLIDE CONTROLLER');
+  },
 });
 
 export default Service.extend(EmberKeyboard, {
@@ -31,6 +40,22 @@ export default Service.extend(EmberKeyboard, {
     this.get('slideRoutes').pushObject(
       Slide.create({ path, config })
     );
+
+    //temp: gj: can we generate a template?
+    
+
+    let owner = Ember.getOwner(this);
+    let containerPath = path.replace('.', '/');
+    console.log(path, containerPath);
+    owner.register(`controller:${containerPath}`, SlideController);
+
+
+    owner.register(`template:${containerPath}`, HTMLBars.compile("<h1>Slide (compiled)" + containerPath + "</h1>"));
+
+    // let template = HTMLBars.compile("hello slide 5");
+    // console.log('TEMPLATE', template);
+
+
   },
 
   slidePaths: mapBy('slideRoutes', 'path'),
