@@ -23,6 +23,10 @@ export default EmberRouter.extend({
 
       slides2.registerSlide(path, config);
       dslPrototype.route.apply(this, arguments);
+    };
+
+    dslPrototype.role = function(name, config = {}) {
+      slides2.registerRole(name, config);
     }
 
     return dsl;
