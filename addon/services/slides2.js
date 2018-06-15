@@ -160,4 +160,9 @@ export default Service.extend(EmberKeyboard, {
       this.get('router').transitionTo(slide.path);
     }
   },
+
+  first() {
+    let slidePath = this.get('slidePaths.firstObject');
+    this.get('router').transitionTo(slidePath);
+  },
 });
