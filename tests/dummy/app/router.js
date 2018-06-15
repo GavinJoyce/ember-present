@@ -23,11 +23,15 @@ Router.map(function() {
     this.role('presenter');
     this.role('audience');
 
-    this.slide('slide-1', { transition: 'slide' });
-    this.slide('slide-2', { transition: 'slide' });
-    this.slide('slide-3', { transition: 'fade' });
-    this.slide('slide-4');
-    this.slide('slide-5');
+    this.route('login');
+
+    this.route('auth', { path: '/' }, function() {
+      this.slide('slide-1', { transition: 'slide' });
+      this.slide('slide-2', { transition: 'slide' });
+      this.slide('slide-3', { transition: 'fade' });
+      this.slide('slide-4');
+      this.slide('slide-5');
+    });
   });
 });
 
