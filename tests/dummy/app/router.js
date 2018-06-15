@@ -19,6 +19,10 @@ Router.map(function() {
   });
 
   this.route('slides', function() {
+    this.role('screen');
+    this.role('presenter');
+    this.role('audience');
+
     this.slide('slide-1', { transition: 'slide' });
     this.slide('slide-2', { transition: 'slide' });
     this.slide('slide-3', { transition: 'fade' });

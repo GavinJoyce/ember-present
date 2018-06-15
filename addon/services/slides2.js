@@ -20,17 +20,28 @@ const SlideTransition = Object.extend({
 export default Service.extend(EmberKeyboard, {
   router: service(),
 
+  slideRoutes: undefined,
+  roles: undefined,
+
   init() {
     this._super(...arguments);
 
     this.set('keyboardActivated', true);
     this.set('slideRoutes', A());
+    this.set('roles', A());
   },
 
   registerSlide(path, config = {}) {
     this.get('slideRoutes').pushObject(
       Slide.create({ path, config })
     );
+  },
+
+  registerRole(name, config) {
+    this.get('roles').pushObject({
+      name,
+      config,
+    });
   },
 
   slidePaths: mapBy('slideRoutes', 'path'),
