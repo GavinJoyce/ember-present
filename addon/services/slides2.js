@@ -43,11 +43,14 @@ export default Service.extend(EmberKeyboard, {
 
     let owner = getOwner(this);
     let containerPath = path.replace('.', '/');
+    let componentName = containerPath.replace('slides/auth.', ''); //TEMP: GJ: improve how we determine the component name
 
     let SlideController = Controller.extend({
       session2: service(),
+      slides2: service(),
 
-      name: containerPath
+      name: containerPath,
+      componentName
     });
 
     owner.register(`controller:${containerPath}`, SlideController);
