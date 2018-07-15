@@ -18,6 +18,7 @@ export default Component.extend({
   layout,
 
   slides2: service(),
+  session2: service(),
 
   duration: 300,
 
@@ -26,6 +27,12 @@ export default Component.extend({
   }),
 
   _rules: function({ newItems, oldItems }) {
+    let role = this.get('session2.role');
+
+    if (role !== 'screen') { //TODO: do we want to support non-screen transitions?
+      return undefined;
+    }
+
     let sourceRoute = oldItems[oldItems.length - 1];
     let targetRoute = newItems[newItems.length - 1];
     let sourceRouteName, targetRouteName;

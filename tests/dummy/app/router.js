@@ -26,7 +26,7 @@ Router.map(function() {
     this.route('login');
 
     this.route('auth', { path: '/' }, function() {
-      this.slide('slide-1', { transition: 'slide' });
+      this.slide('slide-1', { transition: 'slide' }); //we may want to allow transitions per role. let's just assume `screen` for now
       this.slide('slide-2', { transition: 'slide' });
       this.slide('slide-3', { transition: 'fade' });
       this.slide('slide-4');
