@@ -1,10 +1,14 @@
 import Service, { inject as service } from '@ember/service';
 import Object from '@ember/object';
+import Controller from '@ember/controller';
 import { mapBy, readOnly } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
 import { on } from '@ember/object/evented';
+import { getOwner } from '@ember/application';
 import { EKMixin as EmberKeyboard, keyUp } from 'ember-keyboard';
+
+import slideControllerTemplate from 'ember-present/templates/slide-controller';
 
 const Slide = Object.extend({
   path: undefined,
@@ -19,6 +23,7 @@ const SlideTransition = Object.extend({
 
 export default Service.extend(EmberKeyboard, {
   router: service(),
+  session2: service(),
 
   slideRoutes: undefined,
   roles: undefined,
@@ -35,6 +40,18 @@ export default Service.extend(EmberKeyboard, {
     this.get('slideRoutes').pushObject(
       Slide.create({ path, config })
     );
+
+    let owner = getOwner(this);
+    let containerPath = path.replace('.', '/');
+
+    let SlideController = Controller.extend({
+      session2: service(),
+
+      name: containerPath
+    });
+
+    owner.register(`controller:${containerPath}`, SlideController);
+    owner.register(`template:${containerPath}`, slideControllerTemplate);
   },
 
   registerRole(name, config) {
