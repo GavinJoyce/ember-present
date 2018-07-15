@@ -6,9 +6,7 @@ module.exports = {
   name: 'ember-present',
 
   options: {
-    'ember-cli-tailwind': {
-      buildTarget: 'addon'
-    }
+    
   },
 
   SocketServer,
