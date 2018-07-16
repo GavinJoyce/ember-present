@@ -1,25 +1,14 @@
 import Service, { inject as service } from '@ember/service';
-import Object from '@ember/object';
 import Controller from '@ember/controller';
-import { mapBy, readOnly } from '@ember/object/computed';
+import { mapBy, readOnly, reads } from '@ember/object/computed';
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
 import { on } from '@ember/object/evented';
 import { getOwner } from '@ember/application';
 import { EKMixin as EmberKeyboard, keyUp } from 'ember-keyboard';
-
-import slideControllerTemplate from 'ember-present/templates/slide-controller';
-
-const Slide = Object.extend({
-  path: undefined,
-  config: undefined
-});
-
-const SlideTransition = Object.extend({
-  sourceSlide: undefined,
-  targetSlide: undefined,
-  isForwards: undefined,
-});
+import Slide from 'ember-present/models/slide';
+import SlideTransition from 'ember-present/models/slide-transition';
+import slideControllerTemplate from 'ember-present/templates/internal/slide-controller';
 
 export default Service.extend(EmberKeyboard, {
   router: service(),
@@ -27,6 +16,8 @@ export default Service.extend(EmberKeyboard, {
 
   slideRoutes: undefined,
   roles: undefined,
+
+  currentRouteName: reads('router.currentRouteName'),
 
   init() {
     this._super(...arguments);
@@ -37,22 +28,17 @@ export default Service.extend(EmberKeyboard, {
   },
 
   registerSlide(path, config = {}) {
-    this.get('slideRoutes').pushObject(
-      Slide.create({ path, config })
-    );
-
-    let owner = getOwner(this);
-    let containerPath = path.replace('.', '/');
-    let componentName = containerPath.replace('slides/auth.', ''); //TEMP: GJ: improve how we determine the component name
+    let slide = Slide.create({ path, config });
+    this.get('slideRoutes').pushObject(slide);
 
     let SlideController = Controller.extend({
       session2: service(),
       slides2: service(),
-
-      name: containerPath,
-      componentName
+      slide,
     });
 
+    let owner = getOwner(this);
+    let containerPath = slide.get('containerPath');
     owner.register(`controller:${containerPath}`, SlideController);
     owner.register(`template:${containerPath}`, slideControllerTemplate);
   },
@@ -81,8 +67,8 @@ export default Service.extend(EmberKeyboard, {
     });
   },
 
-  currentSlideIndex: computed('slidePaths.[]', 'router.currentRouteName', function() {
-    let currentRouteName = this.get('router.currentRouteName');
+  currentSlideIndex: computed('slidePaths.[]', 'currentRouteName', function() {
+    let currentRouteName = this.get('currentRouteName');
     let index = this.get('slidePaths').indexOf(currentRouteName);
 
     if (index === -1) {

@@ -7,14 +7,15 @@
 .scaled-slide {
   width: 1280px;
   height: 720px;
-  padding: 1px; /* TODO: why is there a white bar with `padding: 0;` ? */
+  padding: 0px;
   text-align: center;
   position: relative;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   transform-origin: center center;
-  cursor: none;
+  /* cursor: none; */
+  background-color: pink;
 }
 
 .responsive-slide {

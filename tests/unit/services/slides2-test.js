@@ -53,7 +53,7 @@ module('Unit | Service | slides2', function(hooks) {
     service.registerSlide('slide-2');
     service.registerSlide('slide-3');
 
-    service.set('router.currentRouteName', 'slide-1');
+    service.set('currentRouteName', 'slide-1');
 
     assert.deepEqual(service.get('currentSlidePath'), 'slide-1');
     assert.deepEqual(service.get('currentSlide.path'), 'slide-1');
@@ -66,7 +66,7 @@ module('Unit | Service | slides2', function(hooks) {
     assert.deepEqual(service.get('nextSlideIndex'), 1);
     assert.deepEqual(service.get('nextSlide.path'), 'slide-2');
 
-    service.set('router.currentRouteName', 'slide-2');
+    service.set('currentRouteName', 'slide-2');
 
     assert.deepEqual(service.get('currentSlidePath'), 'slide-2');
     assert.deepEqual(service.get('currentSlide.path'), 'slide-2');
@@ -79,7 +79,7 @@ module('Unit | Service | slides2', function(hooks) {
     assert.deepEqual(service.get('nextSlideIndex'), 2);
     assert.deepEqual(service.get('nextSlide.path'), 'slide-3');
 
-    service.set('router.currentRouteName', 'slide-3');
+    service.set('currentRouteName', 'slide-3');
 
     assert.deepEqual(service.get('currentSlidePath'), 'slide-3');
     assert.deepEqual(service.get('currentSlide.path'), 'slide-3');
@@ -92,7 +92,7 @@ module('Unit | Service | slides2', function(hooks) {
     assert.deepEqual(service.get('nextSlideIndex'), 2);
     assert.deepEqual(service.get('nextSlide.path'), 'slide-3');
 
-    service.set('router.currentRouteName', 'not-a-slide');
+    service.set('currentRouteName', 'not-a-slide');
 
     assert.deepEqual(service.get('currentSlidePath'), undefined);
     assert.deepEqual(service.get('currentSlide'), undefined);
