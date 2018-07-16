@@ -5,6 +5,8 @@ export default Service.extend({
   isSpriteLoaded: false,
 
   init() {
+    this._super(...arguments);
+
     window.Waud.init();
     window.Waud.enableTouchUnlock();
 
