@@ -15,20 +15,32 @@ module.exports = {
     browser: true
   },
   rules: {
+    'no-console': 'off'
+  },
+  globals: {
+    'require': true,
+    'module': true,
+    'describe': true,
+    'it': true,
+    'process': true,
+    'beforeEach': true
   },
   overrides: [
     // node files
     {
       files: [
+        'ember-cli-build.js',
         'index.js',
         'testem.js',
-        'ember-cli-build.js',
+        'blueprints/*/index.js',
         'config/**/*.js',
         'tests/dummy/config/**/*.js'
       ],
       excludedFiles: [
+        'addon/**',
+        'addon-test-support/**',
         'app/**',
-        'addon/**'
+        'tests/dummy/app/**'
       ],
       parserOptions: {
         sourceType: 'script',

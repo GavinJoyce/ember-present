@@ -177,7 +177,7 @@ module.exports = class SocketServer {
     if (!roles) {
       return false;
     }
-    
+
     let user = this.userStore.getUserBySocketId(socket.id);
 
     if (user) {
