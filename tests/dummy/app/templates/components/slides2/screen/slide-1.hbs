@@ -1,3 +1,22 @@
 {{backgrounds/gradient-background2 colors=(array '#e7e33c' '#e7e33c' '#d52362' '#d523ba')}}
 
-<h1>1</h1>
+<style>
+  .slide-grid h1 {
+    grid-column: 2 / 12;
+    grid-row: 5;
+    text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black;
+  }
+
+  .slide-grid h3 {
+    grid-column: 2 / 12;
+    grid-row: 6;
+    text-shadow: #000 0px 0px 4px;
+  }
+</style>
+
+{{#screen-slide}}
+  <div class='slide-grid text-5xl'>
+    <h1 class='text-orange'>ember-present</h1>
+    <h3 class='text-blue-light'>@gavinjoyce</h3>
+  </div>
+{{/screen-slide}}

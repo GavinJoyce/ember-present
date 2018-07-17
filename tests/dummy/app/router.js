@@ -8,6 +8,7 @@ const Router = EmberPresentRouter.extend({
 
 Router.map(function() {
   this.route('all');
+  this.route('all2');
 
   this.route('login');
 
@@ -28,9 +29,9 @@ Router.map(function() {
     this.route('auth', { path: '/' }, function() {
       this.slide('slide-1', { transition: 'slide' }); //we may want to allow transitions per role. let's just assume `screen` for now
       this.slide('slide-2', { transition: 'slide' });
-      this.slide('slide-3', { transition: 'fade' });
-      this.slide('slide-4');
-      this.slide('slide-5');
+      this.slide('slide-3', { transition: 'slide' });
+      this.slide('slide-4', { transition: 'slide' });
+      this.slide('slide-5', { transition: 'slide' });
     });
   });
 });

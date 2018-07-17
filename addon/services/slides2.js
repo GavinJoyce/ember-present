@@ -1,6 +1,7 @@
 import Service, { inject as service } from '@ember/service';
 import Controller from '@ember/controller';
 import { mapBy, readOnly, reads } from '@ember/object/computed';
+import { schedule } from '@ember/runloop';
 import { computed } from '@ember/object';
 import { A } from '@ember/array';
 import { on } from '@ember/object/evented';
@@ -11,6 +12,7 @@ import SlideTransition from 'ember-present/models/slide-transition';
 import slideControllerTemplate from 'ember-present/templates/internal/slide-controller';
 
 export default Service.extend(EmberKeyboard, {
+  realtime: service(),
   router: service(),
   session2: service(),
 
@@ -25,6 +27,11 @@ export default Service.extend(EmberKeyboard, {
     this.set('keyboardActivated', true);
     this.set('slideRoutes', A());
     this.set('roles', A());
+
+    let realtime = this.get('realtime');
+    realtime.on('goToSlide', (data) => {
+      this.goToSlide(data.slide);
+    }, this);
   },
 
   registerSlide(path, config = {}) {
@@ -157,6 +164,7 @@ export default Service.extend(EmberKeyboard, {
     if (this.get('hasPreviousSlide')) {
       let slide = this.get('previousSlide');
       this.get('router').transitionTo(slide.path);
+      this.get('realtime').emit('goToSlide', { slide: slide.path });
     }
   },
 
@@ -164,11 +172,22 @@ export default Service.extend(EmberKeyboard, {
     if (this.get('hasNextSlide')) {
       let slide = this.get('nextSlide');
       this.get('router').transitionTo(slide.path);
+      this.get('realtime').emit('goToSlide', { slide: slide.path });
     }
   },
 
   first() {
     let slidePath = this.get('slidePaths.firstObject');
     this.get('router').transitionTo(slidePath);
+  },
+
+  goToSlide(slide) {
+    if (this.get('session2.isAuthenticated')) {
+      this.get('router').transitionTo(slide);
+
+      schedule('afterRender', this, () => {
+        window.scrollTo(0, 0);
+      });
+    }
   },
 });
