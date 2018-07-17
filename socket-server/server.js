@@ -174,21 +174,23 @@ module.exports = class SocketServer {
       return false;
     }
 
-    if (!roles) {
-      return false;
-    }
+    return true; //TODO: GJ: implement for v2 architecture
 
-    let user = this.userStore.getUserBySocketId(socket.id);
-
-    if (user) {
-      for (let i=0; i<roles.length; i++) {
-        if (user.role === roles[i]) {
-          return true;
-        }
-      }
-    }
-
-    return false;
+    // if (!roles) {
+    //   return false;
+    // }
+    //
+    // let user = this.userStore.getUserBySocketId(socket.id);
+    //
+    // if (user) {
+    //   for (let i=0; i<roles.length; i++) {
+    //     if (user.role === roles[i]) {
+    //       return true;
+    //     }
+    //   }
+    // }
+    //
+    // return false;
   }
 
   emitToRole(role, name, data) { //TODO: GJ: use rooms for this
