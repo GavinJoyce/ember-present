@@ -12,6 +12,7 @@
 */
 
 export default {
+  'n-1': -1,
   auto: 'auto',
   '0': 0,
   '10': 10,

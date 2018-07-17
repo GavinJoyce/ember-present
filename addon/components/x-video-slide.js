@@ -7,6 +7,7 @@ import { task, timeout } from 'ember-concurrency';
 export default Component.extend(Realtime, {
   layout,
   tagName: 'video',
+  classNames: ['w-full', 'p-0', 'm-0'],
   attributeBindings: ['preload', 'autoplay'],
 
   index: 0,
