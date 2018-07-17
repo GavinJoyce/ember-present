@@ -1,9 +1,3 @@
-.slides {
-  height:100vh;
-  background-color: #111;
-  color: #eee;
-}
-
 .scaled-slide {
   width: 1280px;
   height: 720px;
@@ -22,24 +16,9 @@
   height:100vh;
 }
 
-.video-background {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: -1;
-}
-
 .gradient-background {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   background-size: 400% 400%;
   animation: GradientBackground 20s ease infinite;
-  z-index: -1;
 }
 
 @keyframes GradientBackground {
@@ -52,13 +31,6 @@
   100% {
     background-position: 0% 50%
   }
-}
-
-
-video {
-  width: 100%;
-  padding: 0;
-  margin: 0;
 }
 
 .htmlbars.hljs, .javascript.hljs {

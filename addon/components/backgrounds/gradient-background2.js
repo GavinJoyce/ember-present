@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  classNames: 'gradient-background',
+  classNames: ['gradient-background', 'fixed', 'pin', 'z-n-1'],
 
   init() {
     this._super(...arguments);
