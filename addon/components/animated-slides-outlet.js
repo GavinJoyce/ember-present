@@ -17,8 +17,8 @@ const REVERSE_TRANSITIONS_MAP = {
 export default Component.extend({
   layout,
 
-  slides2: service(),
-  session2: service(),
+  slides: service(),
+  session: service(),
 
   duration: 300,
 
@@ -27,7 +27,7 @@ export default Component.extend({
   }),
 
   _rules: function({ newItems, oldItems }) {
-    let role = this.get('session2.role');
+    let role = this.get('session.role');
 
     if (role !== 'screen') { //TODO: do we want to support non-screen transitions?
       return undefined;
@@ -44,8 +44,8 @@ export default Component.extend({
       targetRouteName = targetRoute.outlets.main.render.name;
     }
 
-    let slides2 = this.get('slides2');
-    let slideTransition = slides2.getSlideTransition(sourceRouteName, targetRouteName);
+    let slides = this.get('slides');
+    let slideTransition = slides.getSlideTransition(sourceRouteName, targetRouteName);
     let targetTransition = slideTransition.get('targetSlide.config.transition');
     let sourceTransition = slideTransition.get('sourceSlide.config.transition');
 

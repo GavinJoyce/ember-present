@@ -3,7 +3,7 @@ import { inject } from '@ember/service';
 
 export default Component.extend({
   realtime: inject(),
-  session2: inject(),
+  session: inject(),
 
   actions: {
     chooseColour(favouriteColour) {

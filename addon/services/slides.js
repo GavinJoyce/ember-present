@@ -14,7 +14,7 @@ import slideControllerTemplate from 'ember-present/templates/internal/slide-cont
 export default Service.extend(EmberKeyboard, {
   realtime: service(),
   router: service(),
-  session2: service(),
+  session: service(),
 
   slideRoutes: undefined,
   roles: undefined,
@@ -39,8 +39,8 @@ export default Service.extend(EmberKeyboard, {
     this.get('slideRoutes').pushObject(slide);
 
     let SlideController = Controller.extend({
-      session2: service(),
-      slides2: service(),
+      session: service(),
+      slides: service(),
       slide,
     });
 
@@ -182,7 +182,7 @@ export default Service.extend(EmberKeyboard, {
   },
 
   goToSlide(slide) {
-    if (this.get('session2.isAuthenticated')) {
+    if (this.get('session.isAuthenticated')) {
       this.get('router').transitionTo(slide);
 
       schedule('afterRender', this, () => {

@@ -6,7 +6,7 @@ const routerServiceStub = Service.extend({
   currentRouteName: ''
 });
 
-module('Unit | Service | slides2', function(hooks) {
+module('Unit | Service | slides', function(hooks) {
   setupTest(hooks);
 
   hooks.beforeEach(function() {
@@ -14,7 +14,7 @@ module('Unit | Service | slides2', function(hooks) {
   });
 
   test('registerSlide', function(assert) {
-    let service = this.owner.lookup('service:slides2');
+    let service = this.owner.lookup('service:slides');
 
     assert.equal(service.get('slideRoutes.length'), 0, 'there are no slides by default');
 
@@ -32,7 +32,7 @@ module('Unit | Service | slides2', function(hooks) {
   });
 
   test('slidePaths and slideCount', function(assert) {
-    let service = this.owner.lookup('service:slides2');
+    let service = this.owner.lookup('service:slides');
 
     assert.deepEqual(service.get('slidePaths'), []);
     assert.deepEqual(service.get('slideCount'), 0);
@@ -45,7 +45,7 @@ module('Unit | Service | slides2', function(hooks) {
   });
 
   test('currentSlideIndex, currentSlideNumber, currentSlidePath, currentSlide and friends', function(assert) {
-    let service = this.owner.lookup('service:slides2');
+    let service = this.owner.lookup('service:slides');
 
     assert.deepEqual(service.get('previousSlideIndex'), 0);
 

@@ -6,15 +6,15 @@ import { computed } from '@ember/object';
 export default Component.extend({
   layout,
   tagName: '',
-  session2: service(),
+  session: service(),
 
-  slideContainerComponent: computed('session2.role', function() {
-    let role = this.get('session2.role');
+  slideContainerComponent: computed('session.role', function() {
+    let role = this.get('session.role');
 
     if (role === 'screen') {
-      return 'x-scaled-slide2';
+      return 'x-scaled-slide';
     } else {
-      return 'x-responsive-slide2';
+      return 'x-responsive-slide';
     }
   }),
 });

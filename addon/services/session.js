@@ -5,7 +5,7 @@ import { task } from 'ember-concurrency';
 export default Service.extend({
   router: inject(),
   realtime: inject(),
-  slides2: inject(),
+  slides: inject(),
 
   user: undefined,
   role: readOnly('user.role'),
