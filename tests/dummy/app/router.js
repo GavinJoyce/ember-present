@@ -8,16 +8,6 @@ const Router = EmberPresentRouter.extend({
 
 Router.map(function() {
   this.route('all');
-  this.route('all2');
-
-  this.route('login');
-
-  this.route('auth', { path: '/' }, function() {
-    this.route('screen');
-    this.route('presenter');
-    this.route('notes');
-    this.route('audience');
-  });
 
   this.route('slides', function() {
     this.role('screen');
