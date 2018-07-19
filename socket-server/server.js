@@ -188,11 +188,12 @@ module.exports = class SocketServer {
       return false;
     }
 
+    if (!roles) {
+      return false;
+    }
+
     return true; //TODO: GJ: implement for v2 architecture
 
-    // if (!roles) {
-    //   return false;
-    // }
     //
     // let user = this.userStore.getUserBySocketId(socket.id);
     //
