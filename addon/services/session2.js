@@ -1,20 +1,86 @@
 import Service, { inject } from '@ember/service';
-import { notEmpty, not } from '@ember/object/computed';
+import { notEmpty, not, readOnly } from '@ember/object/computed';
+import { task } from 'ember-concurrency';
 
 export default Service.extend({
   router: inject(),
+  realtime: inject(),
   slides2: inject(),
 
   user: undefined,
-  role: 'screen',
+  role: readOnly('user.role'),
   isAuthenticated: notEmpty('user'),
   isNotAuthenticated: not('user'),
 
-  actions: {
-    login(username, role) {
-      this.set('user', username); //this will soon be an object
-      this.set('role', role);
-      this.get('slides2').first();
-    }
+  isConnected: false,
+  isReconnecting: false,
+  isLoggingIn: readOnly('loginTask.isRunning'),
+
+  init() {
+    this._super(...arguments);
+
+    let realtime = this.get('realtime');
+
+    realtime.on('connect', () => {
+      this.set('isConnected', true);
+    });
+
+    realtime.on('disconnect', () => {
+      this.set('isConnected', false);
+    });
+
+    realtime.on('reconnecting', () => {
+      this.set('isReconnecting', true);
+    });
+
+    realtime.on('reconnect', () => {
+      this.set('isConnected', true);
+      this.set('isReconnecting', false);
+
+      let user = this.get('user');
+      if (user) {
+        return this.get('reconnectWithTokenTask').perform(user.token);
+      }
+    });
+
+    realtime.on('userMetadataUpdated', (metadata) => {
+      this.set('user.metadata', metadata)
+    });
   },
+
+  actions: {
+    login(username, password) {
+      return this.get('loginTask').perform(username, password);
+    },
+  },
+
+  loginTask: task(function * (username, password) {
+    let realtime = this.get('realtime');
+    console.log('GJ: login');
+    let response = yield realtime.emitWithResponse('login', { username, password });
+
+    this._handleResponse(response);
+  }),
+
+  reconnectWithTokenTask: task(function * (token) {
+    let realtime = this.get('realtime');
+    let response = yield realtime.emitWithResponse('reconnectWithToken', { token });
+    this._handleResponse(response);
+  }),
+
+  _handleResponse(response) {
+    console.log('GJ: login response', response);
+    if (response.isSuccess) {
+      this.set('user', response.user);
+      this.set('invalidLogin', false);
+
+      //TODO: GJ: persist token to cookies so that reloading the app works?
+      let slide = response.currentSlide || 'slides.auth.slide-1'; //TODO: make this dynamic based on slides config
+      this.get('router').transitionTo(slide);
+    } else {
+      this.set('user', undefined);
+      this.set('invalidLogin', true);
+      this.get('router').transitionTo('slides.login');
+    }
+  }
 });

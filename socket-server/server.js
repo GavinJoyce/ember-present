@@ -58,9 +58,16 @@ module.exports = class SocketServer {
         delete data.socketId;
 
         let userSocket = this.getSocket(socketId);
+
         if (userSocket) {
           let metadata = this.userStore.mergeUserMetadata(socketId, data);
+
           userSocket.emit('userMetadataUpdated', metadata);
+
+          //TODO: GJ: throttle this
+          Object.keys(data).forEach((key) => { //TODO: GJ: config roles to emit to
+            this.emitToRole('screen', `users.metadata.${key}.counts`, this.userStore.getMetadataCounts(key));
+          });
         }
       }),
 
@@ -82,6 +89,13 @@ module.exports = class SocketServer {
           return;
         }
         callback(this.userStore.getMetadataSummary(key));
+      }),
+
+      socket.on('getMetadataCounts', (key, callback) => {
+        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+          return;
+        }
+        callback(this.userStore.getMetadataCounts(key));
       }),
 
       socket.on('getUserStatistics', (callback) => {

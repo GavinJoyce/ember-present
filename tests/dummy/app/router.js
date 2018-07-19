@@ -32,6 +32,7 @@ Router.map(function() {
       this.slide('slide-3', { transition: 'slide' });
       this.slide('slide-4', { transition: 'slide' });
       this.slide('slide-5', { transition: 'slide' });
+      this.slide('colour-poll', { transition: 'slide' });
     });
   });
 });

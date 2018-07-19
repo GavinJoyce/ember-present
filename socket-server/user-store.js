@@ -103,6 +103,29 @@ module.exports = class UserStore {
     return data;
   }
 
+  getMetadataCounts(key) {
+    let counts = {};
+    let usersWithKey = 0;
+
+    Object.values(this.connectedUsers).forEach((user) => {
+      let value = user.metadata[key];
+
+      if (value !== undefined) {
+        usersWithKey++;
+        if (counts[value] === undefined) {
+          counts[value] = 1;
+        } else {
+          counts[value]++;
+        }
+      }
+    });
+
+    return {
+      count: usersWithKey,
+      counts
+    };
+  }
+
   get connectedUserCount() {
     return Object.keys(this.connectedUsers).length;
   }
