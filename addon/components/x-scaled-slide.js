@@ -9,7 +9,7 @@ export default Component.extend(DomMixin, {
   layout,
   classNames: ['slide', 'scaled-slide'],
 
-  slides2: inject(),
+  slides: inject(),
 
   // roleData: computed('slides.roleIdentifier', 'slide', function() {
   //   let slide = this.get('slide');

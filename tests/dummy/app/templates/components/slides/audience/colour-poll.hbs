@@ -1,0 +1,15 @@
+<style>
+  .slide {
+    background-color: red;
+  }
+
+  button.selected {
+    font-weight: bold;
+  }
+</style>
+
+<h2>What is your favourite colour? [{{session.user.metadata.favouriteColour}}]</h2>
+
+{{#each (array 'red' 'green' 'blue') as |colour|}}
+  <button onClick={{action 'chooseColour' colour}} class='{{if (eq colour session.user.metadata.favouriteColour ) 'selected'}}'>{{colour}}</button>
+{{/each}}

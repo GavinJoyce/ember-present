@@ -2,11 +2,11 @@ import EmberRouter from '@ember/routing/router';
 import { inject as service } from '@ember/service';
 
 export default EmberRouter.extend({
-  slides2: service(),
+  slides: service(),
 
   _buildDSL() {
     let dsl = this._super(...arguments);
-    let slides2 = this.get('slides2');
+    let slides = this.get('slides');
     let dslPrototype = Object.getPrototypeOf(dsl);
 
     dslPrototype.slide = function() {
@@ -21,12 +21,12 @@ export default EmberRouter.extend({
         path = `${parent}.${name}`;
       }
 
-      slides2.registerSlide(path, config);
+      slides.registerSlide(path, config);
       dslPrototype.route.apply(this, arguments);
     };
 
     dslPrototype.role = function(name, config = {}) {
-      slides2.registerRole(name, config);
+      slides.registerRole(name, config);
     }
 
     return dsl;
