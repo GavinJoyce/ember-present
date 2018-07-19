@@ -1,0 +1,30 @@
+<style>
+  .slide-grid h1 {
+    grid-column: 2 / 12;
+    grid-row: 4;
+    text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black;
+  }
+
+  .slide-grid h3 {
+    grid-column: 2 / 12;
+    grid-row: 5;
+    text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black;
+  }
+
+  .slide-grid h2 {
+    grid-column: 2 / 12;
+    grid-row: 6;
+    text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black;
+  }
+</style>
+
+{{#screen-slide}}
+  <div class='slide-grid text-5xl'>
+    <h1 class='text-blue'>Audience Poll:</h1>
+    <h3 class='text-yellow'>What's your favourite color?</h3>
+
+    <h2>
+      Red: {{counts.red}} - Green: {{counts.green}} - Blue: {{counts.blue}}
+    </h2>
+  </div>
+{{/screen-slide}}

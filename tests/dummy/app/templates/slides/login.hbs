@@ -1,7 +1,7 @@
 Login here
 
 <button
-  onclick={{action 'login' 'sophie' 'screen' target=session2}}
+  onclick={{action 'login' 'sophie' 'screenpassword' target=session2}}
   disabled={{session.isLoggingIn}}
   class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
 >
@@ -9,7 +9,7 @@ Login here
 </button>
 
 <button
-  onclick={{action 'login' 'pat' 'presenter' target=session2}}
+  onclick={{action 'login' 'pat' 'presenterpassword' target=session2}}
   disabled={{session.isLoggingIn}}
   class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
 >
@@ -17,9 +17,17 @@ Login here
 </button>
 
 <button
-  onclick={{action 'login' 'alex' 'audience' target=session2}}
+  onclick={{action 'login' 'alex' '' target=session2}}
   disabled={{session.isLoggingIn}}
   class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
 >
-  Audience
+  Audience 1
+</button>
+
+<button
+  onclick={{action 'login' 'ben' '' target=session2}}
+  disabled={{session.isLoggingIn}}
+  class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+>
+  Audience 2
 </button>

@@ -3,7 +3,16 @@
   Login...
 </h2>
 
-<div class="px-4">
+<h3 class="p-4">{{#link-to 'slides.auth.slide-1'}}Try the new v1 architecture{{/link-to}}</h3>
+
+<h3 class="p-4">
+  Or try {{#link-to 'all2'}}multiple{{/link-to}} at the same time
+</h3>
+
+
+<div class="px-4 text-xs">
+  <h3>Old architecture:</h3>
+
   {{#if (or (eq role 'screen') (not role))}}
     <button
       onclick={{action 'login' 'Screen' 'screenpassword' target=session}}
@@ -48,9 +57,7 @@
 </div>
 
 {{#unless role}}
-  <h3 class="p-4">
+  <h3 class="p-4 text-xs">
     Or try {{#link-to 'all'}}multiple{{/link-to}} at the same time
   </h3>
 {{/unless}}
-
-<h3 class="p-4">Or try the {{#link-to 'slides.auth.slide-1'}}WIP slides{{/link-to}} which use the v1 architecture</h3>
