@@ -16,6 +16,12 @@
     grid-row: 6;
     text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black;
   }
+
+  .slide-grid h4 {
+    grid-column: 2 / 12;
+    grid-row: 8;
+    text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black;
+  }
 </style>
 
 {{#screen-slide}}
@@ -24,7 +30,11 @@
     <h3 class='text-yellow'>What's your favourite color?</h3>
 
     <h2>
-      Red: {{counts.red}} - Green: {{counts.green}} - Blue: {{counts.blue}}
+      Red: {{colourCounts.red}} - Green: {{colourCounts.green}} - Blue: {{colourCounts.blue}}
     </h2>
+
+    <h4>
+      Cat: {{animalCounts.cat}} - Dog: {{animalCounts.dog}} - Cow: {{animalCounts.cow}}
+    </h4>
   </div>
 {{/screen-slide}}

@@ -8,8 +8,14 @@
   }
 </style>
 
-<h2>What is your favourite colour? [{{session.user.metadata.favouriteColour}}]</h2>
+<h4>What is your favourite colour?</h4>
 
 {{#each (array 'red' 'green' 'blue') as |colour|}}
-  <button onClick={{action 'chooseColour' colour}} class='{{if (eq colour session.user.metadata.favouriteColour ) 'selected'}}'>{{colour}}</button>
+  <button onClick={{action 'chooseColour' colour}} class='{{if (eq colour session.user.metadata.favouriteColour) 'selected'}}'>{{colour}}</button>
+{{/each}}
+
+<h4>What is your favourite animal?</h4>
+
+{{#each (array 'cat' 'dog' 'cow') as |animal|}}
+  <button onClick={{action 'chooseAnimal' animal}} class='{{if (eq animal session.user.metadata.favouriteAnimal) 'selected'}}'>{{animal}}</button>
 {{/each}}
