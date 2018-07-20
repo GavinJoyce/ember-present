@@ -1,3 +1,53 @@
-<ul>
-  <li>{{#link-to 'all'}}All Roles{{/link-to}}</li>
-</ul>
+<header class="bg-blue p-8">
+  <section class="container mx-auto text-white text-center">
+    <h1 class="text-5xl py-8">Welcome to ember-present</h1>
+    <h3 class="text-xl pb-8">A WIP! Ember addon for creating interactive presentations where the slides are Ember components</h3>
+    <a class="text-xl text-white hover:text-blue-lighter" href="https://github.com/gavinjoyce/ember-present">GitHub</a>
+  </section>
+</header>
+<main class="p-8">
+  <section class="p-8">
+    <div class="container mx-auto text-xl text-center">
+
+      Login as
+      <button
+        onclick={{action 'login' 'sophie' 'screenpassword' target=session}}
+        disabled={{session.isLoggingIn}}
+        class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+      >
+        Screen
+      </button>
+
+      <button
+        onclick={{action 'login' 'pat' 'presenterpassword' target=session}}
+        disabled={{session.isLoggingIn}}
+        class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+      >
+        Presenter
+      </button>
+
+      <button
+        onclick={{action 'login' 'alex' '' target=session}}
+        disabled={{session.isLoggingIn}}
+        class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+      >
+        Audience 1
+      </button>
+
+      <button
+        onclick={{action 'login' 'ben' '' target=session}}
+        disabled={{session.isLoggingIn}}
+        class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+      >
+        Audience 2
+      </button>
+
+      or try
+
+      {{#link-to 'all' tagName='button' class="bg-white hover:bg-blue text-blue-dark hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"}}
+        Multiple
+      {{/link-to}}
+
+    </div>
+  </section>
+</main>
