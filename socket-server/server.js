@@ -1,4 +1,5 @@
 const UserStore = require('./user-store');
+const throttleWithArgs = require('./throttle-with-args');
 const http = require('http').Server(this.app);
 const io = require('socket.io')(http);
 
@@ -13,8 +14,9 @@ module.exports = class SocketServer {
     this.configuration = configuration;
 
     this.userStore = new UserStore(configuration);
-
     this.currentSlide; //TODO: extract to state class
+
+    this.throttledEmitToRole = throttleWithArgs((...args) => this.emitToRole.apply(this, args));
   }
 
   start() {
@@ -61,12 +63,11 @@ module.exports = class SocketServer {
 
         if (userSocket) {
           let metadata = this.userStore.mergeUserMetadata(socketId, data);
-
           userSocket.emit('userMetadataUpdated', metadata);
 
-          //TODO: GJ: throttle this
           Object.keys(data).forEach((key) => { //TODO: GJ: config roles to emit to
-            this.emitToRole('screen', `users.metadata.${key}.counts`, this.userStore.getMetadataCounts(key));
+            let countData = this.userStore.getMetadataCounts(key);
+            this.throttledEmitToRole('screen', `users.metadata.${key}.counts`, countData);
           });
         }
       }),
