@@ -1,5 +1,5 @@
 import Service, { inject } from '@ember/service';
-import { notEmpty, not, readOnly } from '@ember/object/computed';
+import { equal, notEmpty, not, readOnly } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Service.extend({
@@ -15,6 +15,8 @@ export default Service.extend({
   isConnected: false,
   isReconnecting: false,
   isLoggingIn: readOnly('loginTask.isRunning'),
+
+  canNavigateSlides: equal('role', 'presenter'),
 
   init() {
     this._super(...arguments);
