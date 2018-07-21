@@ -13,4 +13,9 @@ import colors from './colors';
 |
 */
 
-export default colors;
+export default Object.assign({}, colors, {
+  'primary': colors['bg-primary'],
+  'secondary': colors['bg-secondary'],
+  'default': colors['bg-default'],
+  'inverse': colors['bg-inverse'],
+});

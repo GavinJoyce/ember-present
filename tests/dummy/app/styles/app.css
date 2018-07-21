@@ -3,3 +3,27 @@ body {
   margin: 0;
   font-size: 2em;
 }
+
+
+.theme-custom {
+  --color-bg-primary: blue;
+  --color-bg-secondary: red;
+  --color-bg-default: green;
+  --color-bg-inverse: pink;
+
+  --color-text-primary: #fff;
+  --color-text-secondary: pink;
+  --color-text-default: black;
+  --color-text-default-soft: #eee;
+  --color-text-inverse: teal;
+  --color-text-inverse-soft: #333;
+
+  --font-display: Georgia, Times, "Times New Roman", serif;
+  --font-body: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
+
+  --font-weight-normal: 400;
+  --font-weight-display: 400;
+  --font-weight-btn: 600;
+
+  --rounded-btn: .4rem;
+}

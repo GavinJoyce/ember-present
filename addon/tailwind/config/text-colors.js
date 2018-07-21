@@ -13,4 +13,11 @@ import colors from './colors';
 |
 */
 
-export default colors;
+export default Object.assign({}, colors, {
+  'primary': colors['text-primary'],
+  'secondary': colors['text-secondary'],
+  'default': colors['text-default'],
+  'default-soft': colors['text-default-soft'],
+  'inverse': colors['text-inverse'],
+  'inverse-soft': colors['text-inverse-soft'],
+});
