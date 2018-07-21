@@ -2,7 +2,7 @@ import Component from '@ember/component';
 // import { computed, get } from '@ember/object';
 // import { readOnly, notEmpty } from '@ember/object/computed';
 import { inject } from '@ember/service';
-import layout from '../templates/components/x-scaled-slide2';
+import layout from '../templates/components/x-scaled-slide';
 import DomMixin from 'ember-lifeline/mixins/dom';
 
 export default Component.extend(DomMixin, {

@@ -190,4 +190,13 @@ export default Service.extend(EmberKeyboard, {
       });
     }
   },
+
+  actions: {
+    previous() {
+      this.previous();
+    },
+    next() {
+      this.next();
+    },
+  }
 });

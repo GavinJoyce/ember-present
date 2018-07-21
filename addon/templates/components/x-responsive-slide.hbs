@@ -1,1 +1,28 @@
-{{yield}}
+{{yield
+  (hash
+    content=(component 'x-responsive-slide-content')
+  )
+}}
+
+{{#if session.canNavigateSlides}}
+  <div class="bg-yellow fixed pin-x pin-b flex">
+    <button
+      class="flex-1 h-12 m-2 bg-yellow-lighter hover:bg-yellow-light text-lg text-blue hover:text-blue-dark font-bold border border-blue"
+      onclick={{action 'previous' target=slides}}
+    >
+      {{#if slides.hasPreviousSlide}}
+        &lt; prev
+      {{/if}}
+    </button>
+
+    <button
+      class="flex-1 h-12 m-2 bg-yellow-lighter hover:bg-yellow-light disabled:bg-red text-lg text-blue hover:text-blue-dark font-bold border border-blue"
+      onclick={{action 'next' target=slides}}
+      disabled={{not slides.hasNextSlide}}
+    >
+      {{#if slides.hasNextSlide}}
+        next &gt;
+      {{/if}}
+    </button>
+  </div>
+{{/if}}

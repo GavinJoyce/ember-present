@@ -7,6 +7,7 @@ export default Component.extend({
   layout,
   tagName: '',
   session: service(),
+  slides: service(),
 
   slideContainerComponent: computed('session.role', function() {
     let role = this.get('session.role');

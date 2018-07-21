@@ -1,3 +1,8 @@
-{{#component slideContainerComponent}}
-  {{component (concat 'slides/' session.role '/' slide.componentName)}}
+{{#component slideContainerComponent as |api|}}
+  {{component
+    (concat 'slides/' session.role '/' slide.componentName)
+    slide=api
+    slides=slides
+    session=session
+  }}
 {{/component}}
