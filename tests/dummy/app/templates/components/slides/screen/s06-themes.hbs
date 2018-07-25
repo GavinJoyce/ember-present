@@ -1,0 +1,35 @@
+{{backgrounds/gradient-background}}
+
+{{#slide.content}}
+  <div class="{{selectedTheme}}">
+    <div class="font-body fixed pin flex flex-col items-center items-stretch justify-center border">
+      <div class="self-center p-4 mb-4 text-4xl">
+        <h1>Audience Poll</h1>
+      </div>
+      <div class="self-center p-4 mb-4 text-black">
+        <h3>What's your favourite color?</h3>
+      </div>
+      <div class="self-center p-2 mb-2">
+        <h2>
+          [Red: 1] [Green: 2] [Blue: 3]
+        </h2>
+      </div>
+      <div class="self-center p-2 mb-2">
+        <h3>
+          [Cat: 4] [Dog: 2] [Cow: 0]
+        </h3>
+      </div>
+
+      <div class="self-center p-2 mb-2">
+        {{#each (array 'theme-startup' 'theme-boring' 'theme-elegant' 'theme-custom') as |theme|}}
+          <button
+            onclick={{action (mut selectedTheme) theme}}
+            class="font-body rounded-btn text-xl font-medium px-6 py-3 mr-2 {{if (eq theme selectedTheme) 'bg-primary text-primary' 'bg-secondary text-secondary'}}"
+          >
+            {{theme}}
+          </button>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+{{/slide.content}}

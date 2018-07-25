@@ -1,8 +1,16 @@
 {{backgrounds/gradient-background}}
 
-<h1>Screen Slide 3</h1>
-<h2>An example of background animated gradient</h2>
+{{#slide.content}}
+  <div class="font-body fixed pin flex flex-col items-center justify-center">
+    <div class="self-center text-grey-lightest">
+      <h2 class="text-shadow">Screen Slide 2</h2>
+      <h3 class="text-shadow">An example of background animated gradient</h3>
+    </div>
+    <div class="self-center p-4 mb-4 w-full">
+      {{code-snippet name="sample-template.hbs"}}
+      {{code-snippet name="sample.js"}}
+      {{code-snippet name="inline.js" source="let g = 99;"}}
+    </div>
+  </div>
+{{/slide.content}}
 
-{{code-snippet name="sample-template.hbs"}}
-{{code-snippet name="sample.js"}}
-{{code-snippet name="inline.js" source="let g = 99;"}}

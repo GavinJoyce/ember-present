@@ -1,22 +1,13 @@
 {{backgrounds/gradient-background colors=(array '#e7e33c' '#e7e33c' '#d52362' '#d523ba')}}
 
-<style>
-  .slide-grid h1 {
-    grid-column: 2 / 12;
-    grid-row: 5;
-    text-shadow: 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black, 0 0 4px black;
-  }
-
-  .slide-grid h3 {
-    grid-column: 2 / 12;
-    grid-row: 6;
-    text-shadow: #000 0px 0px 4px;
-  }
-</style>
-
-{{#screen-slide}}
-  <div class='slide-grid text-5xl'>
-    <h1 class='text-orange'>ember-present</h1>
-    <h3 class='text-blue-light'>@gavinjoyce</h3>
+{{#slide.content}}
+  <div class="font-body fixed pin flex flex-col items-center justify-center text-5xl">
+    <div class="self-center p-4 mb-4 text-orange">
+      <h1 class="text-shadow">ember-present</h1>
+    </div>
+    <div class="self-center p-4 mb-4 text-blue-light">
+      <h3 class="text-shadow">@gavinjoyce</h3>
+    </div>
+    <div class="h-24"></div>
   </div>
-{{/screen-slide}}
+{{/slide.content}}
