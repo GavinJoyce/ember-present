@@ -17,6 +17,9 @@
 */
 
 export default {
+  'display': 'var(--font-display)',
+  'body': 'var(--font-body)',
+
   sans: [
     'system-ui',
     'BlinkMacSystemFont',

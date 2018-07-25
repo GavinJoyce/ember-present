@@ -15,6 +15,8 @@
 */
 
 export default {
+  'btn': 'var(--rounded-btn)',
+
   none: '0',
   sm: '.125rem',
   default: '.25rem',

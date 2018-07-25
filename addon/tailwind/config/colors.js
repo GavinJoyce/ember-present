@@ -15,6 +15,18 @@
 */
 
 export default {
+  'bg-primary': 'var(--color-bg-primary)',
+  'bg-secondary': 'var(--color-bg-secondary)',
+  'bg-default': 'var(--color-bg-default)',
+  'bg-inverse': 'var(--color-bg-inverse)',
+
+  'text-primary': 'var(--color-text-primary)',
+  'text-secondary': 'var(--color-text-secondary)',
+  'text-default': 'var(--color-text-default)',
+  'text-default-soft': 'var(--color-text-default-soft)',
+  'text-inverse': 'var(--color-text-inverse)',
+  'text-inverse-soft': 'var(--color-text-inverse-soft)',
+
   transparent: 'transparent',
 
   black: '#22292f',

@@ -1,5 +1,24 @@
-<h1>5</h1>
-<h1>5</h1>
-<h1>5</h1>
-<h1>5</h1>
-<h1>5</h1>
+{{backgrounds/gradient-background}}
+
+<div class="{{selectedTheme}}">
+  <div class="bg-inverse font-body fixed pin">
+    <div class="mx-auto px-4">
+      <div class="py-16 text-center">
+        <div class="mb-6">
+          <h1 class="font-display text-inverse font-light text-5xl mb-4">Slide Themes</h1>
+          <p class="font-normal text-inverse-soft text-2xl">Please choose a theme:</p>
+        </div>
+        <div>
+          {{#each (array 'theme-startup' 'theme-boring' 'theme-elegant' 'theme-custom') as |theme|}}
+            <button
+              onclick={{action (mut selectedTheme) theme}}
+              class="font-body rounded-btn text-xl font-medium px-6 py-3 mr-2 {{if (eq theme selectedTheme) 'bg-primary text-primary' 'bg-secondary text-secondary'}}"
+            >
+              {{theme}}
+            </button>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

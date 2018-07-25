@@ -2,4 +2,8 @@
   {{x-slide-background backgroundData=backgroundData}}
 {{/if}}
 
-{{yield}}
+{{yield
+  (hash
+    content=(component 'x-scaled-slide-content')
+  )
+}}
