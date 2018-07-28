@@ -1,0 +1,30 @@
+{{backgrounds/gradient-background}}
+
+{{#slide.content}}
+  <h1 class="text-white p-4 self-center">
+    ember-animated
+  </h1>
+
+  <div class="flex items-stretch w-full h-full">
+    <div class="flex-1 w-1/2 bg-red">
+      {{#animated-container}}
+        {{#animated-each leftItems use=transition as |item|}}
+          <div {{action "move" item}}>
+            {{item.id}}
+            <button>&rarr;</button>
+          </div>
+        {{/animated-each}}
+      {{/animated-container}}
+    </div>
+    <div class="flex-1 w-1/2 bg-green">
+      {{#animated-container}}
+        {{#animated-each rightItems use=transition as |item|}}
+          <div {{action "move" item}}>
+            <button>&larr;</button>
+            {{item.id}}
+          </div>
+        {{/animated-each}}
+      {{/animated-container}}
+    </div>
+  </div>
+{{/slide.content}}
