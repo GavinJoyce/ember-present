@@ -23,6 +23,7 @@ Router.map(function() {
       this.slide('s04-tailwind', { transition: 'slide' });
       this.slide('s05-poll', { transition: 'slide' });
       this.slide('s06-cursor', { transition: 'slide' });
+      this.slide('s07-ember-animated', { transition: 'slide' });
     });
   });
 });
