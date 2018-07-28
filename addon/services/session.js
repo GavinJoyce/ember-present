@@ -71,14 +71,13 @@ export default Service.extend({
   }),
 
   _handleResponse(response) {
-    console.log('GJ: login response', response);
     if (response.isSuccess) {
       this.set('user', response.user);
       this.set('invalidLogin', false);
 
       //TODO: GJ: persist token to cookies so that reloading the app works?
-      let slide = response.currentSlide || 'slides.auth.slide-1'; //TODO: make this dynamic based on slides config
-      this.get('router').transitionTo(slide);
+      let slidePath = response.currentSlide || this.get('slides.firstSlide.path');
+      this.get('router').transitionTo(slidePath);
     } else {
       this.set('user', undefined);
       this.set('invalidLogin', true);

@@ -74,6 +74,8 @@ export default Service.extend(EmberKeyboard, {
     });
   },
 
+  firstSlide: readOnly('slideRoutes.firstObject'),
+
   currentSlideIndex: computed('slidePaths.[]', 'currentRouteName', function() {
     let currentRouteName = this.get('currentRouteName');
     let index = this.get('slidePaths').indexOf(currentRouteName);

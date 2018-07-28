@@ -2863,9 +2863,9 @@ ember-cli@~3.2.0:
     watch-detector "^0.1.0"
     yam "^0.0.24"
 
-ember-code-snippet@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/ember-code-snippet/-/ember-code-snippet-2.0.1.tgz#59147f874a1d725a8aa84d820f6274e6aff083b9"
+ember-code-snippet@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/ember-code-snippet/-/ember-code-snippet-2.2.1.tgz#f4ea7091a424de137833b418473b6f3e0a6a1cd7"
   dependencies:
     broccoli-flatiron "^0.1.2"
     broccoli-merge-trees "^1.0.0"

@@ -17,12 +17,12 @@ Router.map(function() {
     this.route('login');
 
     this.route('auth', { path: '/' }, function() {
-      this.slide('slide-1', { transition: 'slide' }); //we may want to allow transitions per role. let's just assume `screen` for now
-      this.slide('slide-2', { transition: 'slide' });
-      this.slide('slide-3', { transition: 'slide' });
-      this.slide('slide-4', { transition: 'slide' });
-      this.slide('slide-5', { transition: 'slide' });
-      this.slide('colour-poll', { transition: 'slide' });
+      this.slide('s01-title', { transition: 'slide' }); //we may want to allow transitions per role. let's just assume `screen` for now
+      this.slide('s02-code', { transition: 'slide' });
+      this.slide('s03-video', { transition: 'slide' });
+      this.slide('s04-tailwind', { transition: 'slide' });
+      this.slide('s05-poll', { transition: 'slide' });
+      this.slide('s06-cursor', { transition: 'slide' });
     });
   });
 });
