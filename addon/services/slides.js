@@ -26,7 +26,9 @@ export default Service.extend(EmberKeyboard, {
 
     this.set('keyboardActivated', true);
     this.set('slideRoutes', A());
-    this.set('roles', A());
+    this.set('roles', A(
+      [{ name: 'screen' }]
+    ));
 
     let realtime = this.get('realtime');
     realtime.on('goToSlide', (data) => {
