@@ -21,6 +21,7 @@ Router.map(function() {
       this.slide('s05-poll', { transition: 'slide' });
       this.slide('s06-pointer', { transition: 'slide' });
       this.slide('s07-ember-animated', { transition: 'slide' });
+      this.slide('s08-ember-animated-2', { transition: 'nonw' });
     });
   });
 });
