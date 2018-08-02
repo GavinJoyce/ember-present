@@ -18,16 +18,18 @@ module('Unit | Service | slides', function(hooks) {
 
     assert.equal(service.get('slideRoutes.length'), 0, 'there are no slides by default');
 
-    service.registerSlide('slide-1');
+    service.registerSlide('slide-1', 'parent-1');
 
     assert.equal(service.get('slideRoutes.length'), 1);
     assert.equal(service.get('slideRoutes.0.path'), 'slide-1');
+    assert.equal(service.get('slideRoutes.0.parent'), 'parent-1');
     assert.deepEqual(service.get('slideRoutes.0.config'), {});
 
-    service.registerSlide('slide-2', { theme: 'fire' });
+    service.registerSlide('slide-2', 'parent-2', { theme: 'fire' });
 
     assert.equal(service.get('slideRoutes.length'), 2);
     assert.equal(service.get('slideRoutes.1.path'), 'slide-2');
+    assert.equal(service.get('slideRoutes.1.parent'), 'parent-2');
     assert.deepEqual(service.get('slideRoutes.1.config'), { theme: 'fire' });
   });
 
@@ -37,8 +39,8 @@ module('Unit | Service | slides', function(hooks) {
     assert.deepEqual(service.get('slidePaths'), []);
     assert.deepEqual(service.get('slideCount'), 0);
 
-    service.registerSlide('slide-1');
-    service.registerSlide('slide-2');
+    service.registerSlide('slide-1', 'application');
+    service.registerSlide('slide-2', 'application');
 
     assert.deepEqual(service.get('slidePaths'), ['slide-1', 'slide-2']);
     assert.deepEqual(service.get('slideCount'), 2);
@@ -49,9 +51,9 @@ module('Unit | Service | slides', function(hooks) {
 
     assert.deepEqual(service.get('previousSlideIndex'), 0);
 
-    service.registerSlide('slide-1');
-    service.registerSlide('slide-2');
-    service.registerSlide('slide-3');
+    service.registerSlide('slide-1', 'application');
+    service.registerSlide('slide-2', 'application');
+    service.registerSlide('slide-3', 'application');
 
     service.set('currentRouteName', 'slide-1');
 

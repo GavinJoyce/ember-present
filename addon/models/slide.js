@@ -2,14 +2,21 @@ import Object, { computed } from '@ember/object';
 
 export default Object.extend({
   path: undefined,
+  parent: undefined,
   config: undefined,
 
-  componentName: computed('containerPath', function() { //TODO: GJ: improve how we determine the component name
-    let containerPath = this.get('containerPath');
-    return containerPath.replace('slides/auth.', '');
+  componentName: computed('path', 'parent', function() {
+    let path = this.get('path');
+    let parent = this.get('parent');
+
+    return path.replace(`${parent}.`, '');
   }),
 
   containerPath: computed('path', function() {
-    return this.get('path').replace('.', '/');
+    return this.get('path').replace(/\./g, '/');
   }),
+
+  getRoleComponentPath(role) {
+    return `slides/${role.name}/${this.get('componentName')}`;
+  },
 });

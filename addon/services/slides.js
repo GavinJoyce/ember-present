@@ -34,8 +34,8 @@ export default Service.extend(EmberKeyboard, {
     }, this);
   },
 
-  registerSlide(path, config = {}) {
-    let slide = Slide.create({ path, config });
+  registerSlide(path, parent, config = {}) {
+    let slide = Slide.create({ path, parent, config });
     this.get('slideRoutes').pushObject(slide);
 
     let SlideController = Controller.extend({
@@ -48,10 +48,18 @@ export default Service.extend(EmberKeyboard, {
     let containerPath = slide.get('containerPath');
     owner.register(`controller:${containerPath}`, SlideController);
     owner.register(`template:${containerPath}`, slideControllerTemplate);
+
+    let roles = this.get('roles');
+    roles.forEach(role => {
+      let componentPath = slide.getRoleComponentPath(role);
+      if (!this._componentExists(componentPath)) {
+        slide.set(`${role.name}SlideIsMissing`, true);
+      }
+    });
   },
 
   registerRole(name, config) {
-    this.get('roles').pushObject({
+    this.get('roles').pushObject({ //TODO: GJ: extract class
       name,
       config,
     });
@@ -200,5 +208,10 @@ export default Service.extend(EmberKeyboard, {
     next() {
       this.next();
     },
-  }
+  },
+
+  _componentExists(componentPath) {
+    let template = getOwner(this).lookup(`template:components/${componentPath}`);
+    return !!template;
+  },
 });
