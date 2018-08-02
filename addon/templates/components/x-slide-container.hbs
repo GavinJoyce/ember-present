@@ -1,8 +1,14 @@
 {{#component slideContainerComponent as |api|}}
-  {{component
-    (concat 'slides/' session.role '/' slide.componentName)
-    slide=api
-    slides=slides
-    session=session
-  }}
+  {{#let (concat 'slides/' session.role '/' slide.componentName) as |componentPath|}}
+    {{#if (get slide (concat session.role 'SlideIsMissing'))}}
+      [{{componentPath}} is missing]
+    {{else}}
+      {{component
+        componentPath
+        slide=api
+        slides=slides
+        session=session
+      }}
+    {{/if}}
+  {{/let}}
 {{/component}}

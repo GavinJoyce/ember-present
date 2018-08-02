@@ -4,7 +4,7 @@ const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
 
 module.exports = function(defaults) {
   let app = new EmberAddon(defaults, {
-    snippetPaths: ['tests/dummy/app/snippets']
+    snippetPaths: ['tests/dummy/app/snippets'],
   });
 
   app.import('node_modules/waud.js/dist/waud.min.js');

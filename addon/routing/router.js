@@ -21,13 +21,13 @@ export default EmberRouter.extend({
         path = `${parent}.${name}`;
       }
 
-      slides.registerSlide(path, config);
+      slides.registerSlide(path, parent, config);
       dslPrototype.route.apply(this, arguments);
     };
 
     dslPrototype.role = function(name, config = {}) {
       slides.registerRole(name, config);
-    }
+    };
 
     return dsl;
   }

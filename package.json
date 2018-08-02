@@ -30,7 +30,7 @@
     "ember-keyboard": "^2.3.0",
     "ember-lifeline": "^2.0.0",
     "ember-truth-helpers": "^2.0.0",
-    "ember-websockets": "^7.1.1",
+    "ember-websockets": "^7.2.0",
     "lodash": "^4.17.10",
     "waud.js": "^1.0.3"
   },
