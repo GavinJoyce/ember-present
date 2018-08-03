@@ -8,12 +8,15 @@ export default Component.extend(Realtime, {
   layout,
   tagName: 'video',
   classNames: ['w-full', 'p-0', 'm-0'],
-  attributeBindings: ['preload', 'autoplay'],
+  attributeBindings: ['preload', 'autoplay', 'loop'],
 
   index: 0,
   sections: undefined,
-  autoplay: notEmpty('sections'),
+  autoplay: true,
   preload: true,
+  loop: false,
+
+  hasSections: notEmpty('sections'),
 
   init() {
     this._super(...arguments);
@@ -31,6 +34,7 @@ export default Component.extend(Realtime, {
     this.addRealtimeListener('videoPause', () => this.pause());
 
     if (this.get('autoplay')) {
+      console.log('PERFORM');
       this.get('next').perform();
     }
   },
@@ -49,17 +53,21 @@ export default Component.extend(Realtime, {
     let video = this.$()[0];
     video.pause();
 
-    let index = this.get('index');
-    let section = this.get('sections')[index];
-
-    if(section) {
-      video.currentTime = section.start;
+    if (!this.get('hasSections')) {
       video.play();
-      this.incrementProperty('index');
-
-      yield this.get('stop').perform((section.end - section.start) * 1000);
     } else {
-      yield false;
+      let index = this.get('index');
+      let section = this.get('sections')[index];
+
+      if(section) {
+        video.currentTime = section.start;
+        video.play();
+        this.incrementProperty('index');
+
+        yield this.get('stop').perform((section.end - section.start) * 1000);
+      } else {
+        yield false;
+      }
     }
   }),
 
