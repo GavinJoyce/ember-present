@@ -2,10 +2,12 @@ import Component from '@ember/component';
 import { inject } from '@ember/service';
 import layout from '../templates/components/x-scaled-slide';
 import DomMixin from 'ember-lifeline/mixins/dom';
+import Realtime from 'ember-present/mixins/realtime';
 
-export default Component.extend(DomMixin, {
+export default Component.extend(DomMixin, Realtime, {
   layout,
   classNames: ['slide', 'scaled-slide'],
+  pointerData: undefined,
 
   slides: inject(),
 
@@ -14,6 +16,10 @@ export default Component.extend(DomMixin, {
 
     this.addEventListener(window, 'resize', this._onResize);
     this._onResize();
+
+    this.addRealtimeListener('pointerData', (pointerData) => {
+      this.set('pointerData', pointerData);
+    });
   },
 
   _onResize() {

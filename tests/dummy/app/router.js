@@ -8,6 +8,7 @@ const Router = EmberPresentRouter.extend({
 
 Router.map(function() {
   this.route('all');
+  this.route('screen-and-presenter');
 
   this.route('slides', function() {
     this.role('screen');
@@ -22,7 +23,7 @@ Router.map(function() {
       this.slide('s03-video', { transition: 'slide' });
       this.slide('s04-tailwind', { transition: 'slide' });
       this.slide('s05-poll', { transition: 'slide' });
-      this.slide('s06-cursor', { transition: 'slide' });
+      this.slide('s06-pointer', { transition: 'slide' });
       this.slide('s07-ember-animated', { transition: 'slide' });
     });
   });
