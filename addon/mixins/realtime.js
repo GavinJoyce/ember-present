@@ -12,11 +12,21 @@ export default Mixin.create(DisposableMixin, {
     this.registerDisposable(() => realtime.off(name, callback));
   },
 
-  async addMetadataSummaryRealtimeListener(key, callback) { //TODO: task?
+  async addMetadataSummaryRealtimeListener(key, callback) {
     this.addRealtimeListener(`users.metadata.${key}.summary`, callback);
 
     let realtime = this.get('realtime');
     let data = await realtime.emitWithResponse('getMetadataSummary', key);
+
+    if (this.isDestroyed) { return; }
+    callback(data);
+  },
+
+  async addMetadataCountsRealtimeListener(key, callback) {
+    this.addRealtimeListener(`users.metadata.${key}.counts`, callback);
+
+    let realtime = this.get('realtime');
+    let data = await realtime.emitWithResponse('getMetadataCounts', key);
 
     if (this.isDestroyed) { return; }
     callback(data);

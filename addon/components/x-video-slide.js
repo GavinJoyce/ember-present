@@ -34,7 +34,6 @@ export default Component.extend(Realtime, {
     this.addRealtimeListener('videoPause', () => this.pause());
 
     if (this.get('autoplay')) {
-      console.log('PERFORM');
       this.get('next').perform();
     }
   },
