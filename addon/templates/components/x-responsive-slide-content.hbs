@@ -1,3 +1,10 @@
 <div class="bg-blue min-h-screen mb-16">
-  {{yield}}
+  {{yield
+    (hash
+      components=(hash
+        xyInput=(component 'inputs/xy-input')
+        pointerInput=(component 'inputs/pointer-input')
+      )
+    )
+  }}
 </div>

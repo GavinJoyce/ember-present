@@ -1,0 +1,44 @@
+<style>
+  .iframe-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+    grid-gap: 0px;
+    background-color: #fff;
+    color: #444;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    background-color: #333;
+  }
+
+  .iframe-grid iframe {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  iframe.responsive {
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    background-color: #eee;
+  }
+
+  iframe.screen {
+    background-color: #03a9f4;
+  }
+
+  iframe.presenter {
+    background-color: #e91e63;
+  }
+</style>
+
+<div class='iframe-grid'>
+  <iframe src='{{href-to "slides.login"}}' class='scaled screen' />
+  <iframe src='{{href-to "slides.login"}}' class='responsive presenter' />
+</div>

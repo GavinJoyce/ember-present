@@ -2,6 +2,10 @@
   {{x-slide-background backgroundData=backgroundData}}
 {{/if}}
 
+{{#if pointerData}}
+  {{overlays/x-pointer pointerData=pointerData}}
+{{/if}}
+
 {{yield
   (hash
     content=(component 'x-scaled-slide-content')
