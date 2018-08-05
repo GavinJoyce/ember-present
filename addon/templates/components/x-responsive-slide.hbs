@@ -1,28 +1,32 @@
-{{yield
-  (hash
-    content=(component 'x-responsive-slide-content')
-  )
-}}
-
-{{#if session.canNavigateSlides}}
-  <div class="bg-yellow fixed pin-x pin-b flex">
-    <button
-      class="flex-1 h-12 m-2 bg-yellow-lighter hover:bg-yellow-light text-lg text-blue hover:text-blue-dark font-bold border border-blue"
-      onclick={{action 'previous' target=slides}}
-    >
-      {{#if slides.hasPreviousSlide}}
-        &lt; prev
-      {{/if}}
-    </button>
-
-    <button
-      class="flex-1 h-12 m-2 bg-yellow-lighter hover:bg-yellow-light disabled:bg-red text-lg text-blue hover:text-blue-dark font-bold border border-blue"
-      onclick={{action 'next' target=slides}}
-      disabled={{not slides.hasNextSlide}}
-    >
-      {{#if slides.hasNextSlide}}
-        next &gt;
-      {{/if}}
-    </button>
+<div class="flex flex-col fixed pin">
+  <div class="flex-1 overflow-scroll bg-red-darker">
+    {{yield
+      (hash
+        content=(component 'x-responsive-slide-content')
+      )
+    }}
   </div>
-{{/if}}
+
+  {{#if session.canNavigateSlides}}
+    <div class="flex-none h-12 flex">
+      <button
+        class="flex-1 bg-yellow-lighter hover:bg-yellow-light text-lg text-blue hover:text-blue-dark font-bold border border-blue"
+        onclick={{action 'previous' target=slides}}
+      >
+        {{#if slides.hasPreviousSlide}}
+          &lt; prev
+        {{/if}}
+      </button>
+
+      <button
+        class="flex-1 bg-yellow-lighter hover:bg-yellow-light text-lg text-blue hover:text-blue-dark font-bold border border-blue"
+        onclick={{action 'next' target=slides}}
+        disabled={{not slides.hasNextSlide}}
+      >
+        {{#if slides.hasNextSlide}}
+          next &gt;
+        {{/if}}
+      </button>
+    </div>
+  {{/if}}
+</div>

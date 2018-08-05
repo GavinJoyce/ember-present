@@ -50,17 +50,17 @@ export default Component.extend(Realtime, {
     this.get('stop').cancelAll();
 
     let video = this.$()[0];
-    video.pause();
+    yield video.pause();
 
     if (!this.get('hasSections')) {
-      video.play();
+      yield video.play();
     } else {
       let index = this.get('index');
       let section = this.get('sections')[index];
 
       if(section) {
         video.currentTime = section.start;
-        video.play();
+        yield video.play();
         this.incrementProperty('index');
 
         yield this.get('stop').perform((section.end - section.start) * 1000);
