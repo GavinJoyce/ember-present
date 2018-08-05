@@ -32,6 +32,7 @@ module.exports = class SocketServer {
         response.currentSlide = this.currentSlide;
         callback(response);
 
+        //throttle
         this.emitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
         this.emitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
       });
