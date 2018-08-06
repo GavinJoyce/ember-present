@@ -26,5 +26,9 @@ export default {
   '2xl': '1.5rem', // 24px
   '3xl': '1.875rem', // 30px
   '4xl': '2.25rem', // 36px
-  '5xl': '3rem' // 48px
+  '5xl': '3rem', // 48px
+  '6xl': '3.75rem',
+  '8xl': '4.5rem',
+  '10xl': '6rem',
+  '14xl': '9rem',
 };
