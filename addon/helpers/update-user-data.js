@@ -4,11 +4,11 @@ import { getOwner } from '@ember/application';
 export function updateUserData([key, value]) {
   return function() {
     let realtime = getOwner(this).lookup('service:realtime');
-    
+
     let data = {};
     data[key] = value;
 
-    this.get('realtime').emit('updateUserMetaData', data);
+    realtime.emit('updateUserMetaData', data);
   };
 }
 
