@@ -51,6 +51,12 @@ export default Component.extend(DomMixin, {
     throttle(this, this._throttleMove, e, this.get('throttleMs'));
   },
 
+  mouseMove(e) {
+    if (e.buttons === 1) { //clicked
+      throttle(this, this._throttleMove, e, this.get('throttleMs'));
+    }
+  },
+
   _throttleMove(e) {
     let eventPageX;
     let eventPageY;
