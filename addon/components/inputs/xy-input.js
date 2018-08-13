@@ -8,6 +8,9 @@ const SCROLL_PADDING = 50;
 
 export default Component.extend(DomMixin, {
   layout,
+
+  classNames: ['h-screen'],
+
   throttleMs: 25,
 
   $pointer: computed(function() {
@@ -36,6 +39,10 @@ export default Component.extend(DomMixin, {
     this.get('$yLine').style.top = `${height/2}px`;
   },
 
+  click(e) {
+    throttle(this, this._throttleMove, e, this.get('throttleMs'));
+  },
+
   touchStart(e) {
     throttle(this, this._throttleMove, e, this.get('throttleMs'));
   },
@@ -45,32 +52,41 @@ export default Component.extend(DomMixin, {
   },
 
   _throttleMove(e) {
-    if(e.touches.length === 1) {
-      this._hideIosAddressBar();
+    let eventPageX;
+    let eventPageY;
 
+    if(e.touches && e.touches.length === 1) {
       let touch = event.touches[0];
-      let width = document.body.offsetWidth;
-      let height = document.body.offsetHeight;
+      eventPageX = touch.pageX;
+      eventPageY = touch.pageY;
+    } else {
+      eventPageX = e.pageX;
+      eventPageY = e.pageY;
+    }
 
-      let pageX = this._getXorYAdjustedForPadding(touch.pageX, width);
-      let pageY = this._getXorYAdjustedForPadding(touch.pageY, height);
+    this._hideIosAddressBar();
 
-      let $pointer = this.get('$pointer');
-      let $xLine = this.get('$xLine');
-      let $yLine = this.get('$yLine');
+    let width = document.body.offsetWidth;
+    let height = document.body.offsetHeight;
 
-      $pointer.style.left = `${pageX}px`;
-      $xLine.style.left = `${pageX}px`;
-      $pointer.style.top = `${pageY}px`;
-      $yLine.style.top = `${pageY}px`;
+    let pageX = this._getXorYAdjustedForPadding(eventPageX, width);
+    let pageY = this._getXorYAdjustedForPadding(eventPageY, height);
 
-      let onChange = this.get('onChange');
-      if (onChange) {
-        this.get('onChange')({
-          xPercent: this._getPercentage(pageX, width),
-          yPercent: this._getPercentage(pageY, height),
-        });
-      }
+    let $pointer = this.get('$pointer');
+    let $xLine = this.get('$xLine');
+    let $yLine = this.get('$yLine');
+
+    $pointer.style.left = `${pageX}px`;
+    $xLine.style.left = `${pageX}px`;
+    $pointer.style.top = `${pageY}px`;
+    $yLine.style.top = `${pageY}px`;
+
+    let onChange = this.get('onChange');
+    if (onChange) {
+      this.get('onChange')({
+        xPercent: this._getPercentage(pageX, width),
+        yPercent: this._getPercentage(pageY, height),
+      });
     }
   },
 
