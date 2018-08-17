@@ -1,4 +1,4 @@
-import Service, { inject as service } from '@ember/service';
+import Service, { inject } from '@ember/service';
 import Controller from '@ember/controller';
 import { mapBy, readOnly, reads } from '@ember/object/computed';
 import { schedule } from '@ember/runloop';
@@ -12,12 +12,16 @@ import SlideTransition from 'ember-present/models/slide-transition';
 import slideControllerTemplate from 'ember-present/templates/internal/slide-controller';
 
 export default Service.extend(EmberKeyboard, {
-  realtime: service(),
-  router: service(),
-  session: service(),
+  realtime: inject(),
+  router: inject(),
+  session: inject(),
+  config: inject(),
 
   slideRoutes: undefined,
-  roles: undefined,
+
+  roles: computed('config.emberPresent.roles', function() {
+    return Object.values(this.get('config.emberPresent.roles'));
+  }),
 
   currentRouteName: reads('router.currentRouteName'),
 
@@ -26,9 +30,6 @@ export default Service.extend(EmberKeyboard, {
 
     this.set('keyboardActivated', true);
     this.set('slideRoutes', A());
-    this.set('roles', A(
-      [{ name: 'screen' }]
-    ));
 
     let realtime = this.get('realtime');
     realtime.on('goToSlide', (data) => {
@@ -41,8 +42,8 @@ export default Service.extend(EmberKeyboard, {
     this.get('slideRoutes').pushObject(slide);
 
     let SlideController = Controller.extend({
-      session: service(),
-      slides: service(),
+      session: inject(),
+      slides: inject(),
       slide,
     });
 
@@ -51,19 +52,11 @@ export default Service.extend(EmberKeyboard, {
     owner.register(`controller:${containerPath}`, SlideController);
     owner.register(`template:${containerPath}`, slideControllerTemplate);
 
-    let roles = this.get('roles');
-    roles.forEach(role => {
+    this.get('roles').forEach(role => {
       let componentPath = slide.getRoleComponentPath(role);
       if (!this._componentExists(componentPath)) {
         slide.set(`${role.name}SlideIsMissing`, true);
       }
-    });
-  },
-
-  registerRole(name, config) {
-    this.get('roles').pushObject({ //TODO: GJ: extract class
-      name,
-      config,
     });
   },
 

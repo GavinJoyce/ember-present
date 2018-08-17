@@ -11,10 +11,6 @@ Router.map(function() {
   this.route('screen-and-presenter');
 
   this.route('slides', function() {
-    this.role('screen');
-    this.role('presenter');
-    this.role('audience');
-
     this.route('login');
 
     this.route('auth', { path: '/' }, function() {
