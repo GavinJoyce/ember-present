@@ -35,10 +35,10 @@
 
 .htmlbars.hljs, .javascript.hljs {
   text-align: left;
-  margin: 10px auto;
-  width: 70%;
-  padding: 10px;
+  width: 100%;
+  padding: 20px;
   background-color: #151718 !important;
+  border-radius: 20px;
   color: #d4d8d6;
 }
 
