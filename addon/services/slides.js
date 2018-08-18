@@ -53,8 +53,11 @@ export default Service.extend(EmberKeyboard, {
     owner.register(`template:${containerPath}`, slideControllerTemplate);
 
     this.get('roles').forEach(role => {
-      let componentPaths = slide.getRoleComponentPaths(role);
-      if (!this._componentExists(componentPaths)) {
+      let componentPath = this._getComponentPath(slide, role);
+
+      if (componentPath) {
+        slide.set(`${role.name}ComponentPath`, componentPath);
+      } else {
         slide.set(`${role.name}SlideIsMissing`, true);
       }
     });
@@ -205,16 +208,16 @@ export default Service.extend(EmberKeyboard, {
     },
   },
 
-  _componentExists(componentPaths) {
+  _getComponentPath(slide, role) {
+    let componentPaths = slide.getRoleComponentPaths(role);
     let owner = getOwner(this);
 
     for (let componentPath of componentPaths) {
       let template = owner.lookup(`template:components/${componentPath}`);
+
       if (template) {
-        return true;
+        return componentPath;
       }
     }
-
-    return false;
   },
 });

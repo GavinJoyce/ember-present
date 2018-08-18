@@ -1,7 +1,7 @@
 {{#component slideContainerComponent as |api|}}
-  {{#let (concat 'slides/' session.role '/' slide.componentName) as |componentPath|}}
+  {{#let (get slide (concat session.role 'ComponentPath')) as |componentPath|}}
     {{#if (get slide (concat session.role 'SlideIsMissing'))}}
-      [{{componentPath}} is missing]
+      [{{slide.componentName}} component is missing]
     {{else}}
       {{component
         componentPath
