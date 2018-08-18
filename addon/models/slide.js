@@ -16,7 +16,10 @@ export default Object.extend({
     return this.get('path').replace(/\./g, '/');
   }),
 
-  getRoleComponentPath(role) {
-    return `slides/${role.name}/${this.get('componentName')}`;
+  getRoleComponentPaths(role) {
+    return [
+      `slides/${this.get('componentName')}/${role.name}`,
+      `slides/${role.name}/${this.get('componentName')}`,
+    ];
   },
 });
