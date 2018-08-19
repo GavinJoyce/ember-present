@@ -7,10 +7,10 @@ export default Component.extend({
 
   actions: {
     chooseColour(favouriteColour) {
-      this.get('realtime').emit('updateUserMetaData', { favouriteColour });
+      this.get('realtime').emit('updateUserMetadata', { favouriteColour });
     },
     chooseAnimal(favouriteAnimal) {
-      this.get('realtime').emit('updateUserMetaData', { favouriteAnimal });
+      this.get('realtime').emit('updateUserMetadata', { favouriteAnimal });
     },
   }
 });

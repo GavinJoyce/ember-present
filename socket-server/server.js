@@ -7,11 +7,12 @@ function getRandomItem(items) {
   return items[Math.floor(Math.random()*items.length)];
 }
 
-//TODO: GJ: add try catch to ensure no crashers
 module.exports = class SocketServer {
   constructor(app, configuration) {
     this.app = app;
     this.configuration = configuration;
+
+    console.log('configuration', configuration);
 
     this.userStore = new UserStore(configuration);
     this.currentSlide; //TODO: extract to state class
@@ -33,8 +34,8 @@ module.exports = class SocketServer {
         callback(response);
 
         //throttle
-        this.emitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
-        this.emitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+        this.throttledEmitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+        this.throttledEmitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
       });
 
       socket.on('reconnectWithToken', (data, callback) => {
@@ -42,8 +43,8 @@ module.exports = class SocketServer {
         response.currentSlide = this.currentSlide;
         callback(response);
 
-        this.emitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
-        this.emitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+        this.throttledEmitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+        this.throttledEmitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
       }),
 
       socket.on('disconnect', () => {
@@ -51,12 +52,12 @@ module.exports = class SocketServer {
           console.log('SOCKET DISCONNECT', socket.id);
           this.userStore.disconnect(socket.id);
 
-          this.emitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
-          this.emitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+          this.throttledEmitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+          this.throttledEmitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
         }
       });
 
-      socket.on('updateUserMetaData', (data) => { //TODO: rename to updateUserMetadata and review API
+      socket.on('updateUserMetadata', (data) => { //TODO: review API
         let socketId = data.socketId || socket.id; //TODO: GJ: lock down to role
         delete data.socketId;
 
@@ -149,8 +150,8 @@ module.exports = class SocketServer {
         });
 
         //TODO: GJ: config roles and extract commonality
-        this.emitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
-        this.emitToRole('ableton', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
+        this.throttledEmitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
+        this.throttledEmitToRole('ableton', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
       });
 
       socket.on('setInitialSlideState', () => {
@@ -210,7 +211,7 @@ module.exports = class SocketServer {
     // return false;
   }
 
-  emitToRole(role, name, data) { //TODO: GJ: use rooms for this
+  emitToRole(role, name, data) {
     let users = this.userStore.getUsersByRole(role);
     users.forEach((user) => {
       let socket = this.getSocket(user.socketId);

@@ -8,7 +8,7 @@ export function updateUserData([key, value]) {
     let data = {};
     data[key] = value;
 
-    realtime.emit('updateUserMetaData', data);
+    realtime.emit('updateUserMetadata', data);
   };
 }
 

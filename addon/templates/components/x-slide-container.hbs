@@ -1,7 +1,16 @@
 {{#component slideContainerComponent as |api|}}
   {{#let (get slide (concat session.role 'ComponentPath')) as |componentPath|}}
     {{#if (get slide (concat session.role 'SlideIsMissing'))}}
-      [{{slide.componentName}} component is missing]
+      <div class="pin absolute flex pointer-events-none text-grey-darkest">
+        <div class="self-center m-auto">
+          <h3>
+            [{{slide.componentName}}]
+          </h3>
+          <h4 class="self-center m-auto">
+            {{session.role}}
+          </h4>
+        </div>
+      </div>
     {{else}}
       {{component
         componentPath

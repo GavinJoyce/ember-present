@@ -1,11 +1,9 @@
-<div class="bg-black min-h-screen">
-  {{yield
-    (hash
-      button=(component 'x-button')
-      components=(hash
-        xyInput=(component 'inputs/xy-input')
-        pointerInput=(component 'inputs/pointer-input')
-      )
+{{yield
+  (hash
+    button=(component 'x-button')
+    components=(hash
+      xyInput=(component 'inputs/xy-input')
+      pointerInput=(component 'inputs/pointer-input')
     )
-  }}
-</div>
+  )
+}}
