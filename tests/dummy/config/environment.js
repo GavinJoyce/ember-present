@@ -17,24 +17,24 @@ module.exports = function(environment) {
           name: 'presenter',
           type: 'responsive',
           password: 'presenterpassword',
-          route: 'auth.presenter'
+          canControlPresentation: true,
         },
         notes: {
           name: 'notes',
           type: 'scaled',
           password: 'notespassword',
-          route: 'auth.notes'
+          canControlPresentation: true,
         },
         screen: {
           name: 'screen',
           type: 'scaled',
           password: 'screenpassword',
-          route: 'auth.screen'
+          canControlPresentation: true,
         },
         audience: {
           name: 'audience',
           type: 'responsive',
-          route: 'auth.audience'
+          canControlPresentation: false,
         }
       }
     },

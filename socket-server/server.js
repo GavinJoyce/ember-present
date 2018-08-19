@@ -173,7 +173,7 @@ module.exports = class SocketServer {
     let user = this.userStore.getUserBySocketId(socket.id);
     if (user) {
       let roleConfigration = this.configuration.roles[user.role];
-      if (roleConfigration && roleConfigration.canContolPresentation) {
+      if (roleConfigration && roleConfigration.canControlPresentation) {
         return true;
       }
     }
@@ -183,7 +183,7 @@ module.exports = class SocketServer {
 
   throttledEmitToControllers(name, data) {
     Object.values(this.configuration.roles).forEach((role) => {
-      if (role.canContolPresentation) {
+      if (role.canControlPresentation) {
         this.throttledEmitToRole(role.name, name, data)
       }
     });
