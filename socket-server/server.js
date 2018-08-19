@@ -12,8 +12,6 @@ module.exports = class SocketServer {
     this.app = app;
     this.configuration = configuration;
 
-    console.log('configuration', configuration);
-
     this.userStore = new UserStore(configuration);
     this.currentSlide; //TODO: extract to state class
 
@@ -33,9 +31,7 @@ module.exports = class SocketServer {
         response.currentSlide = this.currentSlide;
         callback(response);
 
-        //throttle
-        this.throttledEmitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
-        this.throttledEmitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+        this.throttledEmitToControllers('userStastics', this.userStore.summary);
       });
 
       socket.on('reconnectWithToken', (data, callback) => {
@@ -43,8 +39,7 @@ module.exports = class SocketServer {
         response.currentSlide = this.currentSlide;
         callback(response);
 
-        this.throttledEmitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
-        this.throttledEmitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+        this.throttledEmitToControllers('userStastics', this.userStore.summary);
       }),
 
       socket.on('disconnect', () => {
@@ -52,8 +47,7 @@ module.exports = class SocketServer {
           console.log('SOCKET DISCONNECT', socket.id);
           this.userStore.disconnect(socket.id);
 
-          this.throttledEmitToRole('screen', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
-          this.throttledEmitToRole('ableton', 'userStastics', this.userStore.summary); //TODO: GJ: config roles
+          this.throttledEmitToControllers('userStastics', this.userStore.summary);
         }
       });
 
@@ -67,9 +61,8 @@ module.exports = class SocketServer {
           let metadata = this.userStore.mergeUserMetadata(socketId, data);
           userSocket.emit('userMetadataUpdated', metadata);
 
-          Object.keys(data).forEach((key) => { //TODO: GJ: config roles to emit to
-            let countData = this.userStore.getMetadataCounts(key);
-            this.throttledEmitToRole('screen', `users.metadata.${key}.counts`, countData);
+          Object.keys(data).forEach((key) => {
+            this.throttledEmitToControllers(`users.metadata.${key}.counts`, this.userStore.getMetadataCounts(key));
           });
         }
       }),
@@ -80,7 +73,7 @@ module.exports = class SocketServer {
       });
 
       socket.on('goToSlide', (data) => {
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+        if (!this.canControlPresentation(socket)) {
           return;
         }
         this.currentSlide = data.slide;
@@ -88,35 +81,35 @@ module.exports = class SocketServer {
       });
 
       socket.on('getMetadataSummary', (key, callback) => {
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+        if (!this.canControlPresentation(socket)) {
           return;
         }
         callback(this.userStore.getMetadataSummary(key));
       }),
 
       socket.on('getMetadataCounts', (key, callback) => {
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+        if (!this.canControlPresentation(socket)) {
           return;
         }
         callback(this.userStore.getMetadataCounts(key));
       }),
 
       socket.on('getUserStatistics', (callback) => {
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+        if (!this.canControlPresentation(socket)) {
           return;
         }
         callback(this.userStore.summary);
       });
 
       socket.on('getUsers', (callback) => {
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+        if (!this.canControlPresentation(socket)) {
           return;
         }
         callback(this.userStore.users);
       }),
 
       socket.on('getRandomUserWithMetadata', (key, value, callback) => {
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+        if (!this.canControlPresentation(socket)) {
           return;
         }
 
@@ -126,7 +119,7 @@ module.exports = class SocketServer {
       }),
 
       socket.on('getUsersWithMetadata', (key, callback) => {
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+        if (!this.canControlPresentation(socket)) {
           return;
         }
 
@@ -135,7 +128,7 @@ module.exports = class SocketServer {
       }),
 
       socket.on('clearMetadataByValue', (key, value) => {
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+        if (!this.canControlPresentation(socket)) {
           return;
         }
 
@@ -149,13 +142,11 @@ module.exports = class SocketServer {
           }
         });
 
-        //TODO: GJ: config roles and extract commonality
-        this.throttledEmitToRole('screen', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
-        this.throttledEmitToRole('ableton', `users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
+        this.throttledEmitToControllers(`users.metadata.${key}.summary`, this.userStore.getMetadataSummary(key));
       });
 
       socket.on('setInitialSlideState', () => {
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
+        if (!this.canControlPresentation(socket)) {
           return;
         }
 
@@ -165,20 +156,12 @@ module.exports = class SocketServer {
       });
 
       socket.on('broadcast', ({ name, data }) => { //TODO: GJ: change from hash to arguments
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
-          return;
-        }
-
         data = data || {};
         data.serverTime = Date.now();
         io.emit(name, data);
       });
 
       socket.on('broadcastToRole', ({ role, name, data }) => { //TODO: GJ: change from hash to arguments
-        if (!this.hasRole(socket, ['presenter', 'screen', 'ableton'])) {
-          return;
-        }
-
         data = data || {};
         data.serverTime = Date.now();
         this.emitToRole(role, name, data);
@@ -186,29 +169,24 @@ module.exports = class SocketServer {
     });
   }
 
-  hasRole(socket, roles) {
-    if (!socket) {
-      return false;
+  canControlPresentation(socket) {
+    let user = this.userStore.getUserBySocketId(socket.id);
+    if (user) {
+      let roleConfigration = this.configuration.roles[user.role];
+      if (roleConfigration && roleConfigration.canContolPresentation) {
+        return true;
+      }
     }
 
-    if (!roles) {
-      return false;
-    }
+    return false;
+  }
 
-    return true; //TODO: GJ: implement for v2 architecture
-
-    //
-    // let user = this.userStore.getUserBySocketId(socket.id);
-    //
-    // if (user) {
-    //   for (let i=0; i<roles.length; i++) {
-    //     if (user.role === roles[i]) {
-    //       return true;
-    //     }
-    //   }
-    // }
-    //
-    // return false;
+  throttledEmitToControllers(name, data) {
+    Object.values(this.configuration.roles).forEach((role) => {
+      if (role.canContolPresentation) {
+        this.throttledEmitToRole(role.name, name, data)
+      }
+    });
   }
 
   emitToRole(role, name, data) {
