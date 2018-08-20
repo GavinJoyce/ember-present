@@ -170,15 +170,16 @@ module.exports = class SocketServer {
   }
 
   canControlPresentation(socket) {
-    let user = this.userStore.getUserBySocketId(socket.id);
-    if (user) {
-      let roleConfigration = this.configuration.roles[user.role];
-      if (roleConfigration && roleConfigration.canControlPresentation) {
-        return true;
-      }
-    }
+    return true; //TODO
+    // let user = this.userStore.getUserBySocketId(socket.id);
+    // if (user) {
+    //   let roleConfigration = this.configuration.roles[user.role];
+    //   if (roleConfigration && roleConfigration.canControlPresentation) {
+    //     return true;
+    //   }
+    // }
 
-    return false;
+    // return false;
   }
 
   throttledEmitToControllers(name, data) {

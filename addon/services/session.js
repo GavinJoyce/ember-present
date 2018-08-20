@@ -58,7 +58,6 @@ export default Service.extend({
 
   loginTask: task(function * (username, password) {
     let realtime = this.get('realtime');
-    console.log('GJ: login');
     let response = yield realtime.emitWithResponse('login', { username, password });
 
     this._handleResponse(response);
