@@ -1,5 +1,5 @@
 import Service, { inject } from '@ember/service';
-import { equal, notEmpty, not, readOnly } from '@ember/object/computed';
+import { equal, notEmpty, not, or, readOnly } from '@ember/object/computed';
 import { task } from 'ember-concurrency';
 
 export default Service.extend({
@@ -8,7 +8,11 @@ export default Service.extend({
   slides: inject(),
 
   user: undefined,
-  role: readOnly('user.role'),
+
+  defaultRole: 'screen',
+  userRole: readOnly('user.role'),
+  role: or('userRole', 'defaultRole'),
+
   isAuthenticated: notEmpty('user'),
   isNotAuthenticated: not('user'),
 
