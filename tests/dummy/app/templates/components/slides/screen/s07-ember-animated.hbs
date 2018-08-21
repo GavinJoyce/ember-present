@@ -5,23 +5,34 @@
     ember-animated
   </h1>
 
+  <div>
+    <button onclick={{action "moveRandomLeft"}}>Move from left</button>
+    <button onclick={{action "moveRandomRight"}}>Move from right</button>
+  </div>
+
   <div class="flex items-stretch w-full h-full">
     <div class="flex-1 w-1/2 bg-red">
       {{#animated-container}}
         {{#animated-each leftItems use=transition as |item|}}
-          <div {{action "move" item}}>
+          <div {{action "move" item}} class="">
             {{item.id}}
-            <button>&rarr;</button>
+            <img class="mascot-detail-image w-32" src="https://emberjs.com/images/about/ember-productivity-sm_x2-075fc920.png" />
           </div>
         {{/animated-each}}
+      {{/animated-container}}
+
+      {{#animated-container class="image-container"}}
+        {{#animated-value model group="images" use=transition2 duration=1000}}
+          <img class="mascot-detail-image w-16" src={{model.imageURL}} />
+        {{/animated-value}}
       {{/animated-container}}
     </div>
     <div class="flex-1 w-1/2 bg-green">
       {{#animated-container}}
         {{#animated-each rightItems use=transition as |item|}}
-          <div {{action "move" item}}>
-            <button>&larr;</button>
+          <div {{action "move" item}} class="">
             {{item.id}}
+            <img class="mascot-detail-image w-32" src="https://emberjs.com/images/about/ember-productivity-sm_x2-075fc920.png" />
           </div>
         {{/animated-each}}
       {{/animated-container}}

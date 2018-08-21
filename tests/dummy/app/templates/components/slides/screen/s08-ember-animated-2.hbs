@@ -1,0 +1,17 @@
+{{backgrounds/gradient-background}}
+
+{{#slide.content}}
+  <h1 class="text-white p-4 self-center">
+    ember-animated
+  </h1>
+
+  <div class="flex items-stretch w-full h-full">
+    <div class="flex-1 w-1/2 bg-yellow">
+      {{#animated-container class="image-container"}}
+        {{#animated-value model group="images" use=transition duration=1000}}
+          <img class="mascot-detail-image" src={{model.imageURL}} />
+        {{/animated-value}}
+      {{/animated-container}}
+    </div>
+  </div>
+{{/slide.content}}

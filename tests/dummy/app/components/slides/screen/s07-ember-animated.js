@@ -1,10 +1,15 @@
 import Component from '@ember/component';
-import { later } from '@ember/runloop';
 import { computed } from '@ember/object';
 import move from 'ember-animated/motions/move';
+import scale from 'ember-animated/motions/scale';
+
+import model from '../../../models/data';
 
 export default Component.extend({
-  bounceBack: false,
+  init() {
+    this._super(...arguments);
+    this.set('model', model);
+  },
 
   transition: function * ({ keptSprites, sentSprites, receivedSprites }) {
     keptSprites.forEach(move);
@@ -13,34 +18,36 @@ export default Component.extend({
     yield;
   },
 
-  leftItems: computed({
-    get() {
-      let result = [];
-      for (let i = 0; i < 10; i++) {
-        result.push(makeRandomItem());
-      }
-      return result.sort(numeric);
-    },
-    set(k,v) {
-      return v;
+  transition2: function * ({ sentSprites, receivedSprites }) {
+    yield sentSprites.forEach(sprite => {
+      scale(sprite);
+      move(sprite);
+    });
+
+    yield receivedSprites.forEach(sprite => {
+      scale(sprite);
+      move(sprite);
+    });
+  },
+
+  leftItems: computed(function() {
+    let result = [];
+    for (let i = 0; i < 5; i++) {
+      result.push(makeRandomItem());
     }
+    return result.sort(numeric);
   }),
 
-  rightItems: computed({
-    get() {
-      let result = [];
-      for (let i = 0; i < 10; i++) {
-        result.push(makeRandomItem());
-      }
-      return result.sort(numeric);
-    },
-    set(k,v) {
-      return v;
+  rightItems: computed(function() {
+    let result = [];
+    for (let i = 0; i < 5; i++) {
+      result.push(makeRandomItem());
     }
+    return result.sort(numeric);
   }),
 
   actions: {
-    move(item, bounceCounter=1) {
+    move(item) {
       let rightItems = this.get('rightItems');
       let leftItems = this.get('leftItems');
       let index = rightItems.indexOf(item);
@@ -52,9 +59,14 @@ export default Component.extend({
         this.set('leftItems', leftItems.slice(0, index).concat(leftItems.slice(index+1)));
         this.set('rightItems', rightItems.concat([item]).sort(numeric));
       }
-      if (this.get('bounceBack') && bounceCounter > 0) {
-        later(() => this.send('move', item, bounceCounter - 1), 1000);
-      }
+    },
+    moveRandomLeft() {
+      let randomItem = getRandomItem(this.get('leftItems'));
+      this.send('move', randomItem);
+    },
+    moveRandomRight() {
+      let randomItem = getRandomItem(this.get('rightItems'));
+      this.send('move', randomItem);
     }
   }
 });
@@ -63,4 +75,8 @@ function numeric(a,b) { return a.id - b.id; }
 
 function makeRandomItem() {
   return { id: Math.round(Math.random()*1000) };
+}
+
+function getRandomItem(items) {
+  return items[Math.floor(Math.random()*items.length)];
 }

@@ -39,6 +39,7 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^3.0.0",
+    "ember-animated": "gavinjoyce/ember-animated#gj/scale-bounding-client-rect-spike",
     "ember-cli": "~3.2.0",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-deploy": "^1.0.2",
