@@ -84,7 +84,7 @@ export default Service.extend({
     } else {
       this.set('user', undefined);
       this.set('invalidLogin', true);
-      this.get('router').transitionTo('slides.login');
+      this.get('router').transitionTo('login');
     }
   }
 });

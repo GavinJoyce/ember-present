@@ -29,6 +29,7 @@ export default {
   '5xl': '3rem', // 48px
   '6xl': '3.75rem',
   '8xl': '4.5rem',
+  '9xl': '5.25rem',
   '10xl': '6rem',
   '12xl': '8.75rem',
   '14xl': '9rem',
