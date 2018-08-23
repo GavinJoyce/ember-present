@@ -5,6 +5,12 @@ An addon for creating rich and interactive Ember.js presentations. Currently a w
 
 **This addon is currently in an experimental phase with unstable APIs and no docs. I'll improve this soon.**
 
+## Running locally
+
+* `npm install`
+* `ember server`
+* visit http://localhost:4200/
+
 You can see my EmberConf talk which used this addon here:
 
 [<img width="856" alt="screen shot 2018-03-15 at 06 45 36" src="https://user-images.githubusercontent.com/2526/37498971-892784d0-287e-11e8-9c0a-62dee67564f0.png">](https://www.youtube.com/watch?v=lEMG7ZayU48)
@@ -21,3 +27,8 @@ If you're interested, here is the source code to the presentation:
  * [Ableton Live Project](https://drive.google.com/open?id=1lsl9ATxYUBQhimYrGbwwXXEarqssqIih)
 
 And here's the song that was played: https://soundcloud.com/gavinjoyce/what-could-go-wrong
+
+## Questions
+
+* feel free to reach out to me on twitter: [@gavinjoyce](https://twitter.com/gavinjoyce)
+
